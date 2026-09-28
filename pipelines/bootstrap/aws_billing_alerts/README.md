@@ -33,6 +33,7 @@ Next, run the following [Terragrunt commands](/docs/iac) from the root directory
 ```bash
 source .env
 cd pipelines/bootstrap/aws_billing_alerts
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```

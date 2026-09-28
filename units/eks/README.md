@@ -60,6 +60,7 @@ From the root of this repository, cd into the dev stack, generate it, then rende
 
 ```bash
 cd pipelines/dev/eks/stack
+terragrunt stack clean
 terragrunt stack generate
 terragrunt dag graph | dot -Tpng > /tmp/graph.png && open /tmp/graph.png
 ```

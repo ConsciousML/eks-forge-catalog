@@ -78,6 +78,7 @@ If `dev-2` should reuse `dev`'s Helm value overlays instead of getting its own, 
 ```bash
 source .env
 cd pipelines/dev-2/eks/stack
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```

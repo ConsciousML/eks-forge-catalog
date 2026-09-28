@@ -26,6 +26,7 @@ Deploy the ACL first, since WIF relies on the `tag:ci` the ACL defines. From the
 ```bash
 source .env
 cd pipelines/bootstrap/tailscale/acl
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```
@@ -33,6 +34,7 @@ terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-gene
 Then, deploy the WIF pipeline:
 ```bash
 cd ../wif
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```

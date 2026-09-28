@@ -25,6 +25,7 @@ Otherwise, run the following [Terragrunt commands](/docs/iac) from the root dire
 ```bash
 source .env
 cd pipelines/bootstrap/aws_service_quotas
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```

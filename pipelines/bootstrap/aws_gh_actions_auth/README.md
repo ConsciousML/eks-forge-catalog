@@ -15,6 +15,7 @@ Next, run the following from the root directory of [your fork](/docs/quickstart/
 ```bash
 source .env
 cd pipelines/bootstrap/aws_gh_actions_auth/
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```

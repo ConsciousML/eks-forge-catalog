@@ -29,6 +29,7 @@ setup_dns/
 Next, run the following for each environment (replacing `<environment>` with `dev` and then `ci`), from the root directory of [your fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
 cd pipelines/bootstrap/setup_dns/<environment>
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```

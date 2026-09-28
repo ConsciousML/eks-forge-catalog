@@ -57,6 +57,7 @@ unit "your_module" {
 ```bash
 source .env
 cd pipelines/dev/eks/stack/
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all init --backend-bootstrap
 terragrunt run --all validate
