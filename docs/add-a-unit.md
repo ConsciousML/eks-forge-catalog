@@ -355,7 +355,7 @@ git push origin <branch>
 gh pr create --title "<title>" --body "<description>"
 ```
 
-Iterate until CI passes. If you wrote a module, CI generates its `README.md` and pushes it to your branch, so pull before pushing again:
+Iterate until CI passes. If it fails, see [Troubleshoot Catalog CI](/docs/ci-cd/per-repository/troubleshoot-catalog-ci/). If you wrote a module, CI generates its `README.md` and pushes it to your branch, so pull before pushing again:
 ```bash
 git pull origin <branch>
 ```
