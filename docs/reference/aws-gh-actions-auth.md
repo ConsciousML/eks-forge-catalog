@@ -3,7 +3,7 @@
 
 The [`aws_gh_actions_auth` stack](../../stacks/aws_gh_actions_auth/) provisions the [OIDC](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)-based trust between GitHub Actions and AWS, letting CI assume an IAM role and deploy Terragrunt without long-lived AWS keys.
 
-For setup steps, read the [catalog bootstrap guide](/docs/quickstart/bootstrap/aws_gh_actions_auth).
+For setup steps, read the [AWS GitHub Actions Authentication Bootstrap](/docs/quickstart/bootstrap/aws_gh_actions_auth).
 
 ## Modules
 

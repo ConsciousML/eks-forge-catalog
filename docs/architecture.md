@@ -9,4 +9,4 @@ The [catalog repository](https://github.com/ConsciousML/terragrunt-template-cata
 
 In the [`pipelines/`](../pipelines/) directory, you'll find all the implemented stacks, also called pipelines:
 - [`pipelines/bootstrap`](../pipelines/bootstrap/) contains all the [bootstrap pipelines](/docs/quickstart/bootstrap/)
-- [`pipelines/dev`](../pipelines/dev/) is the `dev` IaC environment deploying the [EKS stack](/docs/overview/#features) 
+- [`pipelines/dev`](../pipelines/dev/) is the `dev` IaC environment deploying the EKS stack, with all its [features](/docs/overview/#features)

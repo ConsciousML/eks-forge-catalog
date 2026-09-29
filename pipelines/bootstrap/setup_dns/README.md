@@ -34,7 +34,7 @@ terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```
 
-Read the [Infrastructure as Code documentation](/docs/iac) for a high-level overview of TG.
+Read [Infrastructure as Code](/docs/iac) for a high-level overview of TG.
 
 :::note
 On the first run, `--backend-bootstrap` automatically creates the [S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html) holding the [Terraform state](https://developer.hashicorp.com/terraform/language/state). More information in the [Terragrunt state backend documentation](https://docs.terragrunt.com/features/units/state-backend/).
@@ -81,4 +81,4 @@ Delegation is working when 4 AWS nameservers appear in the `ANSWER SECTION`.
 
 You can also confirm this visually in the [Route 53 console](https://console.aws.amazon.com/route53/v2/hostedzones). You should see your newly created hosted zone listed. Click it to see its records.
 
-For more information about this bootstrap, read the [reference documentation](/docs/reference/bootstrap/setup_dns/).
+For more information about this bootstrap, read the [DNS Bootstrap](/docs/reference/bootstrap/setup_dns/) reference.

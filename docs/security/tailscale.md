@@ -4,7 +4,7 @@
 EKS Forge deploys internal tooling ([ArgoCD](https://argo-cd.readthedocs.io/en/stable/), [Prometheus](https://prometheus.io/), [Hubble](https://github.com/cilium/hubble), etc.) as private endpoints inside the VPC, not reachable from the public internet. [Tailscale](https://tailscale.com/) is the VPN that lets developers reach them, and the identity provider CI uses to manage the resources that make that VPN work.
 
 This documentation will explain how Tailscale has been implemented in the EKS stack.
-For setup steps, read the [catalog bootstrap guide](/docs/quickstart/bootstrap/tailscale).
+For setup steps, read [Tailscale Bootstrap](/docs/quickstart/bootstrap/tailscale).
 
 There are four components that interact together, created in an order that matters:
 

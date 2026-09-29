@@ -3,7 +3,7 @@
 
 The [`slack` stack](../../stacks/slack/), deployed by the [`slack/gh_secret` pipeline](../../pipelines/bootstrap/slack/gh_secret/), pushes `SLACK_BOT_TOKEN` into this repository's GitHub Actions secrets, so CI-driven environments can inject it into Alertmanager without managing the value by hand. Environment-independent, run once.
 
-For setup steps, read the [catalog bootstrap guide](/docs/quickstart/bootstrap/slack).
+For setup steps, read the [Slack Bootstrap](/docs/quickstart/bootstrap/slack).
 
 ## Modules
 

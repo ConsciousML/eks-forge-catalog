@@ -12,7 +12,7 @@ aws iam create-service-linked-role --aws-service-name spot.amazonaws.com || true
 ```
 
 ## Run the Terragrunt Stack
-In your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog), run the following [Terragrunt commands](/docs/iac) from the root to deploy the `dev` environment:
+In your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog), run the following [Terragrunt](/docs/iac) commands from the root to deploy the `dev` environment:
 
 ```bash
 source .env
@@ -24,7 +24,7 @@ terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-gene
 
 The deployment of this [Terragrunt stack](/docs/iac/#stacks) should take around 30 minutes.
 
-When it's done, connect `kubectl` to your `dev` EKS cluster by creating a [`kubeconfig`](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) (replace `<region-code>` with the region you used when you [configured the catalog](/docs/quickstart/configuration/#catalog-configuration)):
+When it's done, connect `kubectl` to your `dev` EKS cluster by creating a [`kubeconfig`](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) (replace `<region-code>` with the region you set in [Catalog Configuration](/docs/quickstart/configuration/#catalog-configuration)):
 ```bash
 aws eks update-kubeconfig --region <region-code> --name dev-cluster
 ```
@@ -65,7 +65,7 @@ When every application shows `Synced` and `Healthy`, the deployment succeeded.
 
 For security reasons, internal tools (ArgoCD, Prometheus, etc.) are not exposed to the internet. ArgoCD's API and UI are only reachable using Tailscale. Connect to Tailscale by running `tailscale up`, or with the button in the Tailscale client.
 
-The ArgoCD host is `argocd.private.dev.<base_domain>` (replace `<base_domain>` with the [value from `pipelines/dns.hcl`](/docs/quickstart/bootstrap/setup_dns/), e.g. `argocd.private.dev.axelmendoza.com`).
+The ArgoCD host is `argocd.private.dev.<base_domain>` (replace `<base_domain>` with the `base_domain` you set in `pipelines/dns.hcl` during [DNS Bootstrap](/docs/quickstart/bootstrap/setup_dns/), e.g. `argocd.private.dev.axelmendoza.com`).
 There are two ways to interact with your ArgoCD instance:
 - Open `https://argocd.private.dev.<base_domain>` in your browser and log in with username `admin`. Retrieve the password with:
   ```bash
@@ -107,19 +107,19 @@ cd pipelines/dev/eks/stack
 terragrunt run --all destroy --non-interactive --no-stack-generate
 ```
 
-The [bootstrap](/docs/quickstart/bootstrap) resources stay in place, so you can reuse them for your next deployments. Among them, only the Route 53 hosted zones created by [Setup DNS](/docs/quickstart/bootstrap/setup_dns/) are billed.
+The [bootstrap](/docs/quickstart/bootstrap) resources stay in place, so you can reuse them for your next deployments. Among them, only the Route 53 hosted zones created by [DNS Bootstrap](/docs/quickstart/bootstrap/setup_dns/) are billed.
 
 ## What's Next
-Continue with the [staging and production deployment tutorial](/docs/deployment/) to deploy the `staging` and `prod` environments from the live repository.
+Continue with [Production Deployment](/docs/deployment/) to deploy the `staging` and `prod` environments from the live repository.
 
 Or, when you need them:
-- interact with internal tools using the [monitoring guide](/docs/monitoring/)
-- add an application to your cluster with the [applications guide](/docs/applications/get-started/)
-- [add, edit, or remove a unit in your stack](/docs/iac/add-a-unit/)
+- to interact with internal tools, see [Monitoring](/docs/monitoring/)
+- to add an application to your cluster, see [Deploy Your Applications](/docs/applications/get-started/)
+- to add, edit, or remove a unit in your stack, see [Add a Unit](/docs/iac/add-a-unit/)
 
 ## Remove EKS Forge
 :::warning
 The [deployment tutorials](/docs/deployment/) reuse the bootstrap resources. Don't remove them if you plan to continue.
 :::
 
-Only if you want to remove EKS Forge from your AWS account entirely, follow [How to Remove EKS Forge](/docs/iac/remove-eks-forge/).
+Only if you want to remove EKS Forge from your AWS account entirely, follow [Remove EKS Forge](/docs/iac/remove-eks-forge/).

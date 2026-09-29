@@ -3,7 +3,7 @@
 
 The [`slack_channels` stack](../../stacks/slack_channels/), deployed by the [`slack/channels` pipeline](../../pipelines/bootstrap/slack/channels/), creates that environment's Slack channels, prefixed with the environment name (e.g. `dev-k8s-critical`), so the same shared bot can post every environment's alerts without colliding on one channel. Run once per environment.
 
-For setup steps, read the [catalog bootstrap guide](/docs/quickstart/bootstrap/slack).
+For setup steps, read the [Slack Bootstrap](/docs/quickstart/bootstrap/slack).
 
 ## Modules
 

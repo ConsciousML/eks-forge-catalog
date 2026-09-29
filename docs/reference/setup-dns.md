@@ -3,7 +3,7 @@
 
 The [`setup_dns` stack](../../stacks/setup_dns/) provisions a public [Route 53](https://aws.amazon.com/route53/) [hosted zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html) for an environment, the container for the DNS records that route traffic to its domain and that [ACM](https://aws.amazon.com/certificate-manager/) uses to validate its TLS certificate.
 
-For setup steps, read the [catalog bootstrap guide](/docs/quickstart/bootstrap/setup_dns).
+For setup steps, read the [DNS Bootstrap](/docs/quickstart/bootstrap/setup_dns).
 
 ## Modules
 

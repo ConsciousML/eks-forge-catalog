@@ -3,7 +3,7 @@
 
 The [`billing_budgets` stack](../../stacks/billing_budgets/), deployed by the [`aws_billing_alerts` pipeline](../../pipelines/bootstrap/aws_billing_alerts/), creates two [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/): one that emails a notification for each configured USD threshold whenever actual monthly spend exceeds it, and one that does the same based on forecasted monthly spend, giving an earlier warning.
 
-For setup steps, read the [catalog bootstrap guide](/docs/quickstart/bootstrap/aws_billing_alerts).
+For setup steps, read the [AWS Billing Alerts Bootstrap](/docs/quickstart/bootstrap/aws_billing_alerts).
 
 ## Modules
 

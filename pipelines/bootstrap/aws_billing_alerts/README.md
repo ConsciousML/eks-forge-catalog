@@ -29,7 +29,7 @@ locals {
 }
 ```
 
-Next, run the following [Terragrunt commands](/docs/iac) from the root directory of your [catalog repository fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
+Next, run the following [Terragrunt](/docs/iac) commands from the root directory of your [catalog repository fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
 source .env
 cd pipelines/bootstrap/aws_billing_alerts
@@ -53,5 +53,5 @@ aws ce get-anomaly-subscriptions --query "AnomalySubscriptions[].[SubscriptionNa
 You should see `anomaly-subscription` with your email as a subscriber.
 
 :::info
-For this quickstart, keep the threshold defaults already set in the stack file above. Once you've observed real costs, come back and adjust them using the [`billing_budgets`](/docs/reference/bootstrap/aws_billing_budgets/) and [`billing_anomaly_detection`](/docs/reference/bootstrap/aws_billing_anomaly_detection/) reference documentation.
+For this quickstart, keep the threshold defaults already set in the stack file above. Once you've observed real costs, come back and adjust them using the [AWS Billing Budgets](/docs/reference/bootstrap/aws_billing_budgets/) and [AWS Billing Anomaly Detection](/docs/reference/bootstrap/aws_billing_anomaly_detection/) references.
 :::

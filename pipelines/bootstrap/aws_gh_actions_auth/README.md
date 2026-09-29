@@ -9,7 +9,7 @@ This guide needs to be performed only once per catalog fork before running the [
 
 This [bootstrap pipeline](/docs/quickstart/bootstrap) creates an IAM [OIDC identity provider and role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html) that GitHub Actions assumes at runtime, so workflows authenticate with a short-lived GitHub token instead of stored AWS keys. It also stores the role ARN and the deploy keys Terragrunt needs to pull your catalog as GitHub Actions secrets.
 
-First, set up your `.env` file by following the [prerequisite](/docs/reference/environment_variable/#prerequisite) and [`GITHUB_TOKEN`](/docs/reference/environment_variable/#github_token) sections of the environment variables reference.
+First, set up your `.env` file by following the [Prerequisite](/docs/reference/environment_variable/#prerequisite) and [`GITHUB_TOKEN`](/docs/reference/environment_variable/#github_token) sections of the environment variables reference.
 
 Next, run the following from the root directory of [your fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
@@ -20,7 +20,7 @@ terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```
 
-Read the [Infrastructure as Code documentation](/docs/iac) for a high-level overview of Terragrunt.
+Read [Infrastructure as Code](/docs/iac) for a high-level overview of Terragrunt.
 
 Then, check that the IAM role exists:
 ```bash
@@ -43,4 +43,4 @@ gh repo deploy-key list
 
 You should see `Terragrunt Catalog Deploy Key` and `Terraform Docs Deploy Key`.
 
-For more information about this bootstrap, read the [reference documentation](/docs/reference/bootstrap/aws_gh_actions_auth/).
+For more information about this bootstrap, read the [AWS GitHub Actions Authentication](/docs/reference/bootstrap/aws_gh_actions_auth/) reference.
