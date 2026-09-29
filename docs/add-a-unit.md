@@ -148,7 +148,7 @@ For complete examples, see the [`acm_certificate`](https://github.com/ConsciousM
 </TabItem>
 </Tabs>
 
-## Read Shared Config and Other Units' Outputs
+## Read Shared Config
 
 If your unit needs shared configuration, read it from the `.hcl` files under `pipelines/`, listed in the [HCL configuration reference](/docs/reference/hcl_configuration/). Read what `root.hcl` already loads through `include.root.locals`. Read any other file with [`read_terragrunt_config`](https://docs.terragrunt.com/reference/hcl/functions/#read_terragrunt_config) and [`find_in_parent_folders`](https://docs.terragrunt.com/reference/hcl/functions/#find_in_parent_folders).
 
@@ -163,6 +163,8 @@ inputs = {
   cidr = local.vpc_cidr
 }
 ```
+
+## Read Other Units' Outputs
 
 If your unit needs another unit's outputs, add a [`dependency`](https://docs.terragrunt.com/reference/hcl/blocks/#dependency) block pointing at that unit's directory, and read its outputs in `inputs`. If it only has to run after the other unit, without reading its outputs, set `skip_outputs = true` instead. For example, the EBS CSI driver add-on reads the cluster name from `cluster`:
 ```hcl
@@ -182,6 +184,8 @@ inputs = {
 ```
 
 The [`mock_outputs`](https://docs.terragrunt.com/reference/hcl/blocks/#mock-outputs) let `plan` run before the `cluster` unit has been applied.
+
+## Document the Unit
 
 Add a `README.md` describing what the unit deploys and which units it depends on. For example, the EBS CSI driver's README, in `units/eks/addons/ebs_csi_driver/`:
 ```markdown
