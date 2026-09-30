@@ -3,7 +3,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This guide shows you how to add a [unit](/docs/iac/#units) to your [forked catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog), or edit an existing one, validate it in [`dev`](/docs/iac/#dev), and merge it. It covers AWS resources and the Kubernetes add-ons that must run before ArgoCD. For applications ArgoCD deploys, see [Who Owns What](/docs/applications/how-the-app-of-apps-works/#who-owns-what).
+This guide shows you how to add a [unit](/docs/iac/#units) to your [forked catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog), or edit an existing one, validate it in [`dev`](/docs/iac/#dev), and merge it. It covers AWS resources and the Kubernetes add-ons that must run before ArgoCD. For applications ArgoCD deploys, see [Who Owns What](/docs/applications/how-the-app-of-apps-works/#who-owns-what). To remove a unit, see [Remove a Unit](/docs/iac/remove-a-unit/).
 
 If you only change the `values` a unit receives in `staging` or `prod`, you don't need the catalog: see [Release a Change to Production](/docs/deployment/release-a-change-to-production/) instead.
 

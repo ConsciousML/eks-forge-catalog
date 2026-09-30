@@ -115,7 +115,8 @@ Continue with [Production Deployment](/docs/deployment/get-started/) to deploy t
 Or, when you need them:
 - to interact with internal tools, see [Monitoring](/docs/monitoring/)
 - to add an application to your cluster, see [Deploy Your Applications](/docs/applications/get-started/)
-- to add, edit, or remove a unit in your stack, see [Add a Unit](/docs/iac/add-a-unit/)
+- to add or edit a unit in your stack, see [Add or Edit a Unit](/docs/iac/add-a-unit/)
+- to remove a unit from your stack, see [Remove a Unit](/docs/iac/remove-a-unit/)
 
 ## Remove EKS Forge
 :::warning
