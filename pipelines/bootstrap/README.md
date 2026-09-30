@@ -49,4 +49,4 @@ Complete each of these one-time setup guides:
   },
 ]} />
 
-**Caution**: if you want to change the code of these pipelines, read the [For Developers section](../../stacks/README.md#for-developers).
+**Caution**: if you want to change the code of these pipelines, read the [For Developers](../../stacks/README.md#for-developers) section of `stacks/README.md`.

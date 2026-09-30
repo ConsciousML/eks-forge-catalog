@@ -3,7 +3,7 @@
 
 The [`tailscale_wif` stack](../../stacks/tailscale_wif/), deployed by the [`tailscale/wif` pipeline](../../pipelines/bootstrap/tailscale/wif/), creates a Tailscale [Workload Identity Federation](https://tailscale.com/docs/features/workload-identity-federation) credential scoped to this GitHub repository via OIDC, and stores its client ID and audience as GitHub Actions secrets, so CI authenticates to Tailscale using short-lived tokens instead of a stored OAuth secret.
 
-For setup steps, read the [catalog bootstrap guide](/docs/quickstart/bootstrap/tailscale).
+For setup steps, read the [Tailscale Bootstrap](/docs/quickstart/bootstrap/tailscale).
 
 ## Modules
 

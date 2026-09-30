@@ -4,7 +4,7 @@
 In this guide, you'll check whether your AWS account has enough EC2 vCPU headroom for [deployment](/docs/quickstart/deployment/), and request more if it doesn't.
 
 :::danger
-These quotas are account-wide. If they're already managed elsewhere (another team, another IaC repo, AWS Organizations quota templates), skip this guide. If the account already runs other EC2 workloads, size your request to cover their vCPU usage too, as described in the [reference documentation](/docs/reference/bootstrap/aws_ec2_quotas/#sizing-the-request).
+These quotas are account-wide. If they're already managed elsewhere (another team, another IaC repo, AWS Organizations quota templates), skip this guide. If the account already runs other EC2 workloads, size your request to cover their vCPU usage too, as described in [Sizing the Request](/docs/reference/bootstrap/aws_ec2_quotas/#sizing-the-request).
 :::
 
 :::warning
@@ -21,10 +21,11 @@ aws service-quotas get-service-quota --service-code ec2 --quota-code L-34B43A08 
 
 If both values are at least `ondemand_desired_value` and `spot_desired_value` in the [stack file](terragrunt.stack.hcl), skip the rest of this guide.
 
-Otherwise, run the following [Terragrunt commands](/docs/iac) from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
+Otherwise, run the following [Terragrunt](/docs/iac) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
 source .env
 cd pipelines/bootstrap/aws_service_quotas
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```
@@ -33,4 +34,4 @@ AWS approves some increases instantly. Others are reviewed manually and can take
 
 Finally, re-run the check from the first step. Once AWS approves the requests, both values match the ones in the stack file. While AWS reviews them, track their status in the [Service Quotas request history console](https://console.aws.amazon.com/servicequotas/home/requests).
 
-For more information about this bootstrap, read the [reference documentation](/docs/reference/bootstrap/aws_ec2_quotas/).
+For more information about this bootstrap, read the [AWS EC2 Quotas](/docs/reference/bootstrap/aws_ec2_quotas/) reference.

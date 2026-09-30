@@ -3,7 +3,7 @@
 
 The [`billing_anomaly_detection` stack](../../stacks/billing_anomaly_detection/), deployed by the [`aws_billing_alerts` pipeline](../../pipelines/bootstrap/aws_billing_alerts/), creates an [AWS Cost Anomaly Detection](https://aws.amazon.com/aws-cost-management/aws-cost-anomaly-detection/) monitor and subscription that emails a notification when a detected spend anomaly's cost impact reaches or exceeds a configured USD threshold, independent of any fixed budget.
 
-For setup steps, read the [catalog bootstrap guide](/docs/quickstart/bootstrap/aws_billing_alerts).
+For setup steps, read the [AWS Billing Alerts Bootstrap](/docs/quickstart/bootstrap/aws_billing_alerts).
 
 ## Modules
 
@@ -33,4 +33,4 @@ For setup steps, read the [catalog bootstrap guide](/docs/quickstart/bootstrap/a
 
 ## Anomaly Monitor
 
-AWS allows only one `DIMENSIONAL` monitor per dimension per account, and auto-creates a `SERVICE` one, so a fresh `SERVICE` monitor often can't be created. Find an existing one with `aws ce get-anomaly-monitors` and set `monitor_arn` (also settable via `BILLING_ANOMALY_MONITOR_ARN`, see the [environment variables reference](/docs/reference/environment_variable/#billing_anomaly_monitor_arn)) instead of creating a new one.
+AWS allows only one `DIMENSIONAL` monitor per dimension per account, and auto-creates a `SERVICE` one, so a fresh `SERVICE` monitor often can't be created. Find an existing one with `aws ce get-anomaly-monitors` and set `monitor_arn` (also settable via `BILLING_ANOMALY_MONITOR_ARN`, see the [Environment Variables](/docs/reference/environment_variable/#billing_anomaly_monitor_arn) reference) instead of creating a new one.

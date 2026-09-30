@@ -7,6 +7,7 @@ Then, run the following from the root of your [catalog fork](/docs/quickstart/in
 ```bash
 source .env
 cd pipelines/dev/eks/stack
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all destroy --non-interactive --no-stack-generate
 ```

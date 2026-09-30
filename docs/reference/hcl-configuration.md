@@ -5,7 +5,7 @@ This page lists the `.hcl` files that units and stacks read for shared values. T
 
 Units and stacks locate each file with [`find_in_parent_folders`](https://docs.terragrunt.com/reference/hcl/functions/#find_in_parent_folders), which returns the nearest file with that name above them. A file can therefore sit at a different level in each repository and still be found.
 
-To use these values in a unit, read the [add a unit guide](/docs/iac/add-a-unit/).
+To use these values in a unit, see [Read Shared Config](/docs/iac/add-a-unit/#read-shared-config).
 
 ## Layout
 

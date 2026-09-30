@@ -3,9 +3,9 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This guide shows you how to add a [unit](/docs/iac/#units) to your [forked catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog), or edit an existing one, and ship it to [`staging`](/docs/iac/#staging) and [`prod`](/docs/iac/#prod). It covers AWS resources and the Kubernetes add-ons that must run before ArgoCD. For applications ArgoCD deploys, see [Applications](/docs/applications/).
+This guide shows you how to add a [unit](/docs/iac/#units) to your [forked catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog), or edit an existing one, validate it in [`dev`](/docs/iac/#dev), and merge it. It covers AWS resources and the Kubernetes add-ons that must run before ArgoCD. For applications ArgoCD deploys, see [Who Owns What](/docs/applications/how-the-app-of-apps-works/#who-owns-what). To remove a unit, see [Remove a Unit](/docs/iac/remove-a-unit/).
 
-If you only change the `values` a unit receives in `staging` or `prod`, you don't need the catalog: see [How to Edit the Live Configuration](/docs/iac/edit-live-configuration/) instead.
+If you only change the `values` a unit receives in `staging` or `prod`, you don't need the catalog: see [Release a Change to Production](/docs/deployment/release-a-change-to-production/) instead.
 
 First, create a branch in your forked catalog:
 ```bash
@@ -51,7 +51,7 @@ inputs = {
 }
 ```
 
-For complete examples, see the [`vpc`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/vpc/vpc/terragrunt.hcl), [`cluster`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/cluster/terragrunt.hcl), and [Loki S3 `chunks`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/loki/s3/chunks/terragrunt.hcl) units.
+For complete examples, see [`units/vpc/vpc/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/vpc/vpc/terragrunt.hcl), [`units/eks/cluster/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/cluster/terragrunt.hcl), and [`units/eks/addons/loki/s3/chunks/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/loki/s3/chunks/terragrunt.hcl).
 
 </TabItem>
 <TabItem value="kubernetes" label="Kubernetes add-on">
@@ -104,7 +104,7 @@ inputs = {
 
 If you bundle the chart yourself, put it under `charts/<name>/`, drop `repository`, and set `chart = "../../charts/<name>"` (e.g. `chart = "../../charts/karpenter-ec2-node-class"`).
 
-For complete examples, see the [`cilium`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/cilium/helm/terragrunt.hcl) and [`karpenter`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/karpenter/helm/terragrunt.hcl) units for upstream charts, and the [Karpenter `ec2_node_class`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/karpenter/ec2_node_class/terragrunt.hcl) unit for a bundled one.
+For complete examples, see [`units/eks/addons/cilium/helm/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/cilium/helm/terragrunt.hcl) and [`units/eks/addons/karpenter/helm/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/karpenter/helm/terragrunt.hcl) for upstream charts, and [`units/eks/addons/karpenter/ec2_node_class/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/karpenter/ec2_node_class/terragrunt.hcl) for a bundled one.
 
 </TabItem>
 <TabItem value="custom" label="Custom module">
@@ -143,14 +143,14 @@ inputs = {
 }
 ```
 
-For complete examples, see the [`acm_certificate`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/modules/acm_certificate) module and [its unit](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/route53/acm_certificate/terragrunt.hcl), or the [`eks_addon`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/modules/eks_addon) module and [its unit](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/ebs_csi_driver/addon/terragrunt.hcl).
+For complete examples, see [`modules/acm_certificate`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/modules/acm_certificate) and its unit [`units/eks/route53/acm_certificate/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/route53/acm_certificate/terragrunt.hcl), or [`modules/eks_addon`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/modules/eks_addon) and its unit [`units/eks/addons/ebs_csi_driver/addon/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/ebs_csi_driver/addon/terragrunt.hcl).
 
 </TabItem>
 </Tabs>
 
-## Read Shared Config and Other Units' Outputs
+## Read Shared Config
 
-If your unit needs shared configuration, read it from the `.hcl` files under `pipelines/`, listed in the [HCL configuration reference](/docs/reference/hcl_configuration/). Read what `root.hcl` already loads through `include.root.locals`. Read any other file with [`read_terragrunt_config`](https://docs.terragrunt.com/reference/hcl/functions/#read_terragrunt_config) and [`find_in_parent_folders`](https://docs.terragrunt.com/reference/hcl/functions/#find_in_parent_folders).
+If your unit needs shared configuration, read it from the `.hcl` files under `pipelines/`, listed in the [HCL Configuration](/docs/reference/hcl_configuration/) reference. Read what `root.hcl` already loads through `include.root.locals`. Read any other file with [`read_terragrunt_config`](https://docs.terragrunt.com/reference/hcl/functions/#read_terragrunt_config) and [`find_in_parent_folders`](https://docs.terragrunt.com/reference/hcl/functions/#find_in_parent_folders).
 
 Prefix resource names with the environment, so they don't collide across environments:
 ```hcl
@@ -163,6 +163,8 @@ inputs = {
   cidr = local.vpc_cidr
 }
 ```
+
+## Read Other Units' Outputs
 
 If your unit needs another unit's outputs, add a [`dependency`](https://docs.terragrunt.com/reference/hcl/blocks/#dependency) block pointing at that unit's directory, and read its outputs in `inputs`. If it only has to run after the other unit, without reading its outputs, set `skip_outputs = true` instead. For example, the EBS CSI driver add-on reads the cluster name from `cluster`:
 ```hcl
@@ -182,6 +184,8 @@ inputs = {
 ```
 
 The [`mock_outputs`](https://docs.terragrunt.com/reference/hcl/blocks/#mock-outputs) let `plan` run before the `cluster` unit has been applied.
+
+## Document the Unit
 
 Add a `README.md` describing what the unit deploys and which units it depends on. For example, the EBS CSI driver's README, in `units/eks/addons/ebs_csi_driver/`:
 ```markdown
@@ -287,7 +291,7 @@ git commit -m "<message>" # e.g. "feat: add loki s3 chunks bucket"
 git push origin <branch>
 ```
 
-Deploy the dev stack from the repository root. [Clean](https://docs.terragrunt.com/reference/cli/commands/stack/clean/) it first, so no unit left over from a previous [generate](https://docs.terragrunt.com/reference/cli/commands/stack/generate/) gets applied:
+Deploy the dev stack from the repository root. Clean it first with [`terragrunt stack clean`](https://docs.terragrunt.com/reference/cli/commands/stack/clean/), so no unit left over from a previous [`terragrunt stack generate`](https://docs.terragrunt.com/reference/cli/commands/stack/generate/) gets applied:
 ```bash
 source .env
 cd pipelines/dev/eks/stack
@@ -335,7 +339,7 @@ If yours is one of them, copy its lock file into the unit's directory by hand, r
 cp <stack-dir>/.terragrunt-stack/<path>/.terraform.lock.hcl units/<unit-dir>/
 ```
 
-For example, the [`ec2_spot_quota`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/stacks/ec2_quotas/terragrunt.stack.hcl) unit is instantiated from [`units/service_quota`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/service_quota), inside the nested `ec2_quotas` stack:
+For example, the `ec2_spot_quota` unit is instantiated from [`units/service_quota`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/service_quota), inside the nested [`ec2_quotas` stack](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/stacks/ec2_quotas/terragrunt.stack.hcl):
 ```bash
 cp pipelines/bootstrap/aws_service_quotas/.terragrunt-stack/ec2_quotas/.terragrunt-stack/ec2_spot_quota/.terraform.lock.hcl units/service_quota/
 ```
@@ -347,7 +351,7 @@ git add units/<unit-dir>/.terraform.lock.hcl # e.g. units/eks/addons/loki/s3/chu
 git commit -m "chore: pin provider lock files"
 ```
 
-## Tag a Catalog Release
+## Open a Pull Request
 
 Push your branch and open a pull request, replacing `<branch>`, `<title>`, and `<description>` with what the unit deploys and how you validated it:
 ```bash
@@ -355,19 +359,16 @@ git push origin <branch>
 gh pr create --title "<title>" --body "<description>"
 ```
 
-Iterate until CI passes. If you wrote a module, CI generates its `README.md` and pushes it to your branch, so pull before pushing again:
+Iterate until CI passes. If it fails, see [Troubleshoot Catalog CI](/docs/ci-cd/per-repository/troubleshoot-catalog-ci/). If you wrote a module, CI generates its `README.md` and pushes it to your branch, so pull before pushing again:
 ```bash
 git pull origin <branch>
 ```
 
-Once it's merged, tag the merge commit on `main` and push the tag, replacing `<tag>` with the next version (e.g. `v0.2.0`). This is the ref `staging` and `prod` will pin to:
+## Merge
+
+When every job is green, merge:
 ```bash
-git checkout main
-git pull origin main
-git tag <tag>
-git push origin <tag>
+gh pr merge --merge
 ```
 
-## Roll Out to Staging and Prod
-
-To ship the unit to `staging` and `prod`, [bump the catalog version](/docs/iac/bump-the-catalog-version/) in your live repository to the new tag.
+To ship the unit to `staging` and `prod`, see [Release a Change to Production](/docs/deployment/release-a-change-to-production/).

@@ -10,8 +10,8 @@ You can scope down to a narrower policy later by reviewing the [units](../units/
 ### Fast Track (Admin)
 If you're a root user or admin:
 1. create an [IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)
-2. [attach the `AdministratorAccess` policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html) to it
-3. [create an access key](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the user
+2. attach the `AdministratorAccess` [policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html) to it
+3. create an [access key](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the user
 4. Authenticate with the AWS CLI using the `AWS Access Key ID` and `AWS Secret Access Key` secret key:
 ```bash
 aws configure
@@ -38,7 +38,7 @@ locals {
 }
 ```
 Where:
-- `<the-repository-name-of-your-fork>` should be the name you chose when [you forked the catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog)
+- `<the-repository-name-of-your-fork>` should be the name you chose in [Fork the EKS Forge Catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog)
 - `<github_owner_catalog>` is the GitHub username or organization name where your fork lives 
 
 This change points all the `terraform { source = <url>}` to your fork instead of the official EKS Forge catalog.

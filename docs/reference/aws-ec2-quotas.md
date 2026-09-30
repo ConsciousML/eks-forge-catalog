@@ -5,7 +5,7 @@ The [`ec2_quotas` stack](../../stacks/ec2_quotas/), deployed by the [`aws_servic
 
 Both quotas are account-wide: they cover every on-demand or spot vCPU consumer across every [environment](/docs/iac/#environments) on the account, not just this stack.
 
-For setup steps, read the [catalog bootstrap guide](/docs/quickstart/bootstrap/aws_service_quotas).
+For setup steps, read the [AWS Service Quotas Bootstrap](/docs/quickstart/bootstrap/aws_service_quotas).
 
 ## Modules
 

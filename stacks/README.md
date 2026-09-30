@@ -17,6 +17,7 @@ Stacks in this directory are templates. They require input values and cannot be 
 ```bash
 source .env
 cd pipelines/dev/<your_stack>
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --no-stack-generate
 ```

@@ -9,11 +9,11 @@ In this guide, you'll set up [Tailscale](https://tailscale.com/docs/concepts/wha
 This guide needs to be performed only once per catalog fork before running the [deployment](/docs/quickstart/deployment/).
 :::
 
-First, create an account and [log in to Tailscale](https://login.tailscale.com/admin/welcome).
+First, create an account and log in to the [Tailscale admin console](https://login.tailscale.com/admin/welcome).
 
 Then, download and install the [Tailscale client](https://tailscale.com/download).
 
-Next, set up `GITHUB_TOKEN` in the [environment variables guide](/docs/reference/environment_variable/#github_token).
+Next, set up `GITHUB_TOKEN` as described in the [Environment Variables](/docs/reference/environment_variable/#github_token) reference.
 
 To authenticate Terraform with Tailscale, create an OAuth client and fill the [`TAILSCALE_OAUTH_CLIENT_ID` and `TAILSCALE_OAUTH_CLIENT_SECRET`](/docs/reference/environment_variable/#tailscale_oauth_client_id-and-tailscale_oauth_client_secret) environment variables in your `.env` file.
 
@@ -26,6 +26,7 @@ Deploy the ACL first, since WIF relies on the `tag:ci` the ACL defines. From the
 ```bash
 source .env
 cd pipelines/bootstrap/tailscale/acl
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```
@@ -33,6 +34,7 @@ terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-gene
 Then, deploy the WIF pipeline:
 ```bash
 cd ../wif
+terragrunt stack clean
 terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```
@@ -49,7 +51,7 @@ gh secret list
 You should see `TS_OAUTH_CLIENT_ID`, `TS_AUDIENCE`, and `TS_TAGS`. These are the secrets GitHub Actions uses to authenticate with Tailscale.
 
 For more information, read:
-- [how Tailscale has been implemented](/docs/security/tailscale/) in EKS Forge
-- the [`tailscale/acl`](/docs/reference/bootstrap/tailscale_acl/) reference documentation
-- the [`tailscale/wif`](/docs/reference/bootstrap/tailscale_wif/) reference documentation
+- [Tailscale](/docs/security/tailscale/), on how EKS Forge implements it
+- the [Tailscale ACL](/docs/reference/bootstrap/tailscale_acl/) reference
+- the [Tailscale WIF](/docs/reference/bootstrap/tailscale_wif/) reference
 - the [Infrastructure as Code](/docs/iac/) documentation

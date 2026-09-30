@@ -54,7 +54,7 @@ export TAILSCALE_OAUTH_CLIENT_SECRET=<your_client_secret>
 
 **Required by**: `pipelines/bootstrap/slack/` (both `gh_secret` and `channels`) and the EKS stack's `alertmanager/aws_secret_slack_bot` unit
 
-Credential for the Slack app that Alertmanager posts notifications through. Created by following [`pipelines/bootstrap/slack/README.md`](../pipelines/bootstrap/slack/README.md) up to installing the app to your workspace.
+Credential for the Slack app that Alertmanager posts notifications through. Created by following [Slack Bootstrap](/docs/quickstart/bootstrap/slack/) up to installing the app to your workspace.
 
 Copy the Bot User OAuth Token (starts with `xoxb-`) shown under "OAuth Tokens" on the app's "OAuth & Permissions" page. Add it to your `.env`:
 ```bash
@@ -76,7 +76,7 @@ Unset it (or comment it out and open a new shell) once the branch is merged. CI 
 
 **Used by**: [`pipelines/dev/environment.hcl`](../pipelines/dev/environment.hcl) (optional)
 
-Override the `environment` and `environment_alias` locals of the dev environment, described in the [HCL configuration reference](/docs/reference/hcl_configuration/#environmenthcl). `TG_ENVIRONMENT` defaults to `dev`. `TG_ENVIRONMENT_ALIAS` defaults to `TG_ENVIRONMENT`.
+Override the `environment` and `environment_alias` locals of the dev environment, described in the [HCL Configuration](/docs/reference/hcl_configuration/#environmenthcl) reference. `TG_ENVIRONMENT` defaults to `dev`. `TG_ENVIRONMENT_ALIAS` defaults to `TG_ENVIRONMENT`.
 
 CI sets them to `catalog-eks-ci` and `dev` respectively in [`.github/workflows/ci.yaml`](../.github/workflows/ci.yaml).
 ```bash
@@ -94,13 +94,13 @@ The AWS region where the EKS stack is deployed.
 export AWS_REGION=<your-region>   # e.g. us-east-1
 ```
 
-> AWS credentials themselves are not managed via `.env`. Authenticate separately with `aws configure` or an AWS profile. See [Authenticate with AWS](../README.md#authenticate-with-aws).
+> AWS credentials themselves are not managed via `.env`. Authenticate separately with `aws configure` or an AWS profile. See [Authenticate with the AWS CLI](/docs/quickstart/configuration/#authenticate-with-the-aws-cli).
 
 ## `EKS_LOCAL_ADMIN_ARN`
 
 **Required by**: `live/staging/eks/terragrunt.stack.hcl`, `live/prod/eks/terragrunt.stack.hcl`, and `.github/workflows/` in the [live repository](https://github.com/ConsciousML/terragrunt-template-live-eks), not by anything in this catalog repo
 
-The ARN of the local IAM identity registered as a cluster admin so it can run operations locally against staging or prod (e.g. `terragrunt destroy`) when CI deployed the cluster and can't finish tearing it down itself. This catalog only provides the unit that produces it ([`units/github/secrets/eks_local_admin`](../units/github/README.md)). The live repo consumes it.
+The ARN of the local IAM identity registered as a cluster admin so it can run operations locally against staging or prod (e.g. `terragrunt destroy`) when CI deployed the cluster and can't finish tearing it down itself. This catalog only provides the unit that produces it ([`units/github/secrets/eks_local_admin`](../units/github/secrets/eks_local_admin/)). The live repo consumes it.
 
 This variable is set automatically by the bootstrap pipeline, which captures the identity of whoever runs it and stores it as a GitHub Actions secret. No manual configuration is needed.
 

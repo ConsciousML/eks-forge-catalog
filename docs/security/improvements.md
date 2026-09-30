@@ -2,7 +2,7 @@
 
 # Security Improvements
 
-Optional hardening steps you can apply on top of a [deployed](/docs/quickstart/deployment/) environment.
+Optional hardening steps you can apply on top of a [deployment](/docs/quickstart/deployment/).
 
 ## Disable the Public EKS Endpoint
 
@@ -20,10 +20,10 @@ unit "cluster" {
 
 Then re-apply the stack:
 - `dev`: see [Run the Terragrunt Stack](/docs/quickstart/deployment/#run-the-terragrunt-stack).
-- `staging` and `prod`: see [How to Edit the Live Configuration](/docs/iac/edit-live-configuration/).
+- `staging` and `prod`: see [Release a Change to Production](/docs/deployment/release-a-change-to-production/).
 
 From this point on, `kubectl` and the AWS CLI can only reach the API server while connected to Tailscale.
 
 :::warning
-Set `endpoint_public_access` back to `true` and re-apply the `cluster` unit before [destroying the stack](/docs/quickstart/deployment/#destroy-the-infrastructure). Destroying it removes the [Tailscale components](/docs/security/tailscale/), your only path back into the cluster API while the endpoint is private.
+Set `endpoint_public_access` back to `true` and re-apply the `cluster` unit before destroying the stack (see [Destroy the Infrastructure](/docs/quickstart/deployment/#destroy-the-infrastructure)). Destroying it removes the [Tailscale components](/docs/security/tailscale/), your only path back into the cluster API while the endpoint is private.
 :::

@@ -8,7 +8,7 @@ They're meant to be forked and extended.
 
 To get started, you'll fork the catalog, a collection of [Terraform](https://developer.hashicorp.com/terraform) modules and [Terragrunt](https://docs.terragrunt.com/getting-started/terminology/#terragrunt) pipelines, re-usable across multiple environments (`dev`, `staging`, and `prod`).
 
-First, [create an empty repository](https://github.com/new) on GitHub, private or public. Leave the README, `.gitignore`, and license options unset.
+First, create an empty repository from [GitHub's new repository page](https://github.com/new), private or public. Leave the README, `.gitignore`, and license options unset.
 
 Then, set your GitHub owner (user or organization) and the name of the repository you created, by replacing the `<...>`:
 ```bash
@@ -26,7 +26,7 @@ git push origin --tags
 ```
 
 :::warning
-Follow these exact steps instead of GitHub's `Fork` button. The [live repository](/docs/deployment/) pins catalog versions by git tag, and these steps guarantee your repository has them.
+Follow these exact steps instead of GitHub's `Fork` button. The [live repository](/docs/deployment/get-started/) pins catalog versions by git tag, and these steps guarantee your repository has them.
 :::
 
 ## Install the CLI Tools
