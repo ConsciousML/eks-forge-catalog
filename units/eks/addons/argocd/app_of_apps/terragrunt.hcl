@@ -39,6 +39,8 @@ locals {
   # (argocd-app-of-apps-template repo), which appParams has no path to set.
   kube_prometheus_stack_release = "kube-prometheus-stack"
 
+  # Root and child Applications, so github.hcl alone switches the app of apps fork.
+  repo_url = "https://github.com/${include.root.locals.github_owner_app_of_apps}/${include.root.locals.github_repo_name_app_of_apps}"
 }
 
 dependency "route53_hosted_zone_public" {
@@ -194,7 +196,7 @@ dependency "vpc_endpoint_cidrs" {
 
 inputs = {
   cluster_name          = dependency.eks_cluster.outputs.cluster_name
-  repo_url              = "https://github.com/${include.root.locals.github_owner_app_of_apps}/${include.root.locals.github_repo_name_app_of_apps}"
+  repo_url              = local.repo_url
   name                  = values.name
   namespace             = values.namespace
   path                  = values.path
@@ -211,6 +213,7 @@ inputs = {
     config = {
       spec = {
         source = {
+          repoURL        = local.repo_url
           targetRevision = values.target_revision
         }
       }

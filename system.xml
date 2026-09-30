@@ -41,6 +41,7 @@
     </commits>
 
     <restrictions>
+        - Never use `/` in branch names, it breaks Terragrunt (use `-` instead)
         - Skip `.terraform*` and `.terragrunt*` dirs when searching or reading, generated caches
         - In `modules/`, only write and modify: `header.md` and `footer.md`
         - Read sources directly instead of spawning Explore or Task agents
