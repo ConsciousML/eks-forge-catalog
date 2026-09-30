@@ -64,3 +64,26 @@ For a different shell type, use the [`mise activate` reference](https://mise.jdx
 You'll need to be inside your repository directory to have them loaded in your context.
 More information in the [mise shims documentation](https://mise.jdx.dev/dev-tools/shims.html)
 :::
+
+## Enable the Pre-commit Hooks
+Your fork comes with [prek](https://github.com/j178/prek) hooks, defined in [`.pre-commit-config.yaml`](../.pre-commit-config.yaml). They format, validate, and lint your Terraform and Terragrunt code, and scan it for secrets with [Trivy](https://trivy.dev/). These are the same checks the [CI](/docs/ci-cd/) runs on every pull request, so you'll catch issues before you push.
+
+`mise` already installed `prek`. Wire the hooks into git:
+```bash
+prek install
+```
+
+Run every hook against the whole repository:
+```bash
+prek run --all-files
+```
+The first run takes a few minutes, since `OpenTofu validate` downloads the providers of every module. You'll see each hook pass:
+```
+OpenTofu fmt.............................................................Passed
+OpenTofu validate........................................................Passed
+tflint...................................................................Passed
+Terragrunt hcl fmt.......................................................Passed
+Trivy secret scan........................................................Passed
+```
+
+From now on, the hooks run on the files you change each time you `git commit`.

@@ -51,7 +51,6 @@
     </restrictions>
 
     <documentation_map>
-        - `README.md`: repo overview, prerequisites, deploying a dev EKS cluster
         - `modules/README.md`, `units/README.md`, `stacks/README.md`: what each layer is and
           how they compose
 
@@ -60,23 +59,17 @@
         - `pipelines/bootstrap/README.md`: bootstrap pipeline inventory, see
           &lt;bootstrap_pipelines&gt;
 
-        Operational guides, under `docs/`:
-        - `development.md`: adding a module or unit and wiring it into a stack
-        - `troubleshoot.md`: recovering from broken or stuck Terragrunt state
-        - `reproducibility.md`: provider lock file management
-        - `monitoring.md`: operating the deployed kube-prometheus-stack
-        - `network-policies.md`: unrestricted to default-deny with explicit
-          CiliumNetworkPolicy rules
-        - `right-sizing.md`: right-sizing workload CPU and memory requests with the VPA
-          recommender and Goldilocks
-        - `new-environment.md`: adding a new environment, bootstrap and DNS and ACM
-          prerequisites
+        Guides, under `docs/`:
+        - `installation.md`, `configuration.md`, `deployment.md`: installing tools,
+          configuring, and deploying a `dev` EKS cluster
+        - `architecture.md`: how this repo's modules, units, and stacks layer together
+        - `add-a-unit.md`: adding a unit and wiring it into a stack
+        - `remove-a-unit.md`: removing a unit from a stack
+        - `remove-eks-forge.md`: tearing down the catalog side of EKS Forge
         - `environment-variables.md`: every env var used across bootstrap pipelines and the
           EKS stack
-        - `continuous-integration.md`: what CI validates on every pull request
-        - `app-of-apps-integration.md`: threading Terraform values into app-of-apps
-        - `ai-assisted-workflows.md`: manual, permissive, and QRSPI-driven autonomous modes for
-          Claude Code in this repo
+        - `security/`: Tailscale access and security improvements
+        - `reference/`: per-pipeline and HCL configuration reference
 
         Every other README (per-unit, per-module, per-addon-group, here and in
         `argocd-app-of-apps-template`) is reached via links from the docs above. This map
