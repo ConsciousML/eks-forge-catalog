@@ -110,7 +110,7 @@ terragrunt run --all destroy --non-interactive --no-stack-generate
 The [bootstrap](/docs/quickstart/bootstrap) resources stay in place, so you can reuse them for your next deployments. Among them, only the Route 53 hosted zones created by [DNS Bootstrap](/docs/quickstart/bootstrap/setup_dns/) are billed.
 
 ## What's Next
-Continue with [Production Deployment](/docs/deployment/) to deploy the `staging` and `prod` environments from the live repository.
+Continue with [Production Deployment](/docs/deployment/get-started/) to deploy the `staging` and `prod` environments from the live repository.
 
 Or, when you need them:
 - to interact with internal tools, see [Monitoring](/docs/monitoring/)
@@ -119,7 +119,7 @@ Or, when you need them:
 
 ## Remove EKS Forge
 :::warning
-The [deployment tutorials](/docs/deployment/) reuse the bootstrap resources. Don't remove them if you plan to continue.
+The [deployment tutorials](/docs/deployment/get-started/) reuse the bootstrap resources. Don't remove them if you plan to continue.
 :::
 
 Only if you want to remove EKS Forge from your AWS account entirely, follow [Remove EKS Forge](/docs/iac/remove-eks-forge/).

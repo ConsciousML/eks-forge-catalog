@@ -26,7 +26,7 @@ git push origin --tags
 ```
 
 :::warning
-Follow these exact steps instead of GitHub's `Fork` button. The [live repository](/docs/deployment/) pins catalog versions by git tag, and these steps guarantee your repository has them.
+Follow these exact steps instead of GitHub's `Fork` button. The [live repository](/docs/deployment/get-started/) pins catalog versions by git tag, and these steps guarantee your repository has them.
 :::
 
 ## Install the CLI Tools
