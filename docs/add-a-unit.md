@@ -3,9 +3,9 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This guide shows you how to add a [unit](/docs/iac/#units) to your [forked catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog), or edit an existing one, and ship it to [`staging`](/docs/iac/#staging) and [`prod`](/docs/iac/#prod). It covers AWS resources and the Kubernetes add-ons that must run before ArgoCD. For applications ArgoCD deploys, see [Who Owns What](/docs/applications/how-the-app-of-apps-works/#who-owns-what).
+This guide shows you how to add a [unit](/docs/iac/#units) to your [forked catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog), or edit an existing one, validate it in [`dev`](/docs/iac/#dev), and merge it. It covers AWS resources and the Kubernetes add-ons that must run before ArgoCD. For applications ArgoCD deploys, see [Who Owns What](/docs/applications/how-the-app-of-apps-works/#who-owns-what).
 
-If you only change the `values` a unit receives in `staging` or `prod`, you don't need the catalog: see [Edit the Live Configuration](/docs/iac/edit-live-configuration/) instead.
+If you only change the `values` a unit receives in `staging` or `prod`, you don't need the catalog: see [Release a Change to Production](/docs/deployment/release-a-change-to-production/) instead.
 
 First, create a branch in your forked catalog:
 ```bash
@@ -351,7 +351,7 @@ git add units/<unit-dir>/.terraform.lock.hcl # e.g. units/eks/addons/loki/s3/chu
 git commit -m "chore: pin provider lock files"
 ```
 
-## Tag a Catalog Release
+## Open a Pull Request
 
 Push your branch and open a pull request, replacing `<branch>`, `<title>`, and `<description>` with what the unit deploys and how you validated it:
 ```bash
@@ -364,14 +364,11 @@ Iterate until CI passes. If it fails, see [Troubleshoot Catalog CI](/docs/ci-cd/
 git pull origin <branch>
 ```
 
-Once it's merged, tag the merge commit on `main` and push the tag, replacing `<tag>` with the next version (e.g. `v0.2.0`). This is the ref `staging` and `prod` will pin to:
-```bash
-git checkout main
-git pull origin main
-git tag <tag>
-git push origin <tag>
-```
+## Merge
 
-## Roll Out to Staging and Prod
+When every job is green, merge:
+```bash
+gh pr merge --merge
+```
 
 To ship the unit to `staging` and `prod`, see [Release a Change to Production](/docs/deployment/release-a-change-to-production/).
