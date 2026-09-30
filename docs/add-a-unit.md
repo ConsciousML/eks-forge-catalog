@@ -374,4 +374,4 @@ git push origin <tag>
 
 ## Roll Out to Staging and Prod
 
-To ship the unit to `staging` and `prod`, follow [Bump the Catalog Version](/docs/iac/bump-the-catalog-version/) in your live repository, with the new tag.
+To ship the unit to `staging` and `prod`, see [Release a Change to Production](/docs/deployment/release-a-change-to-production/).
