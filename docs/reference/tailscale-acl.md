@@ -9,7 +9,7 @@ For setup steps, read the [Tailscale Bootstrap](/docs/quickstart/bootstrap/tails
 
 | Name | Unit | Module |
 |------|------|--------|
-| `acl` | [`units/eks/addons/tailscale/acl`](../../units/eks/addons/tailscale/acl/) | [`modules/tailscale_acl`](../../modules/tailscale_acl/) |
+| `acl` | [`units/eks/addons/tailscale/acl`](../../units/eks/addons/tailscale/acl/) | [`tailscale_acl`](/docs/reference/terraform_modules/tailscale_acl/) |
 
 ## Inputs
 

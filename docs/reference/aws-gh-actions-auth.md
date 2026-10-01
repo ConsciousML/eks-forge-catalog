@@ -9,11 +9,11 @@ For setup steps, read the [AWS GitHub Actions Authentication Bootstrap](/docs/qu
 
 | Name | Unit | Module |
 |------|------|--------|
-| `github_oidc_provider` | [`units/github/oidc_provider`](../../units/github/oidc_provider/) | [`modules/oidc_provider`](../../modules/oidc_provider/) |
-| `iam_role_github_actions` | [`units/github/iam_role`](../../units/github/iam_role/) | [`modules/iam_role_github_actions`](../../modules/iam_role_github_actions/) |
-| `iam_policies` | [`units/github/iam_policies`](../../units/github/iam_policies/) | [`modules/iam_policies`](../../modules/iam_policies/) |
-| `github_secrets` | [`units/github/secrets/action`](../../units/github/secrets/action/) | [`modules/github_secrets`](../../modules/github_secrets/) |
-| `deploy_key` | [`units/github/deploy_key`](../../units/github/deploy_key/) | [`modules/deploy_key`](../../modules/deploy_key/) |
+| `github_oidc_provider` | [`units/github/oidc_provider`](../../units/github/oidc_provider/) | [`oidc_provider`](/docs/reference/terraform_modules/oidc_provider/) |
+| `iam_role_github_actions` | [`units/github/iam_role`](../../units/github/iam_role/) | [`iam_role_github_actions`](/docs/reference/terraform_modules/iam_role_github_actions/) |
+| `iam_policies` | [`units/github/iam_policies`](../../units/github/iam_policies/) | [`iam_policies`](/docs/reference/terraform_modules/iam_policies/) |
+| `github_secrets` | [`units/github/secrets/action`](../../units/github/secrets/action/) | [`github_secrets`](/docs/reference/terraform_modules/github_secrets/) |
+| `deploy_key` | [`units/github/deploy_key`](../../units/github/deploy_key/) | [`deploy_key`](/docs/reference/terraform_modules/deploy_key/) |
 
 ## Inputs
 

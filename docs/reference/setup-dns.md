@@ -9,7 +9,7 @@ For setup steps, read the [DNS Bootstrap](/docs/quickstart/bootstrap/setup_dns).
 
 | Name | Unit | Module |
 |------|------|--------|
-| `route53_hosted_zone` | [`units/eks/route53/hosted_zone_public`](../../units/eks/route53/hosted_zone_public/) | [`modules/route53_hosted_zone`](../../modules/route53_hosted_zone/) |
+| `route53_hosted_zone` | [`units/eks/route53/hosted_zone_public`](../../units/eks/route53/hosted_zone_public/) | [`route53_hosted_zone`](/docs/reference/terraform_modules/route53_hosted_zone/) |
 
 ## Inputs
 

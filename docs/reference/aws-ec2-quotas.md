@@ -11,8 +11,8 @@ For setup steps, read the [AWS Service Quotas Bootstrap](/docs/quickstart/bootst
 
 | Name | Unit | Module |
 |------|------|--------|
-| `ec2_ondemand_quota` | [`units/service_quota`](../../units/service_quota/) | [`modules/service_quota`](../../modules/service_quota/) |
-| `ec2_spot_quota` | [`units/service_quota`](../../units/service_quota/) | [`modules/service_quota`](../../modules/service_quota/) |
+| `ec2_ondemand_quota` | [`units/service_quota`](../../units/service_quota/) | [`service_quota`](/docs/reference/terraform_modules/service_quota/) |
+| `ec2_spot_quota` | [`units/service_quota`](../../units/service_quota/) | [`service_quota`](/docs/reference/terraform_modules/service_quota/) |
 
 ## Inputs
 
