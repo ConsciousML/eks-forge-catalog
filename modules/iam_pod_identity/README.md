@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# IAM Pod Identity
+# `iam_pod_identity` Terraform Module Reference
 
-Creates an IAM role and policy, optionally attaches existing managed policies, then binds the role to a Kubernetes service account via EKS Pod Identity.
+The [`iam_pod_identity` module](../iam\_pod\_identity/) creates an IAM role and policy, optionally attaches existing managed policies, and binds the role to a Kubernetes service account through [EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html).
 
 ## Requirements
 

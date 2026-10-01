@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# Helm Release
+# `helm_release` Terraform Module Reference
 
-Generic module for installing a Helm chart on an EKS cluster.
+The [`helm_release` module](../helm\_release/) installs a [Helm](https://helm.sh/) chart on an EKS cluster.
 
 ## Requirements
 

@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# ArgoCD App of Apps
+# `argocd_app_of_apps` Terraform Module Reference
 
-Creates an ArgoCD [`Application`](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#applications) resource that acts as the root of an app-of-apps pattern. ArgoCD syncs this Application, which in turn discovers and deploys all child Applications from the configured repository path.
+The [`argocd_app_of_apps` module](../argocd\_app\_of\_apps/) installs the [`argocd-apps`](https://github.com/argoproj/argo-helm/tree/main/charts/argocd-apps) Helm chart to create the root ArgoCD [`Application`](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#applications) of the [app-of-apps pattern](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-bootstrapping/#app-of-apps-pattern). ArgoCD syncs this Application, which deploys every child Application found under the configured repository path.
 
 ## Requirements
 

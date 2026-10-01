@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# EKS Addon
+# `eks_addon` Terraform Module Reference
 
-Installs an EKS managed add-on into an existing cluster.
+The [`eks_addon` module](../eks\_addon/) installs an [EKS managed add-on](https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html) into an existing cluster.
 
 ## Requirements
 

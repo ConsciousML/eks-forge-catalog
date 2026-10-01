@@ -1,8 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# tailscale\_oauth\_client
+# `tailscale_oauth_client` Terraform Module Reference
 
-Creates a Tailscale OAuth client with configurable scopes and tags.
-The outputs (`client_id`, `client_secret`) can be used to authenticate with the Tailscale API.
+The [`tailscale_oauth_client` module](../tailscale\_oauth\_client/) creates a Tailscale [OAuth client](https://tailscale.com/kb/1215/oauth-clients) with configurable scopes and tags, and outputs its `client_id` and `client_secret` for authenticating to the Tailscale API.
 
 ## Requirements
 

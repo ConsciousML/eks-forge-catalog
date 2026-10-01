@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# GitHub Secrets Module
+# `github_secrets` Terraform Module Reference
 
-This module creates GitHub Actions secrets from a map of name-value pairs. Use it to provision any set of secrets in a target repository.
+The [`github_secrets` module](../github\_secrets/) creates a [GitHub Actions secret](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) in a target repository for each entry of a name/value map.
 
 ## Requirements
 

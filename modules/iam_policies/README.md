@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# Iam Policies Module
+# `iam_policies` Terraform Module Reference
 
-This module attaches existing IAM policy ARNs to an IAM role
+The [`iam_policies` module](../iam\_policies/) attaches existing IAM policies, by ARN, to an IAM role.
 
 ## Requirements
 

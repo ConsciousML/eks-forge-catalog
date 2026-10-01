@@ -1,11 +1,9 @@
 <!-- BEGIN_TF_DOCS -->
-# AWS OpenID Connect (OIDC) Module
+# `oidc_provider` Terraform Module Reference
 
-This module creates or retrieves an existing OIDC provider in AWS to connect GitHub Actions with AWS.
+The [`oidc_provider` module](../oidc\_provider/) creates, or looks up, the AWS IAM [OIDC identity provider](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html) that lets GitHub Actions authenticate to AWS.
 
-The `create` argument is crucial. If this module was used using `create=true`, subsequent use of this module must use `create=false`.
-
-AWS does not allows to create two OIDC providers with the same url.
+AWS allows only one OIDC provider per URL. The first instance of this module on an account sets `create = true`; every other instance sets `create = false`.
 
 ## Requirements
 
