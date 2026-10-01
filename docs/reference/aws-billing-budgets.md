@@ -1,5 +1,5 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
-# AWS Billing Budgets Bootstrap
+# AWS Billing Budgets Bootstrap Reference
 
 The [`billing_budgets` stack](../../stacks/billing_budgets/), deployed by the [`aws_billing_alerts` pipeline](../../pipelines/bootstrap/aws_billing_alerts/), creates two [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/): one that emails a notification for each configured USD threshold whenever actual monthly spend exceeds it, and one that does the same based on forecasted monthly spend, giving an earlier warning.
 

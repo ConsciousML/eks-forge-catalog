@@ -1,5 +1,5 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
-# HCL Configuration
+# HCL Configuration Reference
 
 This page lists the `.hcl` files that units and stacks read for shared values. They live under [`pipelines/`](../../pipelines/) in the catalog and under [`live/`](https://github.com/ConsciousML/terragrunt-template-live-eks/tree/main/live) in the live repository.
 

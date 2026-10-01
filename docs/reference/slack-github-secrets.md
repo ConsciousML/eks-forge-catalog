@@ -1,5 +1,5 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
-# Slack GitHub Secrets Bootstrap
+# Slack GitHub Secrets Bootstrap Reference
 
 The [`slack` stack](../../stacks/slack/), deployed by the [`slack/gh_secret` pipeline](../../pipelines/bootstrap/slack/gh_secret/), pushes `SLACK_BOT_TOKEN` into this repository's GitHub Actions secrets, so CI-driven environments can inject it into Alertmanager without managing the value by hand. Environment-independent, run once.
 
