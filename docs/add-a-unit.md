@@ -121,6 +121,17 @@ modules/<name>/
 └── footer.md      # extra notes, can be empty
 ```
 
+Write `header.md` as the module's title and a one-sentence description of what it does. For example, [`modules/helm_release/header.md`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/modules/helm_release/header.md):
+```markdown
+# `helm_release` Terraform Module Reference
+
+The [`helm_release` module](../helm_release/) installs a [Helm](https://helm.sh/) chart on an EKS cluster.
+```
+
+:::warning
+Follow this format, or the module renders poorly in the [Terraform Modules](/docs/reference/terraform_modules/) reference.
+:::
+
 Create its unit under `units/<group>/<name>/terragrunt.hcl` (e.g. `units/eks/route53/acm_certificate/terragrunt.hcl`), and point `source` at the module, pinned to the catalog version:
 ```hcl
 # units/<group>/<name>/terragrunt.hcl
