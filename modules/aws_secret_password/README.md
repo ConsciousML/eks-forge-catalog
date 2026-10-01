@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# aws\_secret\_password
+# `aws_secret_password` Terraform Module Reference
 
-Generates a random password and stores it (plaintext and bcrypt hash) in a single AWS Secrets Manager secret.
+The [`aws_secret_password` module](../aws\_secret\_password/) generates a random password and stores it in a single [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) secret as JSON, under the `plaintext` and `bcrypt_hash` keys.
 
 ## Requirements
 

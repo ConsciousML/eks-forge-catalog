@@ -1,5 +1,5 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
-# AWS Billing Anomaly Detection Bootstrap
+# AWS Billing Anomaly Detection Bootstrap Reference
 
 The [`billing_anomaly_detection` stack](../../stacks/billing_anomaly_detection/), deployed by the [`aws_billing_alerts` pipeline](../../pipelines/bootstrap/aws_billing_alerts/), creates an [AWS Cost Anomaly Detection](https://aws.amazon.com/aws-cost-management/aws-cost-anomaly-detection/) monitor and subscription that emails a notification when a detected spend anomaly's cost impact reaches or exceeds a configured USD threshold, independent of any fixed budget.
 

@@ -1,3 +1,3 @@
-# AWS Caller Identity Module
+# `aws_caller_identity` Terraform Module Reference
 
-This module outputs the ARN of the AWS identity (IAM user or role) used to authenticate the current Terraform run.
+The [`aws_caller_identity` module](../aws_caller_identity/) outputs the ARN of the AWS identity (IAM user or role) that authenticates the current Terraform run.

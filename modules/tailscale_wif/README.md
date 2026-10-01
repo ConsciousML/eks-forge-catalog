@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# tailscale\_wif
+# `tailscale_wif` Terraform Module Reference
 
-Creates a Tailscale federated identity backed by GitHub Actions OIDC, enabling CI runners to join the tailnet without long-lived credentials.
+The [`tailscale_wif` module](../tailscale\_wif/) creates a Tailscale [Workload Identity Federation](https://tailscale.com/docs/features/workload-identity-federation) credential backed by GitHub Actions OIDC, letting CI runners join the tailnet without long-lived credentials.
 
 ## Requirements
 

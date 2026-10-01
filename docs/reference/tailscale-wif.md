@@ -1,5 +1,5 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
-# Tailscale WIF Bootstrap
+# Tailscale WIF Bootstrap Reference
 
 The [`tailscale_wif` stack](../../stacks/tailscale_wif/), deployed by the [`tailscale/wif` pipeline](../../pipelines/bootstrap/tailscale/wif/), creates a Tailscale [Workload Identity Federation](https://tailscale.com/docs/features/workload-identity-federation) credential scoped to this GitHub repository via OIDC, and stores its client ID and audience as GitHub Actions secrets, so CI authenticates to Tailscale using short-lived tokens instead of a stored OAuth secret.
 

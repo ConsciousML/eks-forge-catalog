@@ -1,5 +1,5 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
-# Environment Variables
+# Environment Variables Reference
 
 The reference for every environment variable used by EKS Forge.
 

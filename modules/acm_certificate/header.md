@@ -1,3 +1,3 @@
-# ACM Certificate
+# `acm_certificate` Terraform Module Reference
 
-Creates a TLS/SSL certificate using AWS Certificate Manager (ACM) and outputs its ARN.
+The [`acm_certificate` module](../acm_certificate/) creates an [AWS Certificate Manager (ACM)](https://aws.amazon.com/certificate-manager/) TLS certificate, validates it through DNS records written to a Route 53 hosted zone, and outputs its ARN.

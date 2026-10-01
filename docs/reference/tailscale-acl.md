@@ -1,5 +1,5 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
-# Tailscale ACL Bootstrap
+# Tailscale ACL Bootstrap Reference
 
 The [`acl` unit](../../units/eks/addons/tailscale/acl/), deployed by the [`tailscale/acl` pipeline](../../pipelines/bootstrap/tailscale/acl/), applies the Tailscale [ACL policy](https://tailscale.com/kb/1018/acls) to the tailnet, auto-approving subnet routes for each environment's VPC CIDR so tagged nodes can advertise routes without manual approval in the Tailscale admin panel.
 

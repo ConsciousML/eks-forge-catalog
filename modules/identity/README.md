@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# Identity Module
+# `identity` Terraform Module Reference
 
-Passes an input string through as an output, making it addressable as a Terraform state output.
+The [`identity` module](../identity/) passes an input string through as an output, making it addressable as a Terraform state output.
 
 ## Requirements
 

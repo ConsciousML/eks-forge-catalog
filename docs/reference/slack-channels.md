@@ -1,5 +1,5 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
-# Slack Channels Bootstrap
+# Slack Channels Bootstrap Reference
 
 The [`slack_channels` stack](../../stacks/slack_channels/), deployed by the [`slack/channels` pipeline](../../pipelines/bootstrap/slack/channels/), creates that environment's Slack channels, prefixed with the environment name (e.g. `dev-k8s-critical`), so the same shared bot can post every environment's alerts without colliding on one channel. Run once per environment.
 

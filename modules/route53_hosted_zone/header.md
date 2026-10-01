@@ -1,3 +1,3 @@
-# AWS Route53 Hosted Zone Module
+# `route53_hosted_zone` Terraform Module Reference
 
-This module creates or looks up a Route53 hosted zone. Supports both public zones (internet-facing, requires NS delegation for ACM validation) and private zones (VPC-scoped, no delegation required).
+The [`route53_hosted_zone` module](../route53_hosted_zone/) creates or looks up a [Route 53 hosted zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html), either public (internet-facing, requires NS delegation for ACM validation) or private (VPC-scoped, no delegation).

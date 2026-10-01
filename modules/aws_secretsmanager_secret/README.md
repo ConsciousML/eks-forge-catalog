@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# aws\_secretsmanager\_secret
+# `aws_secretsmanager_secret` Terraform Module Reference
 
-Writes an arbitrary set of key/value pairs into a single AWS Secrets Manager secret, JSON-encoded.
+The [`aws_secretsmanager_secret` module](../aws\_secretsmanager\_secret/) writes a map of key/value pairs, JSON-encoded, into a single [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) secret.
 
 ## Requirements
 
