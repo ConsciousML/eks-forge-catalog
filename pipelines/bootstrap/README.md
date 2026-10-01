@@ -49,4 +49,6 @@ Complete each of these one-time setup guides:
   },
 ]} />
 
+The `app_of_apps_deploy_key` pipeline isn't part of this list: it runs later, during [Enable README Generation in CI](/docs/applications/get-started/app-of-apps-setup/#enable-readme-generation-in-ci).
+
 **Caution**: if you want to change the code of these pipelines, read the [For Developers](../../stacks/README.md#for-developers) section of `stacks/README.md`.
