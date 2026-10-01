@@ -9,7 +9,7 @@ For setup steps, read the [Slack Bootstrap](/docs/quickstart/bootstrap/slack).
 
 | Name | Unit | Module |
 |------|------|--------|
-| `slack_channels` | [`units/slack/channels`](../../units/slack/channels/) | [`modules/slack_channels`](../../modules/slack_channels/) |
+| `slack_channels` | [`units/slack/channels`](../../units/slack/channels/) | [`slack_channels`](/docs/reference/terraform_modules/slack_channels/) |
 
 ## Inputs
 

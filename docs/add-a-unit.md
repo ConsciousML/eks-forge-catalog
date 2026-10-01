@@ -74,7 +74,7 @@ include "provider_helm" {
 }
 ```
 
-Point `source` at the catalog's `helm_release` module, pinned to the catalog version:
+Point `source` at the catalog's [`helm_release` module](/docs/reference/terraform_modules/helm_release/), pinned to the catalog version:
 ```hcl
 terraform {
   source = "git::git@github.com:${include.root.locals.github_owner_catalog}/${include.root.locals.github_repo_name_catalog}.git//modules/helm_release/?ref=${values.version}"

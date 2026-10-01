@@ -9,7 +9,7 @@ For setup steps, read the [AWS Billing Alerts Bootstrap](/docs/quickstart/bootst
 
 | Name | Unit | Module |
 |------|------|--------|
-| `billing_anomaly_detection` | [`units/billing/anomaly_detection`](../../units/billing/anomaly_detection/) | [`modules/billing_anomaly_detection`](../../modules/billing_anomaly_detection/) |
+| `billing_anomaly_detection` | [`units/billing/anomaly_detection`](../../units/billing/anomaly_detection/) | [`billing_anomaly_detection`](/docs/reference/terraform_modules/billing_anomaly_detection/) |
 
 ## Inputs
 

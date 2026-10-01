@@ -9,8 +9,8 @@ For setup steps, read the [AWS Billing Alerts Bootstrap](/docs/quickstart/bootst
 
 | Name | Unit | Module |
 |------|------|--------|
-| `billing_budget_actual` | [`units/billing/budget_actual`](../../units/billing/budget_actual/) | [`modules/billing_budget`](../../modules/billing_budget/) |
-| `billing_budget_forecasted` | [`units/billing/budget_forecasted`](../../units/billing/budget_forecasted/) | [`modules/billing_budget`](../../modules/billing_budget/) |
+| `billing_budget_actual` | [`units/billing/budget_actual`](../../units/billing/budget_actual/) | [`billing_budget`](/docs/reference/terraform_modules/billing_budget/) |
+| `billing_budget_forecasted` | [`units/billing/budget_forecasted`](../../units/billing/budget_forecasted/) | [`billing_budget`](/docs/reference/terraform_modules/billing_budget/) |
 
 ## Inputs
 

@@ -9,7 +9,7 @@ For setup steps, read the [Slack Bootstrap](/docs/quickstart/bootstrap/slack).
 
 | Name | Unit | Module |
 |------|------|--------|
-| `slack_github_secrets` | [`units/slack/github_secrets`](../../units/slack/github_secrets/) | [`modules/github_secrets`](../../modules/github_secrets/) |
+| `slack_github_secrets` | [`units/slack/github_secrets`](../../units/slack/github_secrets/) | [`github_secrets`](/docs/reference/terraform_modules/github_secrets/) |
 
 ## Inputs
 

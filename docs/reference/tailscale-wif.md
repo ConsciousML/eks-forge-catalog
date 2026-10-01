@@ -9,8 +9,8 @@ For setup steps, read the [Tailscale Bootstrap](/docs/quickstart/bootstrap/tails
 
 | Name | Unit | Module |
 |------|------|--------|
-| `tailscale_wif` | [`units/tailscale/workflow_identity_federation`](../../units/tailscale/workflow_identity_federation/) | [`modules/tailscale_wif`](../../modules/tailscale_wif/) |
-| `tailscale_github_secrets` | [`units/tailscale/github_secrets`](../../units/tailscale/github_secrets/) | [`modules/github_secrets`](../../modules/github_secrets/) |
+| `tailscale_wif` | [`units/tailscale/workflow_identity_federation`](../../units/tailscale/workflow_identity_federation/) | [`tailscale_wif`](/docs/reference/terraform_modules/tailscale_wif/) |
+| `tailscale_github_secrets` | [`units/tailscale/github_secrets`](../../units/tailscale/github_secrets/) | [`github_secrets`](/docs/reference/terraform_modules/github_secrets/) |
 
 ## Inputs
 
