@@ -1,3 +1,3 @@
-# Slack Channels Module
+# `slack_channels` Terraform Module Reference
 
-This module creates Slack channels from a list of base names, prefixing each with the environment name (e.g. `k8s-critical` becomes `dev-k8s-critical`). Use it to provision the channels Alertmanager's routing config sends to.
+The [`slack_channels` module](../slack_channels/) creates Slack channels from a list of base names, prefixing each with the environment name (e.g. `k8s-critical` becomes `dev-k8s-critical`).

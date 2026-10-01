@@ -1,3 +1,3 @@
-# AWS Billing Budget Module
+# `billing_budget` Terraform Module Reference
 
-This module creates an AWS Budget that sends an email notification for each configured USD threshold whenever monthly spend crosses it. Set `notification_type` to `"ACTUAL"` or `"FORECASTED"` depending on whether thresholds should compare against actual or forecasted spend.
+The [`billing_budget` module](../billing_budget/) creates an [AWS Budget](https://aws.amazon.com/aws-cost-management/aws-budgets/) that emails a notification for each USD threshold monthly spend crosses. `notification_type` sets whether thresholds compare against `ACTUAL` or `FORECASTED` spend.

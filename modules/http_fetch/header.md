@@ -1,3 +1,3 @@
-# HTTP Fetch
+# `http_fetch` Terraform Module Reference
 
-Fetches a URL and exposes the response body as an output.
+The [`http_fetch` module](../http_fetch/) fetches a URL and exposes the response body as an output.

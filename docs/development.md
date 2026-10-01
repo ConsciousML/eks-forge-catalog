@@ -28,8 +28,6 @@ Create your infrastructure [module](https://developer.hashicorp.com/terraform/la
 - `header.md`: Header documentation for `terraform-docs`
 - `footer.md`: Footer documentation for `terraform-docs`
 
-Read the [instructions](../modules/README.md#documentation) to learn more on documentation generation with `terraform-docs`.
-
 ### Create a Terragrunt Unit Wrapper
 Write a [unit](https://docs.terragrunt.com/features/units/) in `units/your_module/terragrunt.hcl` that:
 - References the module using `values.version` for the git ref

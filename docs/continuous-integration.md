@@ -20,8 +20,6 @@ Fails if any unit under `units/` has a `terragrunt.hcl` without a committed `.te
 ### Documentation Generation
 Uses `terraform-docs` to automatically generate `README.md` in each terraform module in `modules/`, committing and pushing any changes back to the PR branch.
 
-If you create new Terraform modules in `modules/`, read the [documentation instructions](../modules/README.md#documentation).
-
 ### Check Docs Changes
 Fails fast if the previous job pushed a new commit, so the workflow re-triggers on that commit instead of testing a stale one. Seeing this job fail with "terraform-docs created a new commit" is expected, not a bug.
 
