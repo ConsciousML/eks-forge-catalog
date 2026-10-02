@@ -8,6 +8,34 @@ For setup steps, read [Tailscale Bootstrap](/docs/quickstart/bootstrap/tailscale
 
 There are four components that interact together, created in an order that matters:
 
+```mermaid
+---
+title: How Tailscale reaches the VPC
+---
+flowchart TD
+    subgraph Tailnet
+        acl["1. ACL policy"]
+        wif["2. WIF<br/>tag:ci"]
+        dns["4b. Split DNS"]
+    end
+    ci["CI<br/>GitHub Actions"]
+    subgraph Cluster["EKS cluster"]
+        operator["3. Kubernetes operator<br/>tag:k8s-operator"]
+        connector["4a. Connector"]
+    end
+    dev["Developer"]
+    endpoints["Internal endpoints<br/>ArgoCD, Grafana, Hubble"]
+
+    acl -->|"defines tag:ci"| wif
+    ci -->|"authenticates through"| wif
+    ci -->|"creates its OAuth client"| operator
+    operator -->|"runs"| connector
+    acl -.->|"auto-approves the VPC route"| connector
+    dev -->|"resolves private names"| dns
+    dev -->|"over the tailnet"| connector
+    connector -->|"VPC route"| endpoints
+```
+
 ## 1. Access Control (ACL) Policy
 
 A [tailnet](https://tailscale.com/docs/concepts/tailnet)-wide [Access Control (ACL) policy](https://tailscale.com/docs/features/access-control/acls) applied by the [`tailscale/acl` bootstrap pipeline](/docs/reference/bootstrap/tailscale_acl/) from the [catalog repository](https://github.com/ConsciousML/terragrunt-template-catalog-eks). This pipeline needs to be implemented only once per tailnet.
