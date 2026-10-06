@@ -10,12 +10,17 @@ git checkout -b <branch>
 git push -u origin <branch>
 ```
 
-Then export your environment's name as [`TG_ENVIRONMENT`](/docs/reference/environment_variable/#tg_environment-and-tg_environment_alias), replacing `<environment>` (e.g. `dev-2`). Use only lowercase letters, digits, and hyphens, since it ends up in bucket names and hostnames:
+Then add your environment's name as [`TG_ENVIRONMENT`](/docs/reference/environment_variable/#tg_environment-and-tg_environment_alias) to your `.env` file, replacing `<environment>` (e.g. `dev-2`). Use only lowercase letters, digits, and hyphens, since it ends up in bucket names and hostnames:
 ```bash
 export TG_ENVIRONMENT=<environment>
 ```
 
-The commands of this guide read it, so run them all from the same shell.
+Then load it, from the root of your catalog fork:
+```bash
+source .env
+```
+
+From now on, every command run after `source .env` targets your environment instead of `dev`. To go back, see [Switch Between Environments](#switch-between-environments).
 
 ## Reserve a VPC CIDR
 
@@ -29,6 +34,10 @@ vpc_cidrs = {
 ```
 
 The stack reads its VPC CIDR from this entry, so the apply fails without it. The block must not overlap another environment's, since Tailscale routes each VPC by its CIDR.
+
+:::warning
+Each environment takes a whole `/16` block, and `10.0.0.0/8` holds 256 of them (`10.0.0.0/16` to `10.255.0.0/16`). If you add several environments, make sure a free block is left for each one.
+:::
 
 ## Approve the CIDR in Tailscale
 
@@ -93,7 +102,7 @@ The EC2 quotas are shared by every environment of your AWS account, and a second
 
 ## Deploy the Environment
 
-Your environment has no [environment overlays](/docs/applications/how-the-app-of-apps-works/#environment-overlays) of its own, so every app with one would fail to sync. Load the ones of `dev` instead:
+Your environment has no [environment overlays](/docs/applications/how-the-app-of-apps-works/#environment-overlays) of its own, so every app with one would fail to sync. Load the ones of `dev` instead, by adding this to your `.env` file:
 ```bash
 export TG_ENVIRONMENT_ALIAS=dev
 ```
@@ -114,18 +123,18 @@ When it's done, connect `kubectl` to your environment's cluster, replacing `<reg
 aws eks update-kubeconfig --region <region-code> --name $TG_ENVIRONMENT-cluster
 ```
 
-Then check the deployment by following [Dev Deployment](/docs/quickstart/deployment/#deploy-applications-with-argocd) from Deploy Applications with ArgoCD, replacing `dev` with your environment's name in every hostname and secret name (e.g. `argocd.private.dev-2.<base_domain>` and `dev-2-argocd-password`).
+Then check the deployment by following the quickstart from [Deploy Applications with ArgoCD](/docs/quickstart/deployment/#deploy-applications-with-argocd), replacing `dev` with your environment's name in every hostname and secret name (e.g. `argocd.private.dev-2.<base_domain>` and `dev-2-argocd-password`).
 
 The cluster's API endpoint is public, like the one of `dev`. To make it private, see [Disable the Public EKS Endpoint](/docs/security/improvements/#disable-the-public-eks-endpoint).
 
 ## Switch Between Environments
 
-`TG_ENVIRONMENT` and `TG_ENVIRONMENT_ALIAS` only live in your shell. Don't add them to your `.env`, or every command targets your environment instead of `dev`. To target `dev` again, open a new shell or unset them:
+While `TG_ENVIRONMENT` and `TG_ENVIRONMENT_ALIAS` are in your `.env`, every command targets your environment instead of `dev`. To target `dev` again, comment them out in your `.env`, then unset them:
 ```bash
 unset TG_ENVIRONMENT TG_ENVIRONMENT_ALIAS
 ```
 
-To target your environment again, export both.
+To target your environment again, uncomment them and run `source .env`.
 
 :::warning
 Both environments generate their stack into the same `pipelines/dev/eks/stack/.terragrunt-stack/` directory. After switching, always run `terragrunt stack clean` and `terragrunt stack generate` before any other command. Never run Terragrunt for both environments at the same time from one clone of your fork. Use a second clone instead.
@@ -148,7 +157,7 @@ Then follow [Open a Pull Request](/docs/iac/add-a-unit/#open-a-pull-request) and
 
 ## Destroy the Environment
 
-Once you're done with the environment, destroy its stack to stop paying for it. Like for `dev`, disconnect from Tailscale first, by running `tailscale down` or with the button in the Tailscale client. Then, with `TG_ENVIRONMENT` exported, run the following from the root of your catalog fork:
+Once you're done with the environment, destroy its stack to stop paying for it. Like for `dev`, disconnect from Tailscale first, by running `tailscale down` or with the button in the Tailscale client. Then, with `TG_ENVIRONMENT` in your `.env`, run the following from the root of your catalog fork:
 ```bash
 source .env
 cd pipelines/dev/eks/stack
@@ -157,9 +166,11 @@ terragrunt stack generate
 terragrunt run --all destroy --non-interactive --no-stack-generate
 ```
 
-Its hosted zone and Slack channels stay in place, so you can deploy it again later. Only the hosted zone is billed.
+Its hosted zone and Slack channels stay in place, so you can deploy it again later. Only the hosted zone is billed. Until then, target `dev` again, as in [Switch Between Environments](#switch-between-environments).
 
-To remove the environment for good, also destroy its two bootstrap pipelines, from the root of your catalog fork:
+## Remove the Environment
+
+To remove the environment for good, first [destroy its stack](#destroy-the-environment). Then destroy its two bootstrap pipelines, from the root of your catalog fork:
 ```bash
 source .env
 cd pipelines/bootstrap/setup_dns/$TG_ENVIRONMENT
@@ -174,3 +185,4 @@ Then:
 3. Delete its two bootstrap folders and its entry in `vpc_cidrs`.
 4. Apply the ACL again, as in [Approve the CIDR in Tailscale](#approve-the-cidr-in-tailscale).
 5. Merge the change, as in [Open a Pull Request and Merge](#open-a-pull-request-and-merge).
+6. Remove `TG_ENVIRONMENT` and `TG_ENVIRONMENT_ALIAS` from your `.env`, then unset them, as in [Switch Between Environments](#switch-between-environments). Otherwise your next commands still target the environment you removed.
