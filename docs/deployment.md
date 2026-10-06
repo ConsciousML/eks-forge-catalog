@@ -93,6 +93,10 @@ This stack exposes `podinfo` to the public internet. Open `https://podinfo.publi
 
 `podinfo` is a sample app meant to be swapped for a real one in your fork.
 
+## Explore Your Cluster
+
+While your cluster is running, you can follow [Monitor Your Cluster](/docs/monitoring/get-started/) to explore its metrics, logs, network flows, and alerts. Come back here when you're done to destroy the infrastructure.
+
 ## Destroy the Infrastructure
 
 Destroying the infrastructure removes the [Tailscale Connector](/docs/security/tailscale/#4-connector-and-split-dns): the component responsible for routing the Kubernetes API server traffic into the private endpoint. Once it's gone, you lose access to the cluster API.
@@ -113,7 +117,7 @@ The [bootstrap](/docs/quickstart/bootstrap) resources stay in place, so you can 
 Continue with [Production Deployment](/docs/deployment/get-started/) to deploy the `staging` and `prod` environments from the live repository.
 
 Or, when you need them:
-- to interact with internal tools, see [Monitoring](/docs/monitoring/)
+- to explore your cluster's metrics, logs, and alerts, see [Monitor Your Cluster](/docs/monitoring/get-started/)
 - to add an application to your cluster, see [Deploy Your Applications](/docs/applications/get-started/)
 - to add or edit a unit in your stack, see [Add or Edit a Unit](/docs/iac/add-a-unit/)
 - to remove a unit from your stack, see [Remove a Unit](/docs/iac/remove-a-unit/)
