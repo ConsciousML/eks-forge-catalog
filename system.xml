@@ -66,6 +66,7 @@
         - `add-a-unit.md`: adding a unit and wiring it into a stack
         - `remove-a-unit.md`: removing a unit from a stack
         - `add-a-vpc-endpoint.md`: adding an interface VPC endpoint for an AWS service
+        - `add-a-dev-environment.md`: deploying a second `dev`-like environment next to `dev`
         - `remove-eks-forge.md`: tearing down the catalog side of EKS Forge
         - `environment-variables.md`: every env var used across bootstrap pipelines and the
           EKS stack

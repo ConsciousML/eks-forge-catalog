@@ -217,7 +217,7 @@ unit "cluster" {
     # app-of-apps, and the Tailscale Connector (which gives CI its route into the VPC)
     # aren't up yet on a brand-new cluster. Once ArgoCD is reachable over Tailscale,
     # confirming the Connector is routing, set `endpoint_public_access` to false here
-    # and re-apply the `cluster` unit. See docs/new-environment.md for the exact step.
+    # and re-apply the `cluster` unit. See docs/security/improvements.md for the exact step.
     endpoint_public_access  = true
     endpoint_private_access = true
 
