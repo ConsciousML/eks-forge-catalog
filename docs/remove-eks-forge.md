@@ -12,6 +12,8 @@ terragrunt stack generate
 terragrunt run --all destroy --non-interactive --no-stack-generate
 ```
 
+If you added an environment with [Add a Dev Environment](/docs/iac/add-a-dev-environment/), destroy its stack too, as in [Destroy the Environment](/docs/iac/add-a-dev-environment/#destroy-the-environment).
+
 ### Destroy the Catalog Bootstrap
 From the root of your catalog fork, destroy the [bootstrap pipelines](/docs/quickstart/bootstrap/):
 ```bash
@@ -20,4 +22,4 @@ cd pipelines/bootstrap
 terragrunt run --all destroy --non-interactive
 ```
 
-Finally, in your domain registrar, remove the NS records of the `dev` and `ci` subdomains, for the same reason as for `staging` and `prod`.
+Finally, in your domain registrar, remove the NS records of the `dev` and `ci` subdomains, and of any environment you added, for the same reason as for `staging` and `prod`.
