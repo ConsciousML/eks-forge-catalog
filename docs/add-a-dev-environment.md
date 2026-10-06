@@ -2,7 +2,7 @@
 
 This guide shows you how to deploy a second [`dev`](/docs/iac/#dev)-like environment from your [forked catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog) (e.g. `dev-2`), running next to `dev`. It deploys the same stack under another name, with its own state, VPC, cluster, hosted zone, and Slack channels.
 
-It assumes you've already deployed `dev` once, as in [Dev Deployment](/docs/quickstart/deployment/).
+It assumes you've already deployed `dev` once, as in [Dev Deployment](/docs/quickstart/deployment/). For a `staging`-like environment in your live fork, see [Add a Staging Environment](/docs/iac/add-a-staging-environment/) instead.
 
 First, create a branch in your forked catalog and push it, replacing `<branch>`. The pipelines fetch their units from git at your current branch, so it must exist on GitHub:
 ```bash
