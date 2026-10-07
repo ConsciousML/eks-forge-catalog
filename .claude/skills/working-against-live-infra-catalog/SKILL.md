@@ -1,6 +1,6 @@
 ---
 name: working-against-live-infra-catalog
-description: Loop for changes that must take effect on live AWS infra (apply, verify, destroy through Terragrunt). Use whenever a goal requires actually applying, verifying, or destroying resources on live AWS, not just editing or planning source.
+description: Loop for running Terragrunt against live AWS: generate, validate, plan, apply, verify, and destroy. Use before running any `terragrunt` command, and whenever a goal needs resources applied, verified, or destroyed on live AWS.
 ---
 
 ## Apply infra through Terragrunt only

@@ -1,6 +1,6 @@
 ---
 name: reproducibility-catalog
-description: Regenerate provider lock files after adding a unit or changing a provider version/constraint under units/. Use before considering such a change done.
+description: Regenerate and commit provider lock files (`.terraform.lock.hcl`). Use after adding a unit, or adding or bumping a provider version, and before calling that change done. CI fails on a unit without a committed lock file.
 ---
 
 Follow [Commit the Lock File](../../../docs/add-a-unit.md#commit-the-lock-file) for the steps.
