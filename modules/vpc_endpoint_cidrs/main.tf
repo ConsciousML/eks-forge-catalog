@@ -1,5 +1,6 @@
 locals {
-  # Hosts 0 to 31 of each private subnet.
+  # Hosts 0 to 31 of each private subnet, the smallest single CIDR block holding every
+  # endpoint_host_offsets value. Changing it replaces the reservation.
   reservation_prefix_length = 27
 }
 
