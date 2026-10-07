@@ -1,6 +1,6 @@
 ---
 name: github-workflow-catalog
-description: End-to-end process for a catalog change, from issue to branch, implementation, live deploy and test, PR, user review, destroy, and merge. Use when starting a change that needs an issue or a branch, or when asked to commit, push, open a PR, tear down after a review, or merge.
+description: End-to-end process for a catalog change, from issue to branch, implementation, PR, live deploy and test, user review, destroy, and merge. Use when starting a change that needs an issue or a branch, or when asked to commit, push, open a PR, tear down after a review, or merge.
 ---
 
 # GitHub Workflow
@@ -68,29 +68,19 @@ Match the patterns of existing modules and units.
 **Wait** on any meaningful design decision. In an autonomous run, pick the option closest to
 existing patterns and report it.
 
-## 4. Deploy and Test
+## 4. Pull Request
 
-Follow the `working-against-live-infra-catalog` skill. It commits and pushes to the branch first,
-because `pipelines/version.hcl` resolves module sources at the current branch on GitHub.
+Opened before the deploy, so the user can review the change before anything is applied.
 
-Before the first apply, note whether the stack was already up. Step 7 destroys only what this
-workflow applied.
-
-Verify against live AWS state, not plan output. Fix and repeat until it passes. Then report what
-was verified, and what was not.
-
-## 5. Pull Request
-
-If the plan created an `argocd-app-of-apps-template` branch and step 4 validated the feature, open
-and merge its PR first, with the same steps as below.
+If the plan created an `argocd-app-of-apps-template` branch, open its PR too, with the same steps
+as below.
 
 1. Draft the PR:
    - Title: the main commit subject.
    - Body: `Closes #<issue>` when the issue is in this repo, otherwise
      `Part of <owner>/<repo>#<issue>`. Then one or two lines or bullets.
 2. **Wait** for the user to validate the draft. If they asked for an autonomous run, skip the wait.
-3. Commit and push with `git push -u origin <branch>` if step 4 was skipped (a change with no
-   infra to deploy).
+3. Commit and push with `git push -u origin <branch>`.
 4. Open it with `gh pr create --title "<title>" --body "<body>"` and report the link.
 
 Never open it as a draft, CI fails on draft PRs. CI also fails on a leftover `TEMP:` marker or a
@@ -98,8 +88,22 @@ missing provider lock file.
 
 CI pushes a terraform-docs commit back to the branch. Run `git pull` before any later push.
 
-If an `argocd-app-of-apps-template` branch was merged, ask the user to reset `APP_OF_APPS_BRANCH`
-to `main` in `.env`.
+## 5. Deploy and Test
+
+Skip for a change with no infra to deploy.
+
+Follow the `working-against-live-infra-catalog` skill. It commits and pushes each new change to
+the branch first, because `pipelines/version.hcl` resolves module sources at the current branch on
+GitHub.
+
+Before the first apply, note whether the stack was already up. Step 7 destroys only what this
+workflow applied.
+
+Verify against live AWS state, not plan output. Fix and repeat until it passes. Then report what
+was verified, and what was not.
+
+If the plan created an `argocd-app-of-apps-template` branch and the feature is validated, merge
+its PR, then ask the user to reset `APP_OF_APPS_BRANCH` to `main` in `.env`.
 
 ## 6. Review
 
@@ -107,7 +111,7 @@ to `main` in `.env`.
 costs a full redeploy.
 
 Keep the infra up so requested changes can be retested. For each requested change, redo steps 3
-and 4, then push.
+and 5.
 
 ## 7. Destroy
 
@@ -116,7 +120,7 @@ and 4, then push.
 Destroy before merging. The merge deletes the branch that module sources resolve at, and a destroy
 after that fails.
 
-Follow "Tearing down" in `working-against-live-infra-catalog`, limited to what step 4 applied.
+Follow "Tearing down" in `working-against-live-infra-catalog`, limited to what step 5 applied.
 
 Then check with read-only `aws` calls that the resources are gone, and report one of:
 
