@@ -16,8 +16,9 @@ Read-only `aws` CLI calls (`describe-*`, `get-*`, `list-*`) are fine, they don't
 Check first with `aws sts get-caller-identity`. If it resolves, skip this step.
 
 Otherwise, ask the user to authenticate. Don't run
-[Authenticate with AWS](../../../README.md#authenticate-with-aws) yourself, `aws configure` and
-any SSO login are interactive and may touch credentials you shouldn't handle.
+[Authenticate with the AWS CLI](../../../docs/configuration.md#authenticate-with-the-aws-cli)
+yourself, `aws configure` and any SSO login are interactive and may touch credentials you shouldn't
+handle.
 
 ## The loop
 
@@ -44,7 +45,7 @@ any SSO login are interactive and may touch credentials you shouldn't handle.
    - **End-to-end goal**: follow the documented flow instead, from the stack directory:
      `terragrunt stack generate` then
      `terragrunt run --all apply --non-interactive --no-stack-generate` (see
-     [Deploy a Dev EKS Cluster](../../../README.md#deploy-a-dev-eks-cluster)). Terragrunt
+     [Run the Terragrunt Stack](../../../docs/deployment.md#run-the-terragrunt-stack)). Terragrunt
      sequences the whole graph itself.
 6. Verify against the live AWS state (`aws ... describe`/`get`, or the console), not against the
    plan output.
@@ -67,6 +68,6 @@ Only destroy when the user asks for it.
   more than one unit, downstream before upstream, or a downstream unit will fail against a
   dependency that's already gone.
 - **End-to-end goal**: follow the documented flow instead, from the stack directory: read the
-  caution notes in [Destroy the Infrastructure](../../../README.md#destroy-the-infrastructure)
-  first (public endpoint and Tailscale ordering matter there), then
+  caution notes in [Destroy the Infrastructure](../../../docs/deployment.md#destroy-the-infrastructure)
+  first (disconnect from Tailscale before destroying), then
   `terragrunt run --all destroy --non-interactive --no-stack-generate`.

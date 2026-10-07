@@ -21,7 +21,7 @@ Joins the EKS cluster to a Tailnet via the Tailscale Kubernetes operator, exposi
 - **[`tailscale-connector`](https://github.com/ConsciousML/argocd-app-of-apps-template/tree/main/charts/tailscale/connector)** (app-of-apps): deploys the `Connector` CR. Not deployed by this unit
 - **[`tailscale-secrets`](https://github.com/ConsciousML/argocd-app-of-apps-template/tree/main/charts/external-secrets-operator/secret-sync)** (app-of-apps): an instance of the generic `secret-sync` chart, syncs the OAuth credentials into the operator's expected `operator-oauth` secret via an ESO `SecretStore` and `ExternalSecret`, mirroring how ArgoCD's admin password is synced
 
-See the [App of Apps integration guide](../../../../docs/app-of-apps-integration.md) to understand how these apps are wired to Terraform-sourced values.
+See [Pass Terraform Values to an App](https://eks-forge.readthedocs.io/latest/docs/applications/pass-terraform-values-to-an-app/) to understand how these apps are wired to Terraform-sourced values.
 
 ## Upstream Dependencies
 
