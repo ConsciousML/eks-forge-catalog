@@ -45,7 +45,8 @@ Write in [Diataxis reference](https://diataxis.fr/reference/) style:
 
 ## Style
 
-- Write the fewest characters possible while staying readable.
+- Write the fewest characters possible while staying readable and not losing important
+  information.
 - Join list items with commas and "and", never slashes (e.g. `dev`, `staging`, and `prod`).
 - Never use `;`, `-`, or an em dash (`—`) in the middle of a sentence. Use commas, parentheses, or
   split into two sentences instead.
