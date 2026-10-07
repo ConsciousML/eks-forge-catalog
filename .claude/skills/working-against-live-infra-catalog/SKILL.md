@@ -47,7 +47,7 @@ handle.
      `terragrunt run --all apply --non-interactive --no-stack-generate` (see
      [Run the Terragrunt Stack](../../../docs/deployment.md#run-the-terragrunt-stack)). Terragrunt
      sequences the whole graph itself.
-6. Verify against the live AWS state (`aws ... describe`/`get`, or the console), not against the
+6. Verify against the live AWS state (`aws ... describe`, `get`, or the console), not against the
    plan output.
 7. If verification fails, fix the source file and repeat from step 1.
 
