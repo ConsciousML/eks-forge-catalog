@@ -108,8 +108,8 @@ CI pushes a terraform-docs commit back to the branch. Run `git pull` before any 
 Skip for a change with no infra to deploy.
 
 A worktree isolates code, not state. Every session and worktree applies to the same `dev` stack.
-**Wait** before the first apply, even in an autonomous run: ask the user whether another session
-is using it. If one is, wait for it.
+**Wait** before the first apply: ask the user whether another session is using it. If one is, wait
+for it. In an autonomous run, skip the wait.
 
 Follow the `working-against-live-infra-catalog` skill. It commits and pushes each new change to
 the branch first, because `pipelines/version.hcl` resolves module sources at the current branch on
