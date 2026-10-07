@@ -24,6 +24,7 @@ dependency "eks_cluster" {
 }
 
 inputs = {
-  domain      = trimprefix(dependency.eks_cluster.outputs.cluster_endpoint, "https://")
+  # Must be lowercase. EKS returns an uppercase ID, and Tailscale never matches an uppercase domain.
+  domain      = lower(trimprefix(dependency.eks_cluster.outputs.cluster_endpoint, "https://"))
   nameservers = [cidrhost(dependency.vpc.outputs.vpc_cidr_block, 2)]
 }
