@@ -15,12 +15,16 @@ dependency "vpc" {
   mock_outputs_allowed_terraform_commands = ["init", "plan", "validate", "graph", "destroy"]
 }
 
-locals {
-  region_hcl = find_in_parent_folders("region.hcl")
-  region     = read_terragrunt_config(local.region_hcl).locals.region
+dependency "eks_cluster" {
+  config_path = "../../../../cluster"
+  mock_outputs = {
+    cluster_endpoint = "https://mock.eks.amazonaws.com"
+  }
+  mock_outputs_allowed_terraform_commands = ["init", "plan", "validate", "graph", "destroy"]
 }
 
 inputs = {
-  domain      = "${local.region}.eks.amazonaws.com"
+  # Must be lowercase. EKS returns an uppercase ID, and Tailscale never matches an uppercase domain.
+  domain      = lower(trimprefix(dependency.eks_cluster.outputs.cluster_endpoint, "https://"))
   nameservers = [cidrhost(dependency.vpc.outputs.vpc_cidr_block, 2)]
 }
