@@ -133,7 +133,8 @@ commit and push, then redo step 5.
 
 Skip if step 5 was skipped, or if the stack was already up before step 5.
 
-**Wait** for the user to say the review is done, even in an autonomous run.
+**Wait**, even in an autonomous run: ask the user to confirm the destroy. The review being done is
+not a destroy request.
 
 Destroy before merging. The merge deletes the branch that module sources resolve at, and a destroy
 after that fails.
@@ -152,9 +153,12 @@ Never merge after a failed destroy.
 Run `gh pr checks <N> --watch`. `check-docs-changes` fails by design whenever terraform-docs pushed
 a commit. When it does, run `git pull` and watch again. Stop on any other failure.
 
-If the change has an `argocd-app-of-apps-template` PR, merge it first, the same way, from that
-repo's directory. Merging it before the review would force a new branch and PR for any change
-requested there.
+If the change has an `argocd-app-of-apps-template` PR, merge it first, with the same
+`gh pr merge` command, from that repo's directory. Merging it before the review would force a new
+branch and PR for any change requested there.
+
+Delete its branch only if step 7 destroyed the stack. A stack still up syncs from that branch and
+gets stuck without it. Otherwise keep the branch until that stack is destroyed.
 
 Then:
 ```bash
