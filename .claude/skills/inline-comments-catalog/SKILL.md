@@ -12,6 +12,19 @@ important fact.
 - Cut filler ("Note that", "This is used to", "so that we can"). Start with the fact.
 - Name the file or key to keep in sync instead of explaining the whole mechanism.
 
+Write every comment in [Diataxis reference](https://diataxis.fr/reference/) style:
+
+- Describe, don't instruct. Neutral facts only.
+- Be austere and authoritative. No ambiguity.
+- Use the same wording for the same thing everywhere.
+- Phrase it as "X is Y" or "Must use X. Never Y."
+
+Punctuation:
+
+- Join list items with commas and "and", never slashes.
+- Never use `;`, `-`, or an em dash (`—`) in the middle of a sentence.
+- Never join two independent clauses with a comma. Split into two sentences instead.
+
 Example, before:
 
 ```hcl
@@ -24,6 +37,3 @@ After:
 ```hcl
 # Root and child Applications, so github.hcl alone switches the app of apps fork.
 ```
-
-Other style rules (punctuation, lists) are in
-[`how-to-write-docs-catalog`](../how-to-write-docs-catalog/SKILL.md).
