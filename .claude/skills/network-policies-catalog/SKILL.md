@@ -1,6 +1,6 @@
 ---
 name: network-policies-catalog
-description: Write or edit a CiliumNetworkPolicy. Use when building a feature that introduces a new namespace, or a new component in an existing namespace, and when editing an existing NetworkPolicy.
+description: Write or edit a CiliumNetworkPolicy. Use when a change deploys a workload into a new namespace or adds a component to an existing one, when `hubble` shows dropped traffic, and when editing an existing policy.
 ---
 
 Follow [How Network Policies Work](https://eks-forge.readthedocs.io/latest/docs/security/how-network-policies-work/)

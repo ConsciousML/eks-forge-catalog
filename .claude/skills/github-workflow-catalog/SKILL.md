@@ -53,10 +53,6 @@ Match the patterns of existing modules and units.
 **Wait** on any meaningful design decision. In an autonomous run, pick the option closest to
 existing patterns and report it.
 
-- Provider added, removed, or bumped: run the `reproducibility-catalog` skill.
-- Reference docs and comments: `reference-docs-catalog` and `inline-comments-catalog`.
-- Never write a module `README.md`, CI generates it from `header.md` and `footer.md`.
-
 ## 4. Deploy and Test
 
 Follow the `working-against-live-infra-catalog` skill. It commits and pushes to the branch first,
