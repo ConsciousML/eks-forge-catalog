@@ -54,7 +54,7 @@ Match the patterns of existing modules and units.
 existing patterns and report it.
 
 - Provider added, removed, or bumped: run the `reproducibility-catalog` skill.
-- Docs and comments: `how-to-write-docs-catalog` and `inline-comments-catalog`.
+- Reference docs and comments: `reference-docs-catalog` and `inline-comments-catalog`.
 - Never write a module `README.md`, CI generates it from `header.md` and `footer.md`.
 
 ## 4. Deploy and Test
