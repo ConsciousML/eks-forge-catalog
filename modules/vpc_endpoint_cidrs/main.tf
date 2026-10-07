@@ -1,10 +1,14 @@
 locals {
   # Hosts 0 to 31 of each private subnet, the smallest single CIDR block holding every
-  # endpoint_host_offsets value. Changing it replaces the reservation.
+  # endpoint_host_offsets value. Hosts 0 to 3 are AWS's own.
+  # A host with no offset is spare, reserved for a future endpoint.
+  # An offset of 32 or more fails the plan.
+  # Changing this value replaces the reservation. The block is unreserved in between.
   reservation_prefix_length = 27
 }
 
 # Explicit reservation. AWS never hands these addresses to a node, a pod prefix, or another ENI.
+# An address already held when the reservation is created stays held.
 resource "aws_ec2_subnet_cidr_reservation" "endpoints" {
   count = length(var.private_subnets)
 
