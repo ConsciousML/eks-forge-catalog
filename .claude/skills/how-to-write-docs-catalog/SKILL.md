@@ -16,20 +16,17 @@ not against what an existing doc says, docs drift, code doesn't.
 
 Doc types in this repo, with examples to read before writing one of the same kind:
 
-- **Layer-index** (what a whole directory of things is): `README.md`, `modules/README.md`,
-  `units/README.md`, `stacks/README.md`
+- **Layer-index** (what a whole directory of things is): `README.md`
 - **Unit-group** (what a group of related units does and how they compose):
   `units/eks/README.md`, `units/eks/addons/argocd/README.md`, `units/tailscale/README.md`,
   `units/github/README.md`
 - **Bootstrap pipeline** (one-time setup, how to deploy it, links out to unit-group docs for
   detail): `pipelines/bootstrap/tailscale/README.md`, `pipelines/bootstrap/aws_gh_actions_auth/README.md`,
   `pipelines/bootstrap/setup_dns/README.md`
-- **Dev pipeline** (pointer to the site docs for the local environment): `pipelines/dev/README.md`
 - **Config inventory** (file-by-file breakdown of the shared HCL files in the catalog and live):
   `docs/reference/hcl-configuration.md`, published at
   https://eks-forge.readthedocs.io/latest/docs/reference/hcl_configuration/
-- **Operational guide** (procedural, task-oriented): `docs/development.md`, `docs/troubleshoot.md`,
-  `docs/reproducibility.md`
+- **Operational guide** (procedural, task-oriented): `docs/troubleshoot.md`
 
 ## Content
 

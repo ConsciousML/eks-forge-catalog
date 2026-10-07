@@ -19,7 +19,7 @@ Deploys ArgoCD into the cluster and wires up its admin password via AWS Secrets 
 - **[`argocd-server-grpc-service`](https://github.com/ConsciousML/argocd-app-of-apps-template/tree/main/manifests/argocd-server-grpc-service)** (app-of-apps): the ArgoCD server's gRPC `Service` and its `TargetGroupConfiguration`. Not deployed by the `helm` unit above
 - **[`argocd-httproute`](https://github.com/ConsciousML/argocd-app-of-apps-template/tree/main/charts/gateway-api/httproute)** (app-of-apps): an instance of the generic `httproute` chart, routes ArgoCD through the shared private `Gateway`. Not deployed by the `helm` unit above
 
-See the [App of Apps integration guide](../../../../docs/app-of-apps-integration.md) to understand how these apps are wired to Terraform-sourced values.
+See [Pass Terraform Values to an App](https://eks-forge.readthedocs.io/latest/docs/applications/pass-terraform-values-to-an-app/) to understand how these apps are wired to Terraform-sourced values.
 
 ## Upstream Dependencies
 

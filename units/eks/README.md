@@ -1,6 +1,6 @@
 # EKS Cluster Stack
 
-A prod-ready [stack](../../stacks/README.md) of [units](../README.md) for deploying EKS clusters across `dev`, `staging`, and `prod`.
+A prod-ready [stack](https://eks-forge.readthedocs.io/latest/docs/iac/#stacks) of [units](https://eks-forge.readthedocs.io/latest/docs/iac/#units) for deploying EKS clusters across `dev`, `staging`, and `prod`.
 
 The cluster supports:
 

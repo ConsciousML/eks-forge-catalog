@@ -51,9 +51,6 @@
     </restrictions>
 
     <documentation_map>
-        - `modules/README.md`, `units/README.md`, `stacks/README.md`: what each layer is and
-          how they compose
-
         Stack and pipeline level:
         - `units/eks/README.md`: full EKS stack topology, see &lt;eks_stack&gt;
         - `pipelines/bootstrap/README.md`: bootstrap pipeline inventory, see
