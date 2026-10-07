@@ -43,7 +43,7 @@
     <restrictions>
         - Never use `/` in branch names, it breaks Terragrunt (use `-` instead)
         - Skip `.terraform*` and `.terragrunt*` dirs when searching or reading, generated caches
-        - In `modules/`, only write and modify: `header.md` and `footer.md`
+        - In `modules/`, write docs only in `header.md` and `footer.md`. CI generates `README.md`
         - Read sources directly instead of spawning Explore or Task agents
         - Prefix all resources with `{environment}-` to avoid cross-environment collisions
         - Always set `expose = true` on every `include` block in unit files (without it,
