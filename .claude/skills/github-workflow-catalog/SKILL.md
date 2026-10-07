@@ -9,8 +9,11 @@ Never hardcode a GitHub owner, this repo is forked. Run `gh` from the repo's dir
 the repo from `origin`. Read the owner with `gh repo view --json owner -q .owner.login` when you
 need a cross-repo reference (`<owner>/<repo>#<N>`).
 
-If the change also touches `argocd-app-of-apps-template`, use the same branch name there, set
-`APP_OF_APPS_BRANCH` to it in `.env`, and open and merge its PR before this repo's.
+**Wait** at the start on `APP_OF_APPS_BRANCH` in `.env`:
+
+- If no `argocd-app-of-apps-template` change is planned, ask the user to revert it to `main`.
+- If the plan creates a branch there, tell the user to set it to the branch name you plan to
+  create. Name the branch after the feature.
 
 ## 1. Issue
 
@@ -38,7 +41,19 @@ Without a worktree, create the branch in place:
 git checkout main && git pull && git checkout -b <branch>
 ```
 
-With a worktree, create it with the branch and link the ignored `.env` into it. Then switch the
+With a worktree, first check that the session already holds the `.env` vars. A worktree session
+refuses every `source`, so `.env` can't be loaded once inside:
+```bash
+test -n "$AWS_REGION" && printf 'set\n' || printf 'unset\n'
+```
+
+If it prints `unset`, **wait**, even in an autonomous run: ask the user to relaunch Claude Code
+from the repo root with `.env` loaded, then continue:
+```bash
+set -a; source .env; set +a; claude --continue
+```
+
+Then create it with the branch and link the ignored `.env` into it. Then switch the
 session into it with the `EnterWorktree` tool (`path: .claude/worktrees/<branch>`):
 ```bash
 git fetch origin main
@@ -66,6 +81,9 @@ was verified, and what was not.
 
 ## 5. Pull Request
 
+If the plan created an `argocd-app-of-apps-template` branch and step 4 validated the feature, open
+and merge its PR first, with the same steps as below.
+
 1. Draft the PR:
    - Title: the main commit subject.
    - Body: `Closes #<issue>` when the issue is in this repo, otherwise
@@ -79,6 +97,9 @@ Never open it as a draft, CI fails on draft PRs. CI also fails on a leftover `TE
 missing provider lock file.
 
 CI pushes a terraform-docs commit back to the branch. Run `git pull` before any later push.
+
+If an `argocd-app-of-apps-template` branch was merged, ask the user to reset `APP_OF_APPS_BRANCH`
+to `main` in `.env`.
 
 ## 6. Review
 
