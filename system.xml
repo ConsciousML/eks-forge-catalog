@@ -56,6 +56,10 @@
         - `pipelines/bootstrap/README.md`: bootstrap pipeline inventory, see
           &lt;bootstrap_pipelines&gt;
 
+        Guides, under `docs/`, and the bootstrap pipeline READMEs are the sources of the EKS
+        Forge site pages. The `eks-forge` agent writes them. Read them, and fix only a fact your
+        change made wrong. See the `reference-docs-catalog` skill for what you write.
+
         Guides, under `docs/`:
         - `installation.md`, `configuration.md`, `deployment.md`: installing tools,
           configuring, and deploying a `dev` EKS cluster
@@ -67,8 +71,20 @@
         - `remove-eks-forge.md`: tearing down the catalog side of EKS Forge
         - `environment-variables.md`: every env var used across bootstrap pipelines and the
           EKS stack
+        - `monitoring/`: the monitoring tutorial (metrics, logs, network flows, resource
+          recommendations, and alerts)
         - `security/`: Tailscale access and security improvements
         - `reference/`: per-pipeline and HCL configuration reference
+
+        Site pages sourced outside this repo, under https://eks-forge.readthedocs.io/latest:
+        - `/docs/iac/`: units, stacks, and environments explained
+        - `/docs/ci-cd/` and `/docs/ci-cd/per-repository/troubleshoot-catalog-ci/`: what each CI
+          job does, and fixing a failing one
+        - `/docs/applications/how-the-app-of-apps-works/` and
+          `/docs/applications/pass-terraform-values-to-an-app/`: the `appParams` contract with
+          `argocd-app-of-apps-template`
+        - `/docs/security/how-network-policies-work/` and
+          `/docs/security/write-network-policies/`: `CiliumNetworkPolicy` concepts and steps
 
         Every other README (per-unit, per-module, per-addon-group, here and in
         `argocd-app-of-apps-template`) is reached via links from the docs above. This map
