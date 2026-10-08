@@ -51,7 +51,7 @@ inputs = {
 }
 ```
 
-For complete examples, see [`units/vpc/vpc/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/vpc/vpc/terragrunt.hcl), [`units/eks/cluster/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/cluster/terragrunt.hcl), and [`units/eks/addons/loki/s3/chunks/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/loki/s3/chunks/terragrunt.hcl).
+For complete examples, see [`units/vpc/vpc/terragrunt.hcl`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/units/vpc/vpc/terragrunt.hcl), [`units/eks/cluster/terragrunt.hcl`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/units/eks/cluster/terragrunt.hcl), and [`units/eks/addons/loki/s3/chunks/terragrunt.hcl`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/units/eks/addons/loki/s3/chunks/terragrunt.hcl).
 
 </TabItem>
 <TabItem value="kubernetes" label="Kubernetes add-on">
@@ -104,7 +104,7 @@ inputs = {
 
 If you bundle the chart yourself, put it under `charts/<name>/`, drop `repository`, and set `chart = "../../charts/<name>"` (e.g. `chart = "../../charts/karpenter-ec2-node-class"`).
 
-For complete examples, see [`units/eks/addons/cilium/helm/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/cilium/helm/terragrunt.hcl) and [`units/eks/addons/karpenter/helm/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/karpenter/helm/terragrunt.hcl) for upstream charts, and [`units/eks/addons/karpenter/ec2_node_class/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/karpenter/ec2_node_class/terragrunt.hcl) for a bundled one.
+For complete examples, see [`units/eks/addons/cilium/helm/terragrunt.hcl`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/units/eks/addons/cilium/helm/terragrunt.hcl) and [`units/eks/addons/karpenter/helm/terragrunt.hcl`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/units/eks/addons/karpenter/helm/terragrunt.hcl) for upstream charts, and [`units/eks/addons/karpenter/ec2_node_class/terragrunt.hcl`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/units/eks/addons/karpenter/ec2_node_class/terragrunt.hcl) for a bundled one.
 
 </TabItem>
 <TabItem value="custom" label="Custom module">
@@ -121,7 +121,7 @@ modules/<name>/
 └── footer.md      # extra notes, can be empty
 ```
 
-Write `header.md` as the module's title and a one-sentence description of what it does. For example, [`modules/helm_release/header.md`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/modules/helm_release/header.md):
+Write `header.md` as the module's title and a one-sentence description of what it does. For example, [`modules/helm_release/header.md`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/modules/helm_release/header.md):
 ```markdown
 # `helm_release` Terraform Module Reference
 
@@ -154,7 +154,7 @@ inputs = {
 }
 ```
 
-For complete examples, see [`modules/acm_certificate`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/modules/acm_certificate) and its unit [`units/eks/route53/acm_certificate/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/route53/acm_certificate/terragrunt.hcl), or [`modules/eks_addon`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/modules/eks_addon) and its unit [`units/eks/addons/ebs_csi_driver/addon/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/eks/addons/ebs_csi_driver/addon/terragrunt.hcl).
+For complete examples, see [`modules/acm_certificate`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/modules/acm_certificate) and its unit [`units/eks/route53/acm_certificate/terragrunt.hcl`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/units/eks/route53/acm_certificate/terragrunt.hcl), or [`modules/eks_addon`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/modules/eks_addon) and its unit [`units/eks/addons/ebs_csi_driver/addon/terragrunt.hcl`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/units/eks/addons/ebs_csi_driver/addon/terragrunt.hcl).
 
 </TabItem>
 </Tabs>
@@ -214,7 +214,7 @@ provisioning backed by EBS volumes.
 
 ## Add the Unit to the Dev Stack
 
-Add a [`unit`](https://docs.terragrunt.com/reference/hcl/blocks/#unit) block to [`pipelines/dev/eks/stack/terragrunt.stack.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/pipelines/dev/eks/stack/terragrunt.stack.hcl). Point `source` at your unit, and set `path` to the unit's directory under `units/`, so its lock file syncs back to it in [Commit the Lock File](#commit-the-lock-file). Pick the tab that fits your component:
+Add a [`unit`](https://docs.terragrunt.com/reference/hcl/blocks/#unit) block to [`pipelines/dev/eks/stack/terragrunt.stack.hcl`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/pipelines/dev/eks/stack/terragrunt.stack.hcl). Point `source` at your unit, and set `path` to the unit's directory under `units/`, so its lock file syncs back to it in [Commit the Lock File](#commit-the-lock-file). Pick the tab that fits your component:
 
 <Tabs groupId="component">
 <TabItem value="registry" label="Registry module">
@@ -336,7 +336,7 @@ The apply generated your unit's lock file under `.terragrunt-stack/`, which is w
 make sync-lock-files
 ```
 
-This runs [`scripts/sync-lock-files.sh`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/scripts/sync-lock-files.sh), which copies each `.terragrunt-stack/<path>/.terraform.lock.hcl` to `units/<path>/.terraform.lock.hcl`.
+This runs [`scripts/sync-lock-files.sh`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/scripts/sync-lock-files.sh), which copies each `.terragrunt-stack/<path>/.terraform.lock.hcl` to `units/<path>/.terraform.lock.hcl`.
 
 Some units can't set `path` to their directory under `units/`, for example when a stack instantiates one unit several times. The script then reports them as failed:
 ```text
@@ -350,7 +350,7 @@ If yours is one of them, copy its lock file into the unit's directory by hand, r
 cp <stack-dir>/.terragrunt-stack/<path>/.terraform.lock.hcl units/<unit-dir>/
 ```
 
-For example, the `ec2_spot_quota` unit is instantiated from [`units/service_quota`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/units/service_quota), inside the nested [`ec2_quotas` stack](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/stacks/ec2_quotas/terragrunt.stack.hcl):
+For example, the `ec2_spot_quota` unit is instantiated from [`units/service_quota`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/units/service_quota), inside the nested [`ec2_quotas` stack](https://github.com/ConsciousML/eks-forge-catalog/tree/main/stacks/ec2_quotas/terragrunt.stack.hcl):
 ```bash
 cp pipelines/bootstrap/aws_service_quotas/.terragrunt-stack/ec2_quotas/.terragrunt-stack/ec2_spot_quota/.terraform.lock.hcl units/service_quota/
 ```

@@ -252,5 +252,5 @@ The Slack channels created for each environment's Alertmanager notifications.
 |------|-------------|
 | `channel_names` | Slack channel names, without the environment prefix or leading `#`. |
 
-Each name must match the suffix after `<environment>-` of a `slack_configs[].channel` entry in the Alertmanager configuration of [`kube-prometheus-stack`'s `values.yaml`](https://github.com/ConsciousML/argocd-app-of-apps-template/blob/main/charts/monitoring/kube-prometheus-stack/values.yaml) in the app-of-apps repository.
+Each name must match the suffix after `<environment>-` of a `slack_configs[].channel` entry in the Alertmanager configuration of [`kube-prometheus-stack`'s `values.yaml`](https://github.com/ConsciousML/eks-forge-app-of-apps/blob/main/charts/monitoring/kube-prometheus-stack/values.yaml) in the app-of-apps repository.
 

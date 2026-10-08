@@ -41,7 +41,7 @@ The [GitHub Actions OIDC provider](https://docs.aws.amazon.com/IAM/latest/UserGu
 
 Set `create_oidc_provider = false` when another repository already created it in the same AWS account. Setting it `true` a second time fails with `EntityAlreadyExists`. Give each repository's role a distinct `iam_role_name` to avoid conflicts.
 
-In EKS Forge, use `create_oidc_provider = true` in your [catalog](https://github.com/ConsciousML/terragrunt-template-catalog-eks) fork and `create_oidc_provider = false` and in [live](https://github.com/ConsciousML/terragrunt-template-live-eks) fork.
+In EKS Forge, use `create_oidc_provider = true` in your [catalog](https://github.com/ConsciousML/eks-forge-catalog) fork and `create_oidc_provider = false` and in [live](https://github.com/ConsciousML/terragrunt-template-live-eks) fork.
 
 ## GitHub Actions Workflow Setup Action
 

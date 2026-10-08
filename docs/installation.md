@@ -18,7 +18,7 @@ export CATALOG_REPO_NAME=<your-catalog-repo-name>
 
 Clone the catalog and push it to your repository:
 ```bash
-git clone https://github.com/ConsciousML/terragrunt-template-catalog-eks.git $CATALOG_REPO_NAME
+git clone https://github.com/ConsciousML/eks-forge-catalog.git $CATALOG_REPO_NAME
 cd $CATALOG_REPO_NAME
 git remote set-url origin git@github.com:$GITHUB_OWNER/$CATALOG_REPO_NAME.git
 git push origin main

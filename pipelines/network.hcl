@@ -30,7 +30,7 @@ locals {
   }
 
   # Consumer-side keys matching the vpcEndpointCidrs shape each CiliumNetworkPolicy
-  # consumer expects in argocd-app-of-apps-template.
+  # consumer expects in eks-forge-app-of-apps.
   app_param_key_map = {
     secretsmanager       = "secretsmanager"
     route53              = "route53"
