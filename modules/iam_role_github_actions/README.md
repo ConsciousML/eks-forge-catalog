@@ -34,6 +34,7 @@ The [`iam_role_github_actions` module](../iam\_role\_github\_actions/) creates a
 | <a name="input_inline_policies"></a> [inline\_policies](#input\_inline\_policies) | List of inline policies to attach to the IAM role | <pre>list(object({<br/>    name   = string<br/>    policy = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_max_session_duration"></a> [max\_session\_duration](#input\_max\_session\_duration) | Maximum session duration (in seconds) for the IAM role | `number` | `3600` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of the IAM role | `string` | n/a | yes |
+| <a name="input_subject_claim_prefix"></a> [subject\_claim\_prefix](#input\_subject\_claim\_prefix) | Prefix of the OIDC `sub` claim GitHub issues for the repository, e.g. `repo:<owner>@<owner_id>/<repo>@<repo_id>` with immutable subject claims. Defaults to `repo:<github_owner>/<github_repo_name>` | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the IAM role | `map(string)` | `{}` | no |
 
 ## Outputs
