@@ -105,7 +105,8 @@ CI pushes a terraform-docs commit back to the branch. Run `git pull` before any 
 
 ## 5. Deploy and Test
 
-Skip for a change with no infra to deploy.
+Skip only for a docs-only change: docs, READMEs, comments, and skills. Deploy and test any other
+change, even one a `terragrunt plan` seems to cover. A plan doesn't prove it works on live infra.
 
 A worktree isolates code, not state. Every session and worktree applies to the same `dev` stack.
 **Wait** before the first apply: ask the user whether another session is using it. If one is, wait
