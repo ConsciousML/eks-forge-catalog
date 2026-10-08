@@ -10,7 +10,7 @@ locals {
   ci_tag = "tag:ci"
 
   # GitHub's `sub` prefix for the repository. Holds owner and repo IDs with immutable subject claims.
-  subject_claim_prefix = run_cmd("--terragrunt-quiet", "gh", "api", "repos/${local.github_owner_catalog}/${local.github_repo_name_catalog}/actions/oidc/customization/sub", "--jq", ".sub_claim_prefix")
+  subject_claim_prefix = run_cmd("--terragrunt-quiet", "gh", "api", "repos/${local.github_owner_catalog}/${local.github_repo_name_catalog}/actions/oidc/customization/sub", "--jq", ".sub_claim_prefix // error(\"sub_claim_prefix missing from GitHub API response\")")
 }
 
 stack "tailscale_wif" {
