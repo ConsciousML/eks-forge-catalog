@@ -26,6 +26,7 @@ For setup steps, read the [AWS GitHub Actions Authentication Bootstrap](/docs/qu
 | `iam_role_name` | Name of the IAM role GitHub Actions assumes. Must be unique per AWS account when multiple repositories bootstrap into the same account. | `string` | - | Yes |
 | `github_owner` | GitHub username or organization name that owns the repository. | `string` | - | Yes |
 | `github_repo_name` | GitHub repository name. | `string` | - | Yes |
+| `subject_claim_prefix` | Prefix of the OIDC `sub` claim GitHub issues for the repository. Read from the GitHub API, so it holds the owner and repository IDs when the repository uses [immutable subject claims](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims). | `string` | `repo:<github_owner>/<github_repo_name>` | No |
 | `github_branch` | Branch allowed to assume the role. `*` allows all branches. | `string` | - | Yes |
 | `inline_policies` | Inline IAM policies (`name`, `policy` JSON) attached directly to the role. | `list(object)` | - | Yes |
 | `max_session_duration` | Maximum session duration (seconds) for the assumed role. | `number` | `3600` | No |

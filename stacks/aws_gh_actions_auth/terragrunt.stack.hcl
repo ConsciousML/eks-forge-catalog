@@ -21,6 +21,7 @@ unit "iam_role_github_actions" {
     github_owner         = values.github_owner
     github_repo_name     = values.github_repo_name
     github_branch        = values.github_branch
+    subject_claim_prefix = try(values.subject_claim_prefix, null)
     inline_policies      = values.inline_policies
     max_session_duration = try(values.max_session_duration, 3600)
   }

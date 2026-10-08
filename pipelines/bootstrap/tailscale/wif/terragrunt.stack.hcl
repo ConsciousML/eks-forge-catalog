@@ -8,6 +8,9 @@ locals {
   # Tailscale tag assigned to CI runner devices joining via WIF
   # Must already be defined as a tagOwner in the ACL applied by the sibling `acl` pipeline
   ci_tag = "tag:ci"
+
+  # GitHub's `sub` prefix for the repository. Holds owner and repo IDs with immutable subject claims.
+  subject_claim_prefix = run_cmd("--terragrunt-quiet", "gh", "api", "repos/${local.github_owner_catalog}/${local.github_repo_name_catalog}/actions/oidc/customization/sub", "--jq", ".sub_claim_prefix")
 }
 
 stack "tailscale_wif" {
@@ -20,6 +23,7 @@ stack "tailscale_wif" {
     github_repo_name_catalog = local.github_repo_name_catalog
     github_owner             = local.github_owner_catalog
     github_repo_name         = local.github_repo_name_catalog
+    subject_claim_prefix     = local.subject_claim_prefix
     github_token             = get_env("GITHUB_TOKEN")
     issuer                   = "https://token.actions.githubusercontent.com"
     scopes                   = ["all"]

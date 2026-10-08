@@ -6,6 +6,9 @@ locals {
   github_repo_name_catalog = local.github_locals.github_repo_name_catalog
 
   github_token = get_env("GITHUB_TOKEN")
+
+  # GitHub's `sub` prefix for the repository. Holds owner and repo IDs with immutable subject claims.
+  subject_claim_prefix = run_cmd("--terragrunt-quiet", "gh", "api", "repos/${local.github_owner_catalog}/${local.github_repo_name_catalog}/actions/oidc/customization/sub", "--jq", ".sub_claim_prefix")
 }
 
 stack "aws_gh_actions_auth" {
@@ -17,6 +20,7 @@ stack "aws_gh_actions_auth" {
     github_repo_name_catalog = local.github_repo_name_catalog
     github_owner             = local.github_owner_catalog
     github_repo_name         = local.github_repo_name_catalog
+    subject_claim_prefix     = local.subject_claim_prefix
     github_token             = local.github_token
     iam_role_name            = "gh-terragrunt-role-catalog"
     policy_arns = [
