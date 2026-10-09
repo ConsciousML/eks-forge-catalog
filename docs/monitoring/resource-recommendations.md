@@ -1,7 +1,7 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 # Read a Resource Recommendation
 
-Now that you've completed [Explore Your Network Flows](/docs/monitoring/get-started/network-flows/), you'll open the [Goldilocks](https://goldilocks.docs.fairwinds.com/) dashboard and read the CPU and memory it recommends for `podinfo`. You'll only look: nothing on this page changes your cluster.
+In this guide, you'll open the [Goldilocks](https://goldilocks.docs.fairwinds.com/) dashboard and read the CPU and memory it recommends for `podinfo`. You'll only look: nothing on this page changes your cluster.
 
 ## Open the Goldilocks Dashboard
 Like Grafana and Hubble, the Goldilocks dashboard is only reachable using Tailscale. If you disconnected, connect to Tailscale by running `tailscale up`, or with the button in the Tailscale client.
@@ -37,4 +37,4 @@ Open [`manifests/podinfo/podinfo-deployment.yaml`](https://github.com/ConsciousM
 Notice these are the current values the dashboard shows. Goldilocks only displays recommendations: the `requests` and `limits` of `podinfo` change when this file changes.
 
 ## What's Next
-Next, see [Alerts](/docs/monitoring/get-started/alerts/) to follow an alert to Slack.
+Next, see [Control Plane](/docs/monitoring/get-started/control-plane/) to look at the part of your cluster AWS runs for you.

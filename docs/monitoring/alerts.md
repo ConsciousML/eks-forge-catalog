@@ -1,7 +1,7 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 # Follow an Alert
 
-Now that you've completed [Read a Resource Recommendation](/docs/monitoring/get-started/resource-recommendations/), you'll follow an alert from [Prometheus](https://prometheus.io/) to [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) to Slack. You'll only look: nothing on this page changes your cluster.
+In this guide, you'll follow an alert from [Prometheus](https://prometheus.io/) to [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) to Slack. You'll only look: nothing on this page changes your cluster.
 
 ## Find a Firing Alert in Prometheus
 Like your other tools, Prometheus is only reachable using Tailscale. If you disconnected, connect to Tailscale by running `tailscale up`, or with the button in the Tailscale client.
@@ -39,6 +39,6 @@ From there, find the cause with `kubectl` and the tools you explored in this tut
 - [Explore Your Network Flows](/docs/monitoring/get-started/network-flows/) to check whether its traffic is dropped
 
 ## What's Next
-You've completed [Monitor Your Cluster](/docs/monitoring/get-started/). You now know where to find the metrics, logs, network flows, resource recommendations, and alerts of your cluster.
+You've completed [Monitor Your Cluster](/docs/monitoring/get-started/). You now know where to find the metrics, logs, network flows, resource recommendations, control plane metrics, and alerts of your cluster.
 
 When you're done with your `dev` cluster, go back to [Destroy the Infrastructure](/docs/quickstart/deployment/#destroy-the-infrastructure).
