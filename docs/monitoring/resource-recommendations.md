@@ -37,4 +37,4 @@ Open [`manifests/podinfo/podinfo-deployment.yaml`](https://github.com/ConsciousM
 Notice these are the current values the dashboard shows. Goldilocks only displays recommendations: the `requests` and `limits` of `podinfo` change when this file changes.
 
 ## What's Next
-Next, see [Alerts](/docs/monitoring/get-started/alerts/) to follow an alert to Slack.
+Next, see [Control Plane](/docs/monitoring/get-started/control-plane/) to look at the part of your cluster AWS runs for you.

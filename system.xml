@@ -72,7 +72,7 @@
         - `environment-variables.md`: every env var used across bootstrap pipelines and the
           EKS stack
         - `monitoring/`: the monitoring tutorial (metrics, logs, network flows, resource
-          recommendations, and alerts)
+          recommendations, the control plane, and alerts)
         - `security/`: Tailscale access and security improvements
         - `reference/`: per-pipeline and HCL configuration reference
 
