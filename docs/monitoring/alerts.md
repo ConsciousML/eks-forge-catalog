@@ -1,7 +1,7 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 # Follow an Alert
 
-Now that you've completed [Explore Your Control Plane](/docs/monitoring/get-started/control-plane/), you'll follow an alert from [Prometheus](https://prometheus.io/) to [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) to Slack. You'll only look: nothing on this page changes your cluster.
+In this guide, you'll follow an alert from [Prometheus](https://prometheus.io/) to [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) to Slack. You'll only look: nothing on this page changes your cluster.
 
 ## Find a Firing Alert in Prometheus
 Like your other tools, Prometheus is only reachable using Tailscale. If you disconnected, connect to Tailscale by running `tailscale up`, or with the button in the Tailscale client.

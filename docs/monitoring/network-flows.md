@@ -1,7 +1,7 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 # Explore Your Network Flows
 
-Now that you've completed [Explore Your Logs](/docs/monitoring/get-started/logs/), you'll look at the traffic between your pods with [Hubble](https://github.com/cilium/hubble), first in its UI, then with its CLI.
+In this guide, you'll look at the traffic between your pods with [Hubble](https://github.com/cilium/hubble), first in its UI, then with its CLI.
 
 ## Open the Hubble UI
 Like Grafana and Prometheus, the Hubble UI is only reachable using Tailscale. If you disconnected, connect to Tailscale by running `tailscale up`, or with the button in the Tailscale client.

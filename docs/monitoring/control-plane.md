@@ -1,7 +1,7 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 # Explore Your Control Plane
 
-Now that you've completed [Read a Resource Recommendation](/docs/monitoring/get-started/resource-recommendations/), you'll look at the [control plane](https://kubernetes.io/docs/concepts/architecture/#control-plane-components) of your cluster, which AWS runs for you. First in the [EKS](https://aws.amazon.com/eks/) console, then with `kubectl`. You'll only look: nothing on this page changes your cluster.
+In this guide, you'll look at the [control plane](https://kubernetes.io/docs/concepts/architecture/#control-plane-components) of your cluster, which AWS runs for you. First in the [EKS](https://aws.amazon.com/eks/) console, then with `kubectl`. You'll only look: nothing on this page changes your cluster.
 
 ## Open the Observability Dashboard
 Open the [EKS console](https://console.aws.amazon.com/eks/home#/clusters) in your browser. At the top right, select the region you set in [Catalog Configuration](/docs/quickstart/configuration/#catalog-configuration). You should see `dev-cluster` in the list of clusters.
