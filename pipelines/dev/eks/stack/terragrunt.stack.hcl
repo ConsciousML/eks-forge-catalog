@@ -558,7 +558,7 @@ unit "argocd" {
           requests = { cpu = "1388m", memory = "1645M" }
           limits   = { memory = "1645M" }
         }
-        # Outranks the DaemonSets' daemonset-critical (argocd-app-of-apps-template's
+        # Outranks the DaemonSets' daemonset-critical (eks-forge-app-of-apps's
         # priority-classes/), so it can no longer be preempted to make room for one of them
         # on a full node.
         priorityClassName = "system-node-critical"

@@ -38,7 +38,7 @@ flowchart TD
 
 ## 1. Access Control (ACL) Policy
 
-A [tailnet](https://tailscale.com/docs/concepts/tailnet)-wide [Access Control (ACL) policy](https://tailscale.com/docs/features/access-control/acls) applied by the [`tailscale/acl` bootstrap pipeline](/docs/reference/bootstrap/tailscale_acl/) from the [catalog repository](https://github.com/ConsciousML/terragrunt-template-catalog-eks). This pipeline needs to be implemented only once per tailnet.
+A [tailnet](https://tailscale.com/docs/concepts/tailnet)-wide [Access Control (ACL) policy](https://tailscale.com/docs/features/access-control/acls) applied by the [`tailscale/acl` bootstrap pipeline](/docs/reference/bootstrap/tailscale_acl/) from the [catalog repository](https://github.com/ConsciousML/eks-forge-catalog). This pipeline needs to be implemented only once per tailnet.
 
 [Tags](https://tailscale.com/docs/features/tags) label devices by role (`tag:ci`, `tag:k8s-operator`) instead of by user identity. The ACL declares these tags, along with grants (rules that let one tag create auth keys for another). It also auto-approves subnet routes for each environment's VPC CIDR, so tagged nodes can advertise routes without manual approval in the Tailscale admin panel.
 

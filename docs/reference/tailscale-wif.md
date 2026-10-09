@@ -17,7 +17,8 @@ For setup steps, read the [Tailscale Bootstrap](/docs/quickstart/bootstrap/tails
 | Name | Description | Type | Default | Required |
 |------|------|------|---------|----------|
 | `issuer` | OIDC issuer URL for the federated identity. | `string` | - | Yes |
-| `github_owner` | GitHub organization or user account that owns the repository. Combined with `github_repo_name` to build the OIDC subject claim (`repo:<org>/<repo>:*`) scoping the credential to this repository. | `string` | - | Yes |
+| `github_owner` | GitHub organization or user account that owns the repository. Combined with `github_repo_name` to build the OIDC subject claim (`repo:<org>/<repo>:*`) scoping the credential to this repository, unless `subject_claim_prefix` is set. | `string` | - | Yes |
+| `subject_claim_prefix` | Prefix of the OIDC `sub` claim GitHub issues for the repository. Read from the GitHub API, so it holds the owner and repository IDs when the repository uses [immutable subject claims](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims). | `string` | `repo:<github_owner>/<github_repo_name>` | No |
 | `scopes` | OAuth scopes for auth keys issued via this federated identity. | `set(string)` | `["devices:core", "auth_keys", "dns"]` | No |
 | `github_token` | GitHub personal access token with `repo` permissions. | `string` | - | Yes |
 | `github_repo_name` | GitHub repository name where `TS_OAUTH_CLIENT_ID`, `TS_AUDIENCE`, and `TS_TAGS` are stored. | `string` | - | Yes |

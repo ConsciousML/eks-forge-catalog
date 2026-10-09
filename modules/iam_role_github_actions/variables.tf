@@ -13,6 +13,12 @@ variable "github_repo_name" {
   type        = string
 }
 
+variable "subject_claim_prefix" {
+  description = "Prefix of the OIDC `sub` claim GitHub issues for the repository, e.g. `repo:<owner>@<owner_id>/<repo>@<repo_id>` with immutable subject claims. Defaults to `repo:<github_owner>/<github_repo_name>`"
+  type        = string
+  default     = null
+}
+
 variable "github_branch" {
   description = "GitHub branch name or pattern (use '*' for all branches)"
   type        = string

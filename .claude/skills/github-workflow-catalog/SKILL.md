@@ -33,7 +33,7 @@ main checkout on other branches. In an autonomous run, don't create one unless t
 
 ### App-of-apps branch
 
-If the change also touches `argocd-app-of-apps-template`, create a branch there, named after the
+If the change also touches `eks-forge-app-of-apps`, create a branch there, named after the
 feature.
 
 The stack deploys app-of-apps from `APP_OF_APPS_BRANCH` in `.env`. It must be that branch, or
@@ -87,7 +87,7 @@ existing patterns and report it.
 
 Opened before the deploy, so the user can review the change before anything is applied.
 
-If the change has an `argocd-app-of-apps-template` branch, open its PR too, with the same steps as
+If the change has an `eks-forge-app-of-apps` branch, open its PR too, with the same steps as
 below.
 
 1. Draft the PR:
@@ -105,7 +105,8 @@ CI pushes a terraform-docs commit back to the branch. Run `git pull` before any 
 
 ## 5. Deploy and Test
 
-Skip for a change with no infra to deploy.
+Skip only for a docs-only change: docs, READMEs, comments, and skills. Deploy and test any other
+change, even one a `terragrunt plan` seems to cover. A plan doesn't prove it works on live infra.
 
 A worktree isolates code, not state. Every session and worktree applies to the same `dev` stack.
 **Wait** before the first apply: ask the user whether another session is using it. If one is, wait
@@ -153,7 +154,7 @@ Never merge after a failed destroy.
 Run `gh pr checks <N> --watch`. `check-docs-changes` fails by design whenever terraform-docs pushed
 a commit. When it does, run `git pull` and watch again. Stop on any other failure.
 
-If the change has an `argocd-app-of-apps-template` PR, merge it first, with the same
+If the change has an `eks-forge-app-of-apps` PR, merge it first, with the same
 `gh pr merge` command, from that repo's directory. Merging it before the review would force a new
 branch and PR for any change requested there.
 
@@ -186,5 +187,5 @@ git pull   # only if the main checkout is on main
 `git worktree remove` refuses when the worktree holds uncommitted or untracked files. Check
 `git status` there instead of forcing it.
 
-If an `argocd-app-of-apps-template` PR was merged, ask the user to reset `APP_OF_APPS_BRANCH` to
+If an `eks-forge-app-of-apps` PR was merged, ask the user to reset `APP_OF_APPS_BRANCH` to
 `main` in `.env`.

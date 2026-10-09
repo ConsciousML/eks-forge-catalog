@@ -26,7 +26,7 @@ If `argocd_app_of_apps` is among them, it passes your unit's outputs to an app t
 
 ## Delete the Unit
 
-In [`pipelines/dev/eks/stack/terragrunt.stack.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/tree/main/pipelines/dev/eks/stack/terragrunt.stack.hcl), delete your unit's `unit` block. If the block read a `version_<name>` local that no other block uses, delete the local too.
+In [`pipelines/dev/eks/stack/terragrunt.stack.hcl`](https://github.com/ConsciousML/eks-forge-catalog/tree/main/pipelines/dev/eks/stack/terragrunt.stack.hcl), delete your unit's `unit` block. If the block read a `version_<name>` local that no other block uses, delete the local too.
 
 If no other stack uses the unit, delete its directory, with its README and lock file, replacing `<unit-dir>` with its path under `units/`:
 ```bash

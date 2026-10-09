@@ -14,10 +14,10 @@ Deploys ArgoCD into the cluster and wires up its admin password via AWS Secrets 
 
 - **[aws_secret_password](aws_secret_password/)**: Generates a random admin password and stores it in AWS Secrets Manager
 - **[helm](helm/)**: Deploys ArgoCD via Helm. Sets `global.domain` from `domains.hcl`
-- **[app_of_apps](app_of_apps/)**: Deploys the root ArgoCD `Application` CR pointing to the [App of Apps repository](https://github.com/ConsciousML/argocd-app-of-apps-template)
-- **[`argocd-secrets`](https://github.com/ConsciousML/argocd-app-of-apps-template/tree/main/charts/external-secrets-operator/secret-sync)** (app-of-apps): an instance of the generic `secret-sync` chart, syncs the admin password's bcrypt hash into `argocd-secret` via an ESO `SecretStore` and `ExternalSecret`. Not deployed by this unit
-- **[`argocd-server-grpc-service`](https://github.com/ConsciousML/argocd-app-of-apps-template/tree/main/manifests/argocd-server-grpc-service)** (app-of-apps): the ArgoCD server's gRPC `Service` and its `TargetGroupConfiguration`. Not deployed by the `helm` unit above
-- **[`argocd-httproute`](https://github.com/ConsciousML/argocd-app-of-apps-template/tree/main/charts/gateway-api/httproute)** (app-of-apps): an instance of the generic `httproute` chart, routes ArgoCD through the shared private `Gateway`. Not deployed by the `helm` unit above
+- **[app_of_apps](app_of_apps/)**: Deploys the root ArgoCD `Application` CR pointing to the [App of Apps repository](https://github.com/ConsciousML/eks-forge-app-of-apps)
+- **[`argocd-secrets`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/charts/external-secrets-operator/secret-sync)** (app-of-apps): an instance of the generic `secret-sync` chart, syncs the admin password's bcrypt hash into `argocd-secret` via an ESO `SecretStore` and `ExternalSecret`. Not deployed by this unit
+- **[`argocd-server-grpc-service`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/manifests/argocd-server-grpc-service)** (app-of-apps): the ArgoCD server's gRPC `Service` and its `TargetGroupConfiguration`. Not deployed by the `helm` unit above
+- **[`argocd-httproute`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/charts/gateway-api/httproute)** (app-of-apps): an instance of the generic `httproute` chart, routes ArgoCD through the shared private `Gateway`. Not deployed by the `helm` unit above
 
 See [Pass Terraform Values to an App](https://eks-forge.readthedocs.io/latest/docs/applications/pass-terraform-values-to-an-app/) to understand how these apps are wired to Terraform-sourced values.
 

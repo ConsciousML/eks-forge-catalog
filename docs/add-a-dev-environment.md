@@ -24,7 +24,7 @@ From now on, every command run after `source .env` targets your environment inst
 
 ## Reserve a VPC CIDR
 
-Add your environment to `vpc_cidrs` in [`pipelines/network.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/blob/main/pipelines/network.hcl), with the `/16` block that follows the highest one. For example, for `dev-2`:
+Add your environment to `vpc_cidrs` in [`pipelines/network.hcl`](https://github.com/ConsciousML/eks-forge-catalog/blob/main/pipelines/network.hcl), with the `/16` block that follows the highest one. For example, for `dev-2`:
 ```hcl
 vpc_cidrs = {
   ...
@@ -118,7 +118,7 @@ terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```
 
-When it's done, connect `kubectl` to your environment's cluster, replacing `<region-code>` with the region set in [`pipelines/region.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/blob/main/pipelines/region.hcl):
+When it's done, connect `kubectl` to your environment's cluster, replacing `<region-code>` with the region set in [`pipelines/region.hcl`](https://github.com/ConsciousML/eks-forge-catalog/blob/main/pipelines/region.hcl):
 ```bash
 aws eks update-kubeconfig --region <region-code> --name $TG_ENVIRONMENT-cluster
 ```

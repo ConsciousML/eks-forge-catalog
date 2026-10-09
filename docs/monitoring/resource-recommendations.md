@@ -23,7 +23,7 @@ Under the container, notice the two blocks, **Guaranteed QoS** and **Burstable Q
 Look at the **Guaranteed QoS** block. Its recommended CPU and memory are computed by the [VPA recommender](https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler) from what the `podinfo` pods actually used.
 
 ## Find Where the Current Values Come From
-Open [`manifests/podinfo/podinfo-deployment.yaml`](https://github.com/ConsciousML/argocd-app-of-apps-template/blob/main/manifests/podinfo/podinfo-deployment.yaml) in the app of apps repository, and find the `resources` of the `podinfo` container:
+Open [`manifests/podinfo/podinfo-deployment.yaml`](https://github.com/ConsciousML/eks-forge-app-of-apps/blob/main/manifests/podinfo/podinfo-deployment.yaml) in the app of apps repository, and find the `resources` of the `podinfo` container:
 ```yaml
           resources:
             requests:

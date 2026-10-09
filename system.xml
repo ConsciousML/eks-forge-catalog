@@ -8,11 +8,11 @@
         1. This repo (the catalog): Terraform modules, Terragrunt units, and stack configs
         2. `terragrunt-template-live-eks`: live deployments (`dev`, `staging`, `prod`) that
           instantiate this catalog's stacks
-        3. `argocd-app-of-apps-template`: GitOps repo owning the Kubernetes-side Helm charts and
+        3. `eks-forge-app-of-apps`: GitOps repo owning the Kubernetes-side Helm charts and
           manifests, deployed through ArgoCD
 
         Most addons split work across 1. and 3.: this repo provisions the AWS side.
-        `argocd-app-of-apps-template` provisions the Kubernetes side (Helm charts and
+        `eks-forge-app-of-apps` provisions the Kubernetes side (Helm charts and
         manifests). When a change touches both, update docs in both repos in the same pass.
 
         Composition flow in this repo: modules/ → units/ → pipelines/
@@ -82,12 +82,12 @@
           job does, and fixing a failing one
         - `/docs/applications/how-the-app-of-apps-works/` and
           `/docs/applications/pass-terraform-values-to-an-app/`: the `appParams` contract with
-          `argocd-app-of-apps-template`
+          `eks-forge-app-of-apps`
         - `/docs/security/how-network-policies-work/` and
           `/docs/security/write-network-policies/`: `CiliumNetworkPolicy` concepts and steps
 
         Every other README (per-unit, per-module, per-addon-group, here and in
-        `argocd-app-of-apps-template`) is reached via links from the docs above. This map
+        `eks-forge-app-of-apps`) is reached via links from the docs above. This map
         indexes entry points, not every file.
     </documentation_map>
 

@@ -46,7 +46,7 @@ Don't add `s3` in the next section. The unit keeps its gateway endpoint and igno
 
 ## Add the Service
 
-Add your key to `endpoint_host_offsets` in [`pipelines/network.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/blob/main/pipelines/network.hcl), with the offset that follows the highest one. Quote a key that contains a dot, like `"ecr.api"`. For example, for KMS:
+Add your key to `endpoint_host_offsets` in [`pipelines/network.hcl`](https://github.com/ConsciousML/eks-forge-catalog/blob/main/pipelines/network.hcl), with the offset that follows the highest one. Quote a key that contains a dot, like `"ecr.api"`. For example, for KMS:
 ```hcl
 endpoint_host_offsets = {
   ...
@@ -55,7 +55,7 @@ endpoint_host_offsets = {
 }
 ```
 
-If your service's name has no region, also add its key to `global_services` in [`units/vpc/endpoints/terragrunt.hcl`](https://github.com/ConsciousML/terragrunt-template-catalog-eks/blob/main/units/vpc/endpoints/terragrunt.hcl). Otherwise, the unit looks for the endpoint under a name with a region, and the apply fails:
+If your service's name has no region, also add its key to `global_services` in [`units/vpc/endpoints/terragrunt.hcl`](https://github.com/ConsciousML/eks-forge-catalog/blob/main/units/vpc/endpoints/terragrunt.hcl). Otherwise, the unit looks for the endpoint under a name with a region, and the apply fails:
 ```hcl
 global_services = ["route53", "iam", "<key>"]
 ```
