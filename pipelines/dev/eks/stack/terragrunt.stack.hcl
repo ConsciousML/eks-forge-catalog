@@ -230,7 +230,7 @@ unit "cluster" {
 
     # DEV: control plane logging disabled to cut CloudWatch costs, do not port this to
     # staging/prod, re-enable there. See
-    # https://github.com/ConsciousML/terragrunt-template-live-eks/issues/40 for details.
+    # https://github.com/ConsciousML/eks-forge-live/issues/40 for details.
     enabled_log_types = []
     # Infrequent Access cuts cost ~50% but doesn't support all Standard class features:
     # https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch_Logs_Log_Classes.html
