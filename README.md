@@ -7,7 +7,7 @@
 
 [EKS Forge](https://eks-forge.readthedocs.io/latest/) is an open-source platform for building and operating [EKS](https://aws.amazon.com/eks/) clusters.
 
-This repository holds its reusable Terragrunt modules, units, and stacks, deployed across `dev`, `staging`, and `prod` by the [live repository](https://github.com/ConsciousML/terragrunt-template-live-eks).
+This repository holds its reusable Terragrunt modules, units, and stacks, deployed across `dev`, `staging`, and `prod` by the [live repository](https://github.com/ConsciousML/eks-forge-live).
 
 ## Documentation
 

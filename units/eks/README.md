@@ -27,8 +27,8 @@ The following pipelines must run once before deploying this stack:
 This stack is instantiated in:
 
 - **[`pipelines/dev/eks/stack`](../../pipelines/dev/eks/stack/)**: local development environment for iterating on catalog changes
-- **[`live/prod/eks`](https://github.com/ConsciousML/terragrunt-template-live-eks/tree/main/live/prod/eks)**: production environment in the live repository
-- **[`live/staging/eks`](https://github.com/ConsciousML/terragrunt-template-live-eks/tree/main/live/staging/eks)**: staging environment in the live repository
+- **[`live/prod/eks`](https://github.com/ConsciousML/eks-forge-live/tree/main/live/prod/eks)**: production environment in the live repository
+- **[`live/staging/eks`](https://github.com/ConsciousML/eks-forge-live/tree/main/live/staging/eks)**: staging environment in the live repository
 
 ## What's Inside
 
