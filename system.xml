@@ -63,7 +63,6 @@
         Guides, under `docs/`:
         - `installation.md`, `configuration.md`, `deployment.md`: installing tools,
           configuring, and deploying a `dev` EKS cluster
-        - `architecture.md`: how this repo's modules, units, and stacks layer together
         - `add-a-unit.md`: adding a unit and wiring it into a stack
         - `remove-a-unit.md`: removing a unit from a stack
         - `add-a-vpc-endpoint.md`: adding an interface VPC endpoint for an AWS service
