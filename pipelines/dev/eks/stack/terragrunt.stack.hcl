@@ -645,6 +645,14 @@ unit "argocd" {
           requests = { cpu = "11m", memory = "64M" }
           limits   = { cpu = "55m", memory = "64M" }
         }
+        # Copies the argocd binary. With the 64M inherited from resources, it is OOMKilled
+        # mid copy and dex then crashloops on the truncated binary.
+        initImage = {
+          resources = {
+            requests = { cpu = "11m", memory = "128M" }
+            limits   = { cpu = "55m", memory = "128M" }
+          }
+        }
         nodeSelector = local.critical_node_selector
         tolerations  = local.critical_tolerations
       }
