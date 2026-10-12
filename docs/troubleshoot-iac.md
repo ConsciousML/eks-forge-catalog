@@ -23,19 +23,22 @@ Finally, run the destroy again from `<stack-dir>`:
 terragrunt run --all destroy --non-interactive --no-stack-generate
 ```
 
-## The Kubernetes Provider Times Out
+## The Kubernetes Resources Can't Be Destroyed
 
-An apply or a destroy fails on a unit under `eks/addons` with:
-```text
-Error: Plugin error
+The destroy keeps failing on the units under `eks/addons`, which manage the resources inside the cluster through the `kubernetes` and `helm` providers. For example:
+- **The cluster API doesn't answer in time**, so the providers fail with:
+  ```text
+  Error: Plugin error
 
-The plugin returned an unexpected error from
-plugin6.(*GRPCProvider).PlanResourceChange: rpc error: code = Unknown desc
-= failed to determine resource type ID: cannot get OpenAPI foundry: failed
-get OpenAPI spec: context deadline exceeded
-```
+  The plugin returned an unexpected error from
+  plugin6.(*GRPCProvider).PlanResourceChange: rpc error: code = Unknown desc
+  = failed to determine resource type ID: cannot get OpenAPI foundry: failed
+  get OpenAPI spec: context deadline exceeded
+  ```
+- **A Helm release doesn't uninstall**, and the unit fails with `Error uninstalling release` even though you're disconnected from Tailscale (see [The App of Apps Uninstall Times Out](#the-app-of-apps-uninstall-times-out)).
+- **You generated the stack from another branch or tag than the one that's deployed**, so its units no longer match what runs in the cluster.
 
-The cluster API is too slow to answer the `kubernetes` and `helm` providers, or you generated the stack from another branch or tag than the one that's deployed. Run the command again first. If it keeps failing and you want to destroy the cluster, follow the steps below: they destroy it without these two providers.
+Run the destroy again first. If it keeps failing, follow the steps below: they destroy the cluster without these two providers.
 
 Disconnect from Tailscale by running `tailscale down`, or with the button in the Tailscale client, since the steps below remove the [Tailscale Connector](/docs/security/tailscale/#4-connector-and-split-dns).
 
