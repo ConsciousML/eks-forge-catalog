@@ -62,6 +62,19 @@ inputs = {
 
   access_entries = try(values.access_entries, {})
 
+  # cilium-health pings every node. Without it, every agent reports its peers unreachable.
+  # See https://docs.cilium.io/en/stable/operations/system_requirements/#firewall-rules
+  node_security_group_additional_rules = {
+    ingress_self_icmp_echo = {
+      description = "Node to node ICMP echo request"
+      protocol    = "icmp"
+      from_port   = 8
+      to_port     = 0
+      type        = "ingress"
+      self        = true
+    }
+  }
+
   node_security_group_tags = {
     "karpenter.sh/discovery" = local.cluster_name_full
   }
