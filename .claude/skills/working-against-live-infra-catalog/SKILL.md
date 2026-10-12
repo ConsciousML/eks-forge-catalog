@@ -51,6 +51,21 @@ handle.
    plan output.
 7. If verification fails, fix the source file and repeat from step 1.
 
+## Show the user the log file
+
+Write the output of every `plan`, `apply`, and `destroy` to a log file:
+```bash
+terragrunt run --all apply --non-interactive --no-stack-generate > <log-file> 2>&1
+```
+
+As soon as the command starts, give the user the log file's path and the command to follow it,
+so they can watch the run themselves:
+```bash
+tail -f <log-file>
+```
+
+The log holds color codes, so `grep` needs `-a` to search it.
+
 ## Don't validate unit source directly
 
 `terragrunt hcl validate --working-dir units/<...>` (or any other terragrunt command run straight
