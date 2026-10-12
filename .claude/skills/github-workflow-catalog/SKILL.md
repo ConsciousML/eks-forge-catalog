@@ -33,18 +33,20 @@ main checkout on other branches. In an autonomous run, don't create one unless t
 
 ### App-of-apps branch
 
-If the change also touches `eks-forge-app-of-apps`, create a branch there, named after the
-feature.
-
 The stack deploys app-of-apps from the branch named in `.app-of-apps-branch`, a gitignored file
 at the root of the checkout you deploy from. It deploys from `main` when the file is missing.
 
-Once the branch or worktree below exists, write the file at its root:
+If the change touches `eks-forge-app-of-apps`, create a branch there, named after the feature.
+Once the catalog branch or worktree below exists, write the file at its root:
 ```bash
 printf '%s\n' <branch> > .app-of-apps-branch
 ```
 
-If the change doesn't touch that repo, check that the file is missing instead.
+If it doesn't, delete the file there, so a leftover from an earlier change can't deploy the
+wrong branch:
+```bash
+rm -f .app-of-apps-branch
+```
 
 ### Without a worktree
 
