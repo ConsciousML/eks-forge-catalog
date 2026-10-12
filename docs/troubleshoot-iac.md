@@ -49,6 +49,13 @@ export ENVIRONMENT=<env>
 export BUCKET="tofu-state-$(aws sts get-caller-identity --query Account --output text)-${AWS_REGION}-${ENVIRONMENT}"
 ```
 
+### Stop ArgoCD
+
+ArgoCD recreates every resource you delete from an application it syncs. Stop its application controller, so what you delete in the next steps stays deleted:
+```bash
+kubectl scale statefulset argocd-application-controller -n argocd --replicas=0
+```
+
 ### Delete the Routes and Ingresses
 
 Delete the routes, gateways, and ingresses of the cluster, so the AWS Load Balancer Controller and ExternalDNS remove their load balancers and DNS records before the cluster is gone:
@@ -81,8 +88,10 @@ aws route53 list-resource-record-sets --hosted-zone-id <zone-id> \
 
 Delete the namespaces whose resources live outside the cluster, such as EBS volumes and Tailscale devices:
 ```bash
-kubectl delete ns argocd monitoring tailscale
+kubectl delete ns monitoring loki tailscale
 ```
+
+Leave the `argocd` namespace: nothing in it lives outside the cluster, and its applications can't be deleted while the application controller is stopped.
 
 ### Destroy the Cluster Unit
 
@@ -94,16 +103,18 @@ terragrunt destroy
 
 ### Destroy the Rest of the Stack
 
-Once the cluster is gone, Terragrunt skips every unit under `eks/addons`, so the rest of the stack destroys. From `<stack-dir>`:
+Once the cluster is gone, Terragrunt skips the units under `eks/addons` that use the `kubernetes` and `helm` providers, so the rest of the stack destroys. From `<stack-dir>`:
 ```bash
 terragrunt run --all destroy --non-interactive --no-stack-generate
 ```
 
+The other units under `eks/addons`, such as the IAM roles and the Loki buckets, only use the `aws` provider and are destroyed by this command. If one of them fails, fix it and run the command again before going further: the next step removes its state too.
+
 ### Remove the State of the Add-on Units
 
-The skipped units keep their state, which now points at resources that no longer exist. Set the path of these units in the state bucket:
+The skipped units keep their state, which now points at resources that no longer exist. Set the path of the add-on units in the state bucket, replacing `<env-dir>` with the directory of your stack: `dev` in your catalog fork, even for [another environment](/docs/iac/add-a-dev-environment/), or `<env>` in your live fork:
 ```bash
-export PREFIX="${ENVIRONMENT}/eks/stack/.terragrunt-stack/eks/addons"
+export PREFIX="<env-dir>/eks/stack/.terragrunt-stack/eks/addons"
 ```
 
 Then continue at [Remove the State of a Directory of Units](#remove-the-state-of-a-directory-of-units), without setting `BUCKET` and `PREFIX` again.
