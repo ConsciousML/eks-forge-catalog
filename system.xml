@@ -68,6 +68,8 @@
         - `add-a-vpc-endpoint.md`: adding an interface VPC endpoint for an AWS service
         - `add-a-dev-environment.md`: deploying a second `dev`-like environment next to `dev`
         - `remove-eks-forge.md`: tearing down the catalog side of EKS Forge
+        - `troubleshoot-iac.md`, `troubleshoot-tailscale.md`, `troubleshoot-monitoring.md`:
+          fixing a failing apply or destroy, Tailscale access, and the monitoring tools
         - `environment-variables.md`: every env var used across bootstrap pipelines and the
           EKS stack
         - `monitoring/`: the monitoring tutorial (metrics, logs, network flows, resource

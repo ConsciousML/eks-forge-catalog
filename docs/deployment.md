@@ -63,7 +63,7 @@ When every application shows `Synced` and `Healthy`, the deployment succeeded.
 
 ## Log In to ArgoCD
 
-For security reasons, internal tools (ArgoCD, Prometheus, etc.) are not exposed to the internet. ArgoCD's API and UI are only reachable using Tailscale. Connect to Tailscale by running `tailscale up`, or with the button in the Tailscale client.
+For security reasons, internal tools (ArgoCD, Prometheus, etc.) are not exposed to the internet. ArgoCD's API and UI are only reachable using Tailscale. Connect to Tailscale by running `tailscale up`, or with the button in the Tailscale client. If a private hostname doesn't load on macOS, see [Internal Endpoints Are Unreachable on macOS](/docs/troubleshooting/tailscale/#internal-endpoints-are-unreachable-on-macos).
 
 The ArgoCD host is `argocd.private.dev.<base_domain>` (replace `<base_domain>` with the `base_domain` you set in `pipelines/dns.hcl` during [DNS Bootstrap](/docs/quickstart/bootstrap/setup_dns/), e.g. `argocd.private.dev.axelmendoza.com`).
 There are two ways to interact with your ArgoCD instance:
