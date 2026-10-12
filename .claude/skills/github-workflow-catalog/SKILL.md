@@ -33,16 +33,20 @@ main checkout on other branches. In an autonomous run, don't create one unless t
 
 ### App-of-apps branch
 
-If the change also touches `eks-forge-app-of-apps`, create a branch there, named after the
-feature.
+The stack deploys app-of-apps from the branch named in `.app-of-apps-branch`, a gitignored file
+at the root of the checkout you deploy from. It deploys from `main` when the file is missing.
 
-The stack deploys app-of-apps from `APP_OF_APPS_BRANCH` in `.env`. It must be that branch, or
-`main` when the change doesn't touch that repo. Check it from the main checkout:
+If the change touches `eks-forge-app-of-apps`, create a branch there, named after the feature.
+Once the catalog branch or worktree below exists, write the file at its root:
 ```bash
-source .env && printf '%s\n' "$APP_OF_APPS_BRANCH"
+printf '%s\n' <branch> > .app-of-apps-branch
 ```
 
-If it's wrong, **wait**, even in an autonomous run: ask the user to set it in `.env`.
+If it doesn't, delete the file there, so a leftover from an earlier change can't deploy the
+wrong branch:
+```bash
+rm -f .app-of-apps-branch
+```
 
 ### Without a worktree
 
@@ -187,5 +191,5 @@ git pull   # only if the main checkout is on main
 `git worktree remove` refuses when the worktree holds uncommitted or untracked files. Check
 `git status` there instead of forcing it.
 
-If an `eks-forge-app-of-apps` PR was merged, ask the user to reset `APP_OF_APPS_BRANCH` to
-`main` in `.env`.
+If an `eks-forge-app-of-apps` PR was merged, delete `.app-of-apps-branch` from the main checkout
+when it's there.
