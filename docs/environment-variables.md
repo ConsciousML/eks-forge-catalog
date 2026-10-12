@@ -61,17 +61,6 @@ Copy the Bot User OAuth Token (starts with `xoxb-`) shown under "OAuth Tokens" o
 export SLACK_BOT_TOKEN=<your-bot-token>
 ```
 
-## `APP_OF_APPS_BRANCH`
-
-**Used by**: the dev EKS stack's `argocd_app_of_apps` unit (optional)
-
-The `eks-forge-app-of-apps` branch ArgoCD syncs from. Defaults to `main` when unset. Set it to test an app-of-apps branch without editing the stack file:
-```bash
-export APP_OF_APPS_BRANCH=<your-branch>
-```
-
-Unset it (or comment it out and open a new shell) once the branch is merged. CI never sets it, so it always plans against `main`.
-
 ## `TG_ENVIRONMENT` and `TG_ENVIRONMENT_ALIAS`
 
 **Used by**: [`pipelines/dev/environment.hcl`](../pipelines/dev/environment.hcl) (optional)

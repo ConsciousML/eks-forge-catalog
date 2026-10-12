@@ -33,5 +33,8 @@ out/
 # Environment file
 .env
 
+# App-of-apps branch the dev stack syncs from
+.app-of-apps-branch
+
 # Dev notes
 docs/dev-notes

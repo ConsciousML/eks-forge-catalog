@@ -4,8 +4,9 @@ locals {
   version_fck_nat = "1.6.1"
   version_cluster = "21.15.1"
 
-  # Set APP_OF_APPS_BRANCH in .env to point to your app-of-apps dev branch
-  app_of_apps_target_revision = "refs/heads/${get_env("APP_OF_APPS_BRANCH", "main")}"
+  # Write your app-of-apps dev branch name in a gitignored .app-of-apps-branch file at the repo
+  # root to sync from it. Syncs from main when the file is missing.
+  app_of_apps_target_revision = "refs/heads/${try(trimspace(file("${get_repo_root()}/.app-of-apps-branch")), "main")}"
 
   # Keep in sync with the aws-load-balancer-controller chart dependency version pinned in
   # the app-of-apps repo's aws-load-balancer-controller/Chart.yaml
