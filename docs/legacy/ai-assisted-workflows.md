@@ -4,7 +4,7 @@ This guide walks you through three levels of autonomy for Claude Code in this re
 
 ## RPI Manual Mode
 
-Default. Every edit and Bash command outside [`.claude/settings.json`](../.claude/settings.json)'s allow-list prompts for approval.
+Default. Every edit and Bash command outside [`.claude/settings.json`](../../.claude/settings.json)'s allow-list prompts for approval.
 
 **Step by step:**
 - **Research**: point Claude at the file paths you already know, or let it explore the codebase. Nothing runs without your approval either way.
@@ -21,7 +21,7 @@ For work you can hand off unattended once a specific test proves the goal is met
 - Run [`/goal`](https://code.claude.com/docs/en/goal.md) and define a specific, checkable test as the completion condition, for example a command exiting 0 or a resource reaching a given state.
 - Run [`/loop`](https://code.claude.com/docs/en/scheduled-tasks.md) with specific instructions on how to reach the goal.
 
-**Note:** if the goal requires changing the live EKS cluster, feed `/loop` the [`working-against-live-cluster`](https://github.com/ConsciousML/eks-forge-app-of-apps/blob/main/.claude/skills/working-against-live-cluster/SKILL.md) skill (`eks-forge-app-of-apps`) as its starting instructions. It covers editing, committing, syncing the affected ArgoCD app, and verifying against live cluster state instead of a rendered manifest.
+**Note:** if the goal requires changing the live EKS cluster, feed `/loop` the [`working-against-live-cluster-app-of-apps`](https://github.com/ConsciousML/eks-forge-app-of-apps/blob/main/.claude/skills/working-against-live-cluster-app-of-apps/SKILL.md) skill (`eks-forge-app-of-apps`) as its starting instructions. It covers editing, committing, syncing the affected ArgoCD app, and verifying against live cluster state instead of a rendered manifest.
 
 **Use when:** the desired end state is easy to check mechanically but tedious to babysit step by step.
 
@@ -44,7 +44,7 @@ Heaviest workflow, for changes safe to leave unattended because verification is 
 
 ## Permission Settings
 
-All three modes read the same [`.claude/settings.json`](../.claude/settings.json), but manual and auto mode apply it differently:
+All three modes read the same [`.claude/settings.json`](../../.claude/settings.json), but manual and auto mode apply it differently:
 - **Manual mode**: only `permissions.allow` entries skip the approval prompt. Everything else prompts.
 - **Auto mode**: `permissions.deny` and `permissions.ask` still gate first, blocking or prompting unconditionally. Anything not caught by either falls to Claude's own [auto mode classifier](https://code.claude.com/docs/en/auto-mode-config), which decides what's safe to run on its own.
 
