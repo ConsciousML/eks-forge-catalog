@@ -51,45 +51,9 @@
     </restrictions>
 
     <documentation_map>
-        Stack and pipeline level:
-        - `units/eks/README.md`: full EKS stack topology, see &lt;eks_stack&gt;
-        - `pipelines/bootstrap/README.md`: bootstrap pipeline inventory, see
-          &lt;bootstrap_pipelines&gt;
-
-        Guides, under `docs/`, and the bootstrap pipeline READMEs are the sources of the EKS
-        Forge site pages. The `eks-forge` agent writes them. Read them, and fix only a fact your
-        change made wrong. See the `reference-docs-catalog` skill for what you write.
-
-        Guides, under `docs/`:
-        - `installation.md`, `configuration.md`, `deployment.md`: installing tools,
-          configuring, and deploying a `dev` EKS cluster
-        - `add-a-unit.md`: adding a unit and wiring it into a stack
-        - `remove-a-unit.md`: removing a unit from a stack
-        - `add-a-vpc-endpoint.md`: adding an interface VPC endpoint for an AWS service
-        - `add-a-dev-environment.md`: deploying a second `dev`-like environment next to `dev`
-        - `remove-eks-forge.md`: tearing down the catalog side of EKS Forge
-        - `troubleshoot-iac.md`, `troubleshoot-tailscale.md`, `troubleshoot-monitoring.md`:
-          fixing a failing apply or destroy, Tailscale access, and the monitoring tools
-        - `environment-variables.md`: every env var used across bootstrap pipelines and the
-          EKS stack
-        - `monitoring/`: the monitoring tutorial (metrics, logs, network flows, resource
-          recommendations, the control plane, and alerts)
-        - `security/`: Tailscale access and security improvements
-        - `reference/`: per-pipeline and HCL configuration reference
-
-        Site pages sourced outside this repo, under https://eks-forge.readthedocs.io/latest:
-        - `/docs/iac/`: units, stacks, and environments explained
-        - `/docs/ci-cd/` and `/docs/ci-cd/per-repository/troubleshoot-catalog-ci/`: what each CI
-          job does, and fixing a failing one
-        - `/docs/applications/how-the-app-of-apps-works/` and
-          `/docs/applications/pass-terraform-values-to-an-app/`: the `appParams` contract with
-          `eks-forge-app-of-apps`
-        - `/docs/security/how-network-policies-work/` and
-          `/docs/security/write-network-policies/`: `CiliumNetworkPolicy` concepts and steps
-
-        Every other README (per-unit, per-module, per-addon-group, here and in
-        `eks-forge-app-of-apps`) is reached via links from the docs above. This map
-        indexes entry points, not every file.
+        `documentation-map.csv` in the `eks-forge` repo lists every EKS Forge site page. Load the
+        `documentation-map-catalog` skill and read the related pages before planning or
+        implementing a change.
     </documentation_map>
 
     <instructions>
