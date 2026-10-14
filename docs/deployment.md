@@ -99,7 +99,7 @@ While your cluster is running, you can follow [Monitor Your Cluster](/docs/monit
 
 ## Destroy the Infrastructure
 
-Destroying the infrastructure removes the [Tailscale Connector](/docs/security/tailscale/#4-connector-and-split-dns): the component responsible for routing the Kubernetes API server traffic into the private endpoint. Once it's gone, you lose access to the cluster API.
+Destroying the infrastructure removes the [Tailscale Connector](/docs/networking/tailscale/#4-connector-and-split-dns): the component responsible for routing the Kubernetes API server traffic into the private endpoint. Once it's gone, you lose access to the cluster API.
 
 Before destroying the stack, disconnect from Tailscale by running `tailscale down` or click on the top-right button in the Tailscale Client.
 

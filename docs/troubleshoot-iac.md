@@ -11,7 +11,7 @@ Unable to uninstall Helm release app-of-apps: uninstallation completed with
 read tcp <local-ip>:<port>-><vpc-ip>:443: read: operation timed out
 ```
 
-You were connected to Tailscale, so your calls to the cluster API went through the [Tailscale Connector](/docs/security/tailscale/#4-connector-and-split-dns), which the destroy removed halfway.
+You were connected to Tailscale, so your calls to the cluster API went through the [Tailscale Connector](/docs/networking/tailscale/#4-connector-and-split-dns), which the destroy removed halfway.
 
 Disconnect from Tailscale by running `tailscale down`, or with the button in the Tailscale client. Then check that the cluster answers:
 ```bash
@@ -40,7 +40,7 @@ The destroy keeps failing on the units under `eks/addons`, which manage the reso
 
 Run the destroy again first. If it keeps failing, follow the steps below: they destroy the cluster without these two providers.
 
-Disconnect from Tailscale by running `tailscale down`, or with the button in the Tailscale client, since the steps below remove the [Tailscale Connector](/docs/security/tailscale/#4-connector-and-split-dns).
+Disconnect from Tailscale by running `tailscale down`, or with the button in the Tailscale client, since the steps below remove the [Tailscale Connector](/docs/networking/tailscale/#4-connector-and-split-dns).
 
 Then set the variables the commands below read, replacing `<region-code>` with your region and `<env>` with your [environment](/docs/iac/#environments) (e.g. `dev`):
 ```bash

@@ -1,11 +1,11 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
-This guide shows you how to fix the access to your cluster's private tools over [Tailscale](/docs/security/tailscale/).
+This guide shows you how to fix the access to your cluster's private tools over [Tailscale](/docs/networking/tailscale/).
 
 Go to the section of your problem below.
 
 ## Internal Endpoints Are Unreachable on macOS
 
-A private hostname, such as `argocd.private.<env>.<base_domain>`, doesn't load in your browser while you're connected to Tailscale. After you reconnect, macOS can keep its previous DNS configuration, so the hostname never reaches the [Split DNS](/docs/security/tailscale/#4-connector-and-split-dns) resolver.
+A private hostname, such as `argocd.private.<env>.<base_domain>`, doesn't load in your browser while you're connected to Tailscale. After you reconnect, macOS can keep its previous DNS configuration, so the hostname never reaches the [Split DNS](/docs/networking/tailscale/#4-connector-and-split-dns) resolver.
 
 First, check that the hostname resolves, replacing `<hostname>`:
 ```bash
