@@ -2,7 +2,7 @@
 
 This guide shows you how to add a `domain_name_<tool>` [unit](/docs/iac/#units) to your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog). The infrastructure tests read each tool's hostname from the `value` output of its unit, so you need one before you [add an endpoint check](/docs/ci-cd/testing/add-an-infrastructure-test/#add-an-endpoint-check) for your tool.
 
-It assumes your tool's hostname is in `domains.hcl`, as in [Add the Hostname](/docs/applications/expose-an-app/#add-the-hostname), and that you've created a branch in your catalog fork.
+It assumes your tool's hostname is in `domains.hcl`, as in [Add the Hostname](/docs/networking/expose-an-app/#add-the-hostname), and that you've created a branch in your catalog fork.
 
 ## Write the Unit
 

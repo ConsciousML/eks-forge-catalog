@@ -41,7 +41,7 @@ Each environment takes a whole `/16` block, and `10.0.0.0/8` holds 256 of them (
 
 ## Approve the CIDR in Tailscale
 
-The [Tailscale ACL](/docs/reference/bootstrap/tailscale_acl/) pipeline builds `autoApprovers` from `vpc_cidrs`. Without your CIDR in it, the environment's [Tailscale Connector](/docs/security/tailscale/#4-connector-and-split-dns) can't route traffic into its VPC. From the root of your catalog fork, apply it again:
+The [Tailscale ACL](/docs/reference/bootstrap/tailscale_acl/) pipeline builds `autoApprovers` from `vpc_cidrs`. Without your CIDR in it, the environment's [Tailscale Connector](/docs/networking/tailscale/#4-connector-and-split-dns) can't route traffic into its VPC. From the root of your catalog fork, apply it again:
 ```bash
 source .env
 cd pipelines/bootstrap/tailscale/acl

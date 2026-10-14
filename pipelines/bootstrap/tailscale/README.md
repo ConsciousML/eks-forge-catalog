@@ -51,7 +51,7 @@ gh secret list
 You should see `TS_OAUTH_CLIENT_ID`, `TS_AUDIENCE`, and `TS_TAGS`. These are the secrets GitHub Actions uses to authenticate with Tailscale.
 
 For more information, read:
-- [Tailscale](/docs/security/tailscale/), on how EKS Forge implements it
+- [Tailscale](/docs/networking/tailscale/), on how EKS Forge implements it
 - the [Tailscale ACL](/docs/reference/bootstrap/tailscale_acl/) reference
 - the [Tailscale WIF](/docs/reference/bootstrap/tailscale_wif/) reference
 - the [Infrastructure as Code](/docs/iac/) documentation
