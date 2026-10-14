@@ -117,6 +117,7 @@ The [bootstrap](/docs/quickstart/bootstrap) resources stay in place, so you can 
 Continue with [Production Deployment](/docs/deployment/get-started/) to deploy the `staging` and `prod` environments from the live repository.
 
 Or, when you need them:
+- to understand how what you deployed fits together, see [Architecture](/docs/architecture/)
 - to explore your cluster's metrics, logs, and alerts, see [Monitor Your Cluster](/docs/monitoring/get-started/)
 - to add an application to your cluster, see [Deploy Your Applications](/docs/applications/get-started/)
 - to add or edit a unit in your stack, see [Add or Edit a Unit](/docs/iac/add-a-unit/)
