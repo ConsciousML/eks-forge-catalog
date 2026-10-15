@@ -8,6 +8,6 @@ terraform {
 }
 
 inputs = {
-  alias_name  = values.alias_name
-  description = try(values.description, null)
+  alias_name  = include.root.locals.state_kms_key_alias
+  description = "Encrypts OpenTofu state and plan files"
 }
