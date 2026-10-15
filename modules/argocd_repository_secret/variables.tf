@@ -1,6 +1,6 @@
 # tflint-ignore: terraform_unused_declarations
 variable "cluster_name" {
-  description = "Name of the EKS cluster, used to configure the Kubernetes provider"
+  description = "Name of the EKS cluster, used to configure the Helm provider"
   type        = string
 }
 
@@ -11,9 +11,9 @@ variable "enabled" {
 }
 
 variable "name" {
-  description = "Name of the ArgoCD repository Secret"
+  description = "Name of the Helm release and of the ArgoCD repository Secret"
   type        = string
-  default     = "app-of-apps-repository"
+  default     = "argocd-repository-secret"
 }
 
 variable "namespace" {

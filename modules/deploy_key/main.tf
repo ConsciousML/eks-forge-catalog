@@ -40,7 +40,7 @@ resource "aws_secretsmanager_secret" "deploy_key" {
   }
 }
 
-# Key name read by modules/argocd_repository.
+# Key name read by modules/argocd_repository_secret.
 resource "aws_secretsmanager_secret_version" "deploy_key" {
   count = var.aws_secret_name == null ? 0 : 1
 

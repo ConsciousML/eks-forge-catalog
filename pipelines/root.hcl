@@ -14,15 +14,6 @@ locals {
   github_owner_app_of_apps     = local.github_locals.github_owner_app_of_apps
   github_repo_name_catalog     = local.github_locals.github_repo_name_catalog
   github_repo_name_app_of_apps = local.github_locals.github_repo_name_app_of_apps
-
-  app_of_apps_private                = local.github_locals.app_of_apps_private
-  app_of_apps_deploy_key_secret_name = local.github_locals.app_of_apps_deploy_key_secret_name
-  # Must match the ArgoCD repository Secret url exactly. SSH uses port 443, already open in the
-  # argocd-repo-server network policy and in ArgoCD's default known hosts.
-  app_of_apps_repo_url = (local.app_of_apps_private
-    ? "ssh://git@ssh.github.com:443/${local.github_owner_app_of_apps}/${local.github_repo_name_app_of_apps}.git"
-    : "https://github.com/${local.github_owner_app_of_apps}/${local.github_repo_name_app_of_apps}"
-  )
 }
 
 # Configure AWS backend for storing Terraform state files

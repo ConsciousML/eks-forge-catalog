@@ -40,11 +40,11 @@ locals {
   kube_prometheus_stack_release = "kube-prometheus-stack"
 
   # Root and child Applications, so github.hcl alone switches the app of apps fork.
-  repo_url = include.root.locals.app_of_apps_repo_url
+  repo_url = read_terragrunt_config(find_in_parent_folders("github.hcl")).locals.app_of_apps_repo_url
 }
 
-dependency "argocd_repository" {
-  config_path  = "../repository"
+dependency "argocd_repository_secret" {
+  config_path  = "../repository_secret"
   skip_outputs = true
 }
 

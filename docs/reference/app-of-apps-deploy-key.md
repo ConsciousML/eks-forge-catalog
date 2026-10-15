@@ -4,7 +4,7 @@
 The [`app_of_apps_deploy_key` pipeline](../../pipelines/bootstrap/app_of_apps_deploy_key/) adds two deploy keys to the app of apps fork set in [`github.hcl`](/docs/reference/hcl_configuration/#githubhcl). Environment-independent, run once.
 
 - `deploy_key_helm_docs`: a write key. Its private key is a GitHub Actions secret on the same fork, so its CI can push the generated chart READMEs back to PRs.
-- `deploy_key_argocd`: a read-only key. Its private key is in the AWS Secrets Manager secret named `app_of_apps_deploy_key_secret_name` in `github.hcl`. The [`argocd/repository`](../../units/eks/addons/argocd/repository/) unit reads it when `app_of_apps_private` is `true`, so ArgoCD can read a private fork.
+- `deploy_key_argocd`: a read-only key. Its private key is in the AWS Secrets Manager secret named `app_of_apps_deploy_key_secret_name` in `github.hcl`. The [`argocd/repository_secret`](../../units/eks/addons/argocd/repository_secret/) unit reads it when `app_of_apps_private` is `true`, so ArgoCD can read a private fork.
 
 For setup steps, read [Enable README Generation in CI](/docs/applications/get-started/app-of-apps-setup/#enable-readme-generation-in-ci).
 
