@@ -15,11 +15,10 @@ locals {
   github_repo_name_catalog     = local.github_locals.github_repo_name_catalog
   github_repo_name_app_of_apps = local.github_locals.github_repo_name_app_of_apps
 
-  # Repository owning the state KMS key created by stacks/terraform_state_encryption, catalog or live.
-  repo = "catalog"
-
-  state_kms_key_alias = "alias/${local.repo}-tofu-state"
-  state_kms_key_arn   = "arn:aws:kms:${local.aws_region}:${get_aws_account_id()}:${local.state_kms_key_alias}"
+  # State KMS key created by stacks/terraform_state_encryption, one per bootstrap environment.
+  bootstrap_environment = read_terragrunt_config(find_in_parent_folders("bootstrap/environment.hcl")).locals.environment
+  state_kms_key_alias   = "alias/${local.bootstrap_environment}-tofu-state"
+  state_kms_key_arn     = "arn:aws:kms:${local.aws_region}:${get_aws_account_id()}:${local.state_kms_key_alias}"
   # The key's own unit can't encrypt its state with a key not yet created.
   state_encryption = !strcontains(get_terragrunt_dir(), "state_kms_key")
 
