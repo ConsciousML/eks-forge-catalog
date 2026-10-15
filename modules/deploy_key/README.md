@@ -3,11 +3,14 @@
 
 The [`deploy_key` module](../deploy\_key/) generates an SSH key pair per target GitHub repository, registers the public key as a [deploy key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#deploy-keys) on that repository, and stores the private key as a GitHub Actions secret in the current repository.
 
+With `aws_secret_name` set, it also stores the private key in an [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) secret as JSON, under the `ssh_private_key` key. This requires exactly one repository.
+
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.1 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | = 6.55.0 |
 | <a name="requirement_github"></a> [github](#requirement\_github) | = 6.6.0 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | = 4.3.0 |
 
@@ -15,6 +18,7 @@ The [`deploy_key` module](../deploy\_key/) generates an SSH key pair per target 
 
 | Name | Version |
 |------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | = 6.55.0 |
 | <a name="provider_github"></a> [github](#provider\_github) | = 6.6.0 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | = 4.3.0 |
 
@@ -22,6 +26,8 @@ The [`deploy_key` module](../deploy\_key/) generates an SSH key pair per target 
 
 | Name | Type |
 |------|------|
+| [aws_secretsmanager_secret.deploy_key](https://registry.terraform.io/providers/hashicorp/aws/6.55.0/docs/resources/secretsmanager_secret) | resource |
+| [aws_secretsmanager_secret_version.deploy_key](https://registry.terraform.io/providers/hashicorp/aws/6.55.0/docs/resources/secretsmanager_secret_version) | resource |
 | [github_actions_secret.deploy_key](https://registry.terraform.io/providers/integrations/github/6.6.0/docs/resources/actions_secret) | resource |
 | [github_repository_deploy_key.deploy_key](https://registry.terraform.io/providers/integrations/github/6.6.0/docs/resources/repository_deploy_key) | resource |
 | [tls_private_key.deploy_key](https://registry.terraform.io/providers/hashicorp/tls/4.3.0/docs/resources/private_key) | resource |
@@ -30,13 +36,14 @@ The [`deploy_key` module](../deploy\_key/) generates an SSH key pair per target 
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_current_repository"></a> [current\_repository](#input\_current\_repository) | GitHub repository name (format: 'repo-name') where the GitHub Actions secrets will be stored | `string` | n/a | yes |
+| <a name="input_aws_secret_name"></a> [aws\_secret\_name](#input\_aws\_secret\_name) | Name of an AWS Secrets Manager secret storing the private key as JSON under ssh\_private\_key. Requires exactly one repository. Null creates no secret | `string` | `null` | no |
+| <a name="input_current_repository"></a> [current\_repository](#input\_current\_repository) | GitHub repository name (format: 'repo-name') where the GitHub Actions secrets will be stored | `string` | `null` | no |
 | <a name="input_deploy_key_title"></a> [deploy\_key\_title](#input\_deploy\_key\_title) | Human-readable title for the deploy key as it appears in GitHub repository settings | `string` | `"Terragrunt Deploy Key"` | no |
 | <a name="input_github_owner"></a> [github\_owner](#input\_github\_owner) | GitHub organization or user account that owns the target repositories | `string` | n/a | yes |
 | <a name="input_github_token"></a> [github\_token](#input\_github\_token) | GitHub personal access token with 'repo' and 'admin:repo\_hook' permissions. Required to create deploy keys and manage repository settings | `string` | n/a | yes |
 | <a name="input_read_only"></a> [read\_only](#input\_read\_only) | Whether the deploy key should be read-only (true) or have write access (false). For security, defaults to read-only. | `bool` | `true` | no |
 | <a name="input_repositories"></a> [repositories](#input\_repositories) | List of GitHub repository names (format: 'repo-name') where deploy keys will be added for secure access | `list(string)` | n/a | yes |
-| <a name="input_secret_names"></a> [secret\_names](#input\_secret\_names) | List of GitHub Actions secret names for storing private keys. Must correspond 1:1 with the repositories list (same order) | `list(string)` | n/a | yes |
+| <a name="input_secret_names"></a> [secret\_names](#input\_secret\_names) | List of GitHub Actions secret names for storing private keys. Must correspond 1:1 with the repositories list (same order). Empty creates no GitHub Actions secret | `list(string)` | `[]` | no |
 
 ## Outputs
 
