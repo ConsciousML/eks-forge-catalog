@@ -48,7 +48,7 @@ EOF
 
 catalog {
   urls = [
-    "https://github.com/${local.github_owner_catalog}/${local.github_repo_name_catalog}"
+    "git@github.com:${local.github_owner_catalog}/${local.github_repo_name_catalog}.git"
   ]
 }
 

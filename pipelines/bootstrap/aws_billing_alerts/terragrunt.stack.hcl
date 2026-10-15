@@ -16,7 +16,7 @@ locals {
 }
 
 stack "billing_budgets" {
-  source = "github.com/${local.github_owner_catalog}/${local.github_repo_name_catalog}//stacks/billing_budgets?ref=${local.version}"
+  source = "git::git@github.com:${local.github_owner_catalog}/${local.github_repo_name_catalog}.git//stacks/billing_budgets?ref=${local.version}"
   path   = "billing_budgets"
   values = {
     version                  = local.version
@@ -34,7 +34,7 @@ stack "billing_budgets" {
 }
 
 stack "billing_anomaly_detection" {
-  source = "github.com/${local.github_owner_catalog}/${local.github_repo_name_catalog}//stacks/billing_anomaly_detection?ref=${local.version}"
+  source = "git::git@github.com:${local.github_owner_catalog}/${local.github_repo_name_catalog}.git//stacks/billing_anomaly_detection?ref=${local.version}"
   path   = "billing_anomaly_detection"
   values = {
     version                  = local.version

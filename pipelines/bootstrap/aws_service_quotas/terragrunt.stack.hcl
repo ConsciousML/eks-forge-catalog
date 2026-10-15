@@ -11,7 +11,7 @@ locals {
 }
 
 stack "ec2_quotas" {
-  source = "github.com/${local.github_owner_catalog}/${local.github_repo_name_catalog}//stacks/ec2_quotas?ref=${local.version}"
+  source = "git::git@github.com:${local.github_owner_catalog}/${local.github_repo_name_catalog}.git//stacks/ec2_quotas?ref=${local.version}"
   path   = "ec2_quotas"
   values = {
     version                  = local.version

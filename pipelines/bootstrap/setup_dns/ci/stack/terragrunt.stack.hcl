@@ -7,7 +7,7 @@ locals {
 }
 
 stack "setup_dns" {
-  source = "github.com/${local.github_owner_catalog}/${local.github_repo_name_catalog}//stacks/setup_dns?ref=${local.version}"
+  source = "git::git@github.com:${local.github_owner_catalog}/${local.github_repo_name_catalog}.git//stacks/setup_dns?ref=${local.version}"
   path   = "setup_dns"
   values = {
     version                  = local.version
