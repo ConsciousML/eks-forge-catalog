@@ -14,6 +14,17 @@ resource "github_repository_deploy_key" "deploy_key" {
   repository = each.key
   key        = tls_private_key.deploy_key[each.key].public_key_openssh
   read_only  = var.read_only
+
+  lifecycle {
+    precondition {
+      condition     = contains([0, length(var.repositories)], length(var.secret_names))
+      error_message = "secret_names must be empty or match repositories 1:1."
+    }
+    precondition {
+      condition     = length(var.secret_names) == 0 || var.current_repository != null
+      error_message = "current_repository is required when secret_names is set."
+    }
+  }
 }
 
 # Add the private key of each deploy key to the current repository

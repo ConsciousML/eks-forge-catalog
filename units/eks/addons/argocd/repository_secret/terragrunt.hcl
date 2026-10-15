@@ -17,10 +17,6 @@ terraform {
   source = "git::git@github.com:${include.root.locals.github_owner_catalog}/${include.root.locals.github_repo_name_catalog}.git//modules/argocd_repository_secret/?ref=${values.version}"
 }
 
-locals {
-  github_locals = read_terragrunt_config(find_in_parent_folders("github.hcl")).locals
-}
-
 # The argocd namespace must exist.
 dependency "argocd" {
   config_path  = "../helm"
@@ -29,8 +25,8 @@ dependency "argocd" {
 
 inputs = {
   cluster_name = dependency.eks_cluster.outputs.cluster_name
-  enabled      = local.github_locals.app_of_apps_private
-  repo_url     = local.github_locals.app_of_apps_repo_url
+  enabled      = include.root.locals.github_locals.app_of_apps_private
+  repo_url     = include.root.locals.github_locals.app_of_apps_repo_url
   # Written by the app_of_apps_deploy_key bootstrap.
-  secret_name = local.github_locals.app_of_apps_deploy_key_secret_name
+  secret_name = include.root.locals.github_locals.app_of_apps_deploy_key_secret_name
 }

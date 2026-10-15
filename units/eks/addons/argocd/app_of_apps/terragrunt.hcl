@@ -4,11 +4,13 @@ include "root" {
 }
 
 include "provider_k8s_base" {
-  path = find_in_parent_folders("provider_k8s_base.hcl")
+  path   = find_in_parent_folders("provider_k8s_base.hcl")
+  expose = true
 }
 
 include "provider_helm" {
-  path = find_in_parent_folders("provider_helm.hcl")
+  path   = find_in_parent_folders("provider_helm.hcl")
+  expose = true
 }
 
 terraform {
@@ -40,7 +42,7 @@ locals {
   kube_prometheus_stack_release = "kube-prometheus-stack"
 
   # Root and child Applications, so github.hcl alone switches the app of apps fork.
-  repo_url = read_terragrunt_config(find_in_parent_folders("github.hcl")).locals.app_of_apps_repo_url
+  repo_url = include.root.locals.github_locals.app_of_apps_repo_url
 }
 
 dependency "argocd_repository_secret" {

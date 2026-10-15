@@ -65,7 +65,7 @@ GitHub owners and repository names used in module sources and GitHub resources.
 | `github_repo_name_catalog` | Catalog repository name. |
 | `github_owner_app_of_apps` | User or organization owning the app-of-apps repository. |
 | `github_repo_name_app_of_apps` | App-of-apps repository name. |
-| `app_of_apps_private` | `true` makes ArgoCD read the app-of-apps over SSH, with the read-only key of the [`app_of_apps_deploy_key`](/docs/reference/bootstrap/app_of_apps_deploy_key/) bootstrap. `false` reads it over HTTPS without credentials. |
+| `app_of_apps_private` | `true` makes ArgoCD read the app-of-apps over SSH, with the read-only key of the [`app_of_apps_deploy_key`](/docs/reference/bootstrap/app_of_apps_deploy_key/) bootstrap. `false` reads it over HTTPS without credentials. Switching from `true` to `false` deletes the repository `Secret` before the `Application` moves to HTTPS, so ArgoCD reports authentication errors until `app_of_apps` applies. |
 | `app_of_apps_deploy_key_secret_name` | Secrets Manager secret holding that key. One per app-of-apps fork, shared by every environment, so it has no `<environment>-` prefix. |
 | `app_of_apps_repo_url` | URL ArgoCD reads the app-of-apps from, used as the `Application` `repoURL` and the repository `Secret` `url`. `ssh://git@ssh.github.com:443/<owner>/<repo>.git` when `app_of_apps_private` is `true`, `https://github.com/<owner>/<repo>` otherwise. |
 | `github_owner_live` | Live only. User or organization owning the live repository. |
