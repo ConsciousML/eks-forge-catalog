@@ -259,3 +259,60 @@ From the directory of a unit whose state you removed, run a plan. It shows every
 ```bash
 terragrunt plan
 ```
+
+## A Unit Can't Read Its Unencrypted State
+
+After upgrading to a catalog version that encrypts state, a unit fails with one of:
+```text
+Error: Backend configuration changed
+```
+```text
+encountered unencrypted payload without unencrypted method configured
+```
+
+`root.hcl` now encrypts every state with the KMS key of the `terraform_state_encryption` bootstrap pipeline, both in S3 and in OpenTofu itself. States written before the upgrade are plaintext, and OpenTofu refuses to read them. Migrate them once, pipeline by pipeline.
+
+:::warning
+Migrate only when no one else runs Terragrunt against the same states. A run from an older catalog version can't read a migrated state.
+:::
+
+First, create the key if it doesn't exist yet. From the root of your catalog fork:
+```bash
+cd pipelines/bootstrap/terraform_state_encryption
+terragrunt stack generate
+terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
+```
+
+Then allow OpenTofu to read plaintext states while it writes encrypted ones. This variable extends the generated encryption configuration with a fallback:
+```bash
+export TF_ENCRYPTION='method "unencrypted" "migrate" {}
+state {
+  method = method.aes_gcm.default
+  fallback { method = method.unencrypted.migrate }
+}
+plan {
+  method = method.aes_gcm.default
+  fallback { method = method.unencrypted.migrate }
+}'
+```
+
+From the directory of each stack, bootstrap pipelines first, update the backend configuration, then rewrite every state without changing any resource:
+```bash
+terragrunt stack generate
+terragrunt run --all init --non-interactive --no-stack-generate -- -reconfigure
+terragrunt run --all apply --non-interactive --no-stack-generate -- -refresh-only -auto-approve
+```
+
+`-reconfigure` only updates the local backend configuration. It doesn't copy or move any state.
+
+Once every stack is migrated, remove the fallback:
+```bash
+unset TF_ENCRYPTION
+```
+
+Check that a state is encrypted, replacing `<bucket>` and `<key>`. It prints `encrypted_data` instead of `resources`:
+```bash
+aws s3 cp "s3://<bucket>/<key>" - | python3 -c 'import json,sys; print(sorted(json.load(sys.stdin)))'
+```
+
+The bucket keeps the plaintext versions of the migrated states, since versioning is on. They still hold any secret the states contain, and they're your only rollback path. Delete them once the migration is verified.
