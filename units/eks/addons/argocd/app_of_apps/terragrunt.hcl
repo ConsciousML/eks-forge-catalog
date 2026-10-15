@@ -40,7 +40,12 @@ locals {
   kube_prometheus_stack_release = "kube-prometheus-stack"
 
   # Root and child Applications, so github.hcl alone switches the app of apps fork.
-  repo_url = "https://github.com/${include.root.locals.github_owner_app_of_apps}/${include.root.locals.github_repo_name_app_of_apps}"
+  repo_url = include.root.locals.app_of_apps_repo_url
+}
+
+dependency "argocd_repository" {
+  config_path  = "../repository"
+  skip_outputs = true
 }
 
 dependency "route53_hosted_zone_public" {

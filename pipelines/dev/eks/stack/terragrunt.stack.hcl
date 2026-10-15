@@ -672,6 +672,15 @@ unit "argocd_password" {
   }
 }
 
+unit "argocd_repository" {
+  source = "${get_repo_root()}/units/eks/addons/argocd/repository"
+  path   = "eks/addons/argocd/repository"
+
+  values = {
+    version = local.version
+  }
+}
+
 unit "argocd_app_of_apps" {
   source = "${get_repo_root()}/units/eks/addons/argocd/app_of_apps"
   path   = "eks/addons/argocd/app_of_apps"

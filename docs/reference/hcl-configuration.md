@@ -18,6 +18,7 @@ To use these values in a unit, see [Read Shared Config](/docs/iac/add-a-unit/#re
 | [`cluster_name.hcl`](#cluster_namehcl) | Shared | `pipelines/dev/cluster_name.hcl` | `live/cluster_name.hcl` |
 | [`provider_k8s_base.hcl`](#provider_k8s_basehcl) | Shared | `pipelines/dev/provider_k8s_base.hcl` | `live/provider_k8s_base.hcl` |
 | [`provider_helm.hcl`](#provider_helmhcl) | Shared | `pipelines/dev/provider_helm.hcl` | `live/provider_helm.hcl` |
+| [`provider_kubernetes.hcl`](#provider_kuberneteshcl) | Shared | `pipelines/dev/provider_kubernetes.hcl` | None yet |
 | [`environment.hcl`](#environmenthcl) | Per environment | `pipelines/dev/environment.hcl` | `live/<env>/environment.hcl` |
 | [`region.hcl`](#regionhcl) | Per environment | `pipelines/region.hcl` | `live/<env>/region.hcl` |
 | [`cluster_name_env.hcl`](#cluster_name_envhcl) | Per stack | `pipelines/dev/eks/cluster_name_env.hcl` | `live/<env>/eks/cluster_name_env.hcl` |
@@ -48,6 +49,8 @@ The root configuration every unit includes through `include "root"`. It loads `r
 | `environment_alias` | Local | `environment_alias` from `environment.hcl`. |
 | `github_owner_catalog`, `github_repo_name_catalog` | Local | Catalog owner and repository name from `github.hcl`. |
 | `github_owner_app_of_apps`, `github_repo_name_app_of_apps` | Local | App-of-apps owner and repository name from `github.hcl`. |
+| `app_of_apps_private`, `app_of_apps_deploy_key_secret_name` | Local | Same-named values from `github.hcl`. |
+| `app_of_apps_repo_url` | Local | URL ArgoCD reads the app-of-apps from. `ssh://git@ssh.github.com:443/<owner>/<repo>.git` when `app_of_apps_private` is `true`, `https://github.com/<owner>/<repo>` otherwise. |
 | `remote_state` | Block | S3 backend. Bucket `tofu-state-<account-id>-<region>-<environment>`, key `<unit-path>/tofu.tfstate`, lock table `terragrunt_lock_table`. Generates `backend.tf`. |
 | `generate "provider"` | Block | AWS provider for `aws_region`. Generates `providers_aws.tf`. |
 | `catalog` | Block | Points the [Terragrunt catalog](https://docs.terragrunt.com/reference/hcl/blocks/#catalog) at the catalog repository. |
@@ -65,6 +68,8 @@ GitHub owners and repository names used in module sources and GitHub resources.
 | `github_repo_name_catalog` | Catalog repository name. |
 | `github_owner_app_of_apps` | User or organization owning the app-of-apps repository. |
 | `github_repo_name_app_of_apps` | App-of-apps repository name. |
+| `app_of_apps_private` | `true` makes ArgoCD read the app-of-apps over SSH, with the read-only key of the [`app_of_apps_deploy_key`](/docs/reference/bootstrap/app_of_apps_deploy_key/) bootstrap. `false` reads it over HTTPS without credentials. |
+| `app_of_apps_deploy_key_secret_name` | Secrets Manager secret holding that key. One per app-of-apps fork, shared by every environment, so it has no `<environment>-` prefix. |
 | `github_owner_live` | Live only. User or organization owning the live repository. |
 | `github_repo_name_live` | Live only. Live repository name. |
 
@@ -135,6 +140,14 @@ The Helm provider for units that deploy Helm charts. Included alongside `provide
 | Name | Kind | Description |
 |------|------|-------------|
 | `generate "provider_helm"` | Block | Helm provider authenticated against the cluster from the `provider_k8s_base.hcl` data sources, with an `aws eks get-token` exec fallback. Generates `provider_helm.tf`. |
+
+### `provider_kubernetes.hcl`
+
+The Kubernetes provider for units that manage Kubernetes resources directly. Included alongside `provider_k8s_base.hcl`.
+
+| Name | Kind | Description |
+|------|------|-------------|
+| `generate "provider_kubernetes"` | Block | Kubernetes provider authenticated the same way as `provider_helm.hcl`. Generates `provider_kubernetes.tf`. |
 
 ## Per Environment
 

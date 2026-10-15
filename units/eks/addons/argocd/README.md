@@ -14,6 +14,7 @@ Deploys ArgoCD into the cluster and wires up its admin password via AWS Secrets 
 
 - **[aws_secret_password](aws_secret_password/)**: Generates a random admin password and stores it in AWS Secrets Manager
 - **[helm](helm/)**: Deploys ArgoCD via Helm. Sets `global.domain` from `domains.hcl`
+- **[repository](repository/)**: Creates the ArgoCD repository `Secret` that authenticates to a private app-of-apps fork over SSH. Creates nothing when `app_of_apps_private` in `github.hcl` is `false`
 - **[app_of_apps](app_of_apps/)**: Deploys the root ArgoCD `Application` CR pointing to the [App of Apps repository](https://github.com/ConsciousML/eks-forge-app-of-apps)
 - **[`argocd-secrets`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/charts/external-secrets-operator/secret-sync)** (app-of-apps): an instance of the generic `secret-sync` chart, syncs the admin password's bcrypt hash into `argocd-secret` via an ESO `SecretStore` and `ExternalSecret`. Not deployed by this unit
 - **[`argocd-server-grpc-service`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/manifests/argocd-server-grpc-service)** (app-of-apps): the ArgoCD server's gRPC `Service` and its `TargetGroupConfiguration`. Not deployed by the `helm` unit above
@@ -28,8 +29,14 @@ See [Pass Terraform Values to an App](https://eks-forge.readthedocs.io/latest/do
 - **[`units/eks/addons/prometheus_stack/crds`](../prometheus_stack/crds/)**: depends on it so the Prometheus Operator CRDs exist before ArgoCD's own Helm release renders any `ServiceMonitor`
 - **[`units/eks/route53`](../../route53/)**: depends on the private hosted zone
 
+### [Repository Unit](repository/)
+
+- **[`units/eks/addons/argocd/helm`](helm/)**: depends on it so the `argocd` namespace exists
+- **[`app_of_apps_deploy_key` bootstrap](/docs/reference/bootstrap/app_of_apps_deploy_key/)**: reads the Secrets Manager secret it writes, named `app_of_apps_deploy_key_secret_name` in `github.hcl`. Not a `dependency` block. The bootstrap must run first when `app_of_apps_private` is `true`
+
 ### [App of Apps Unit](app_of_apps/)
 
+- **[`units/eks/addons/argocd/repository`](repository/)**: depends on it so the repository `Secret` exists before ArgoCD syncs a private fork. Its `url` and the `Application` `repoURL` both come from `app_of_apps_repo_url` in `root.hcl`
 - **[`units/vpc`](../../../vpc/vpc/)**: reads `vpc_id` and `vpc_cidr_block` to configure `aws-lbc` and `tailscale-connector`
 - **[`units/eks/addons/prometheus_stack`](../prometheus_stack/)**: reads the `grafana/aws_secret_password` and `alertmanager/aws_secret_slack_bot` secret names to configure `grafana-secrets` and `alertmanager-secrets`
 - **[`units/eks/addons/external_secrets_operator`](../external_secrets_operator/)**: depends on its IAM role so the ESO controller can read the admin password secret once deployed through app-of-apps
