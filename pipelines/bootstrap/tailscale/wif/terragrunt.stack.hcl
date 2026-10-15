@@ -14,7 +14,7 @@ locals {
 }
 
 stack "tailscale_wif" {
-  source = "github.com/${local.github_owner_catalog}/${local.github_repo_name_catalog}//stacks/tailscale_wif?ref=${local.version}"
+  source = "git::git@github.com:${local.github_owner_catalog}/${local.github_repo_name_catalog}.git//stacks/tailscale_wif?ref=${local.version}"
   path   = "tailscale_wif"
 
   values = {

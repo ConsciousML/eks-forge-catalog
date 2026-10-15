@@ -7,7 +7,7 @@ locals {
 }
 
 stack "slack" {
-  source = "github.com/${local.github_owner_catalog}/${local.github_repo_name_catalog}//stacks/slack?ref=${local.version}"
+  source = "git::git@github.com:${local.github_owner_catalog}/${local.github_repo_name_catalog}.git//stacks/slack?ref=${local.version}"
   path   = "slack"
 
   values = {

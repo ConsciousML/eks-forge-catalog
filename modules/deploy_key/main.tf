@@ -14,14 +14,49 @@ resource "github_repository_deploy_key" "deploy_key" {
   repository = each.key
   key        = tls_private_key.deploy_key[each.key].public_key_openssh
   read_only  = var.read_only
+
+  lifecycle {
+    precondition {
+      condition     = contains([0, length(var.repositories)], length(var.secret_names))
+      error_message = "secret_names must be empty or match repositories 1:1."
+    }
+    precondition {
+      condition     = length(var.secret_names) == 0 || var.current_repository != null
+      error_message = "current_repository is required when secret_names is set."
+    }
+  }
 }
 
 # Add the private key of each deploy key to the current repository
 # i.e where GH Actions will run
 resource "github_actions_secret" "deploy_key" {
-  count = length(var.repositories)
+  count = length(var.secret_names)
 
   repository      = var.current_repository
   secret_name     = var.secret_names[count.index]
   plaintext_value = tls_private_key.deploy_key[var.repositories[count.index]].private_key_openssh
+}
+
+resource "aws_secretsmanager_secret" "deploy_key" {
+  count = var.aws_secret_name == null ? 0 : 1
+
+  name                    = var.aws_secret_name
+  recovery_window_in_days = 0
+
+  lifecycle {
+    precondition {
+      condition     = length(var.repositories) == 1
+      error_message = "aws_secret_name requires exactly one repository."
+    }
+  }
+}
+
+# Key name read by modules/argocd_repository_secret.
+resource "aws_secretsmanager_secret_version" "deploy_key" {
+  count = var.aws_secret_name == null ? 0 : 1
+
+  secret_id = aws_secretsmanager_secret.deploy_key[0].id
+  secret_string = jsonencode({
+    ssh_private_key = tls_private_key.deploy_key[var.repositories[0]].private_key_openssh
+  })
 }

@@ -12,7 +12,7 @@ locals {
 }
 
 stack "aws_gh_actions_auth" {
-  source = "github.com/${local.github_owner_catalog}/${local.github_repo_name_catalog}//stacks/aws_gh_actions_auth?ref=${local.version}"
+  source = "git::git@github.com:${local.github_owner_catalog}/${local.github_repo_name_catalog}.git//stacks/aws_gh_actions_auth?ref=${local.version}"
   path   = "github_actions_bootstrap"
   values = {
     version                  = local.version

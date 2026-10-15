@@ -15,13 +15,15 @@ variable "repositories" {
 }
 
 variable "secret_names" {
-  description = "List of GitHub Actions secret names for storing private keys. Must correspond 1:1 with the repositories list (same order)"
+  description = "List of GitHub Actions secret names for storing private keys. Must correspond 1:1 with the repositories list (same order). Empty creates no GitHub Actions secret"
   type        = list(string)
+  default     = []
 }
 
 variable "current_repository" {
   description = "GitHub repository name (format: 'repo-name') where the GitHub Actions secrets will be stored"
   type        = string
+  default     = null
 }
 
 variable "deploy_key_title" {
@@ -34,4 +36,10 @@ variable "read_only" {
   description = "Whether the deploy key should be read-only (true) or have write access (false). For security, defaults to read-only."
   type        = bool
   default     = true
+}
+
+variable "aws_secret_name" {
+  description = "Name of an AWS Secrets Manager secret storing the private key as JSON under ssh_private_key. Requires exactly one repository. Null creates no secret"
+  type        = string
+  default     = null
 }
