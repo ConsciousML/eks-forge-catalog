@@ -596,19 +596,9 @@ unit "argocd" {
         nodeSelector = local.critical_node_selector
         tolerations  = local.critical_tolerations
       }
+      # Alerts go through Alertmanager. Its ClusterRole lists Secrets in every namespace.
       notifications = {
-        metrics = {
-          enabled = true
-          serviceMonitor = {
-            enabled = true
-          }
-        }
-        resources = {
-          requests = { cpu = "50m", memory = "64M" }
-          limits   = { cpu = "50m", memory = "64M" }
-        }
-        nodeSelector = local.critical_node_selector
-        tolerations  = local.critical_tolerations
+        enabled = false
       }
       applicationSet = {
         resources = {
