@@ -15,5 +15,5 @@ Find the pages related to your task and read them first. A `source` containing
 https://eks-forge.readthedocs.io/latest.
 
 A page whose `source` is empty, or has no `_external/` path, lives in the `eks-forge` repo. The
-docs agent owns it. Never edit it. When your change affects one, follow step 9 "Site Docs Issue"
-of the `github-workflow-catalog` skill.
+docs agent owns it. Never edit it. Step 9 "Site Docs Issue" of the `github-workflow-catalog` skill
+reports your change to that agent.

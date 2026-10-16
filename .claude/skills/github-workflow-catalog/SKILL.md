@@ -196,17 +196,20 @@ when it's there.
 
 ## 9. Site Docs Issue
 
-Runs once the PRs are merged, so the issue cites the final change. Skip if the change affects
-no page owned by the `eks-forge` repo (see the `documentation-map-catalog` skill).
+Runs once the PRs are merged, so the issue cites the final change. It tells the agent of the
+`eks-forge` repo what changed in the catalog. That agent decides which site pages to update, so
+don't investigate the site docs yourself. Skip if the change only touches skills or comments.
 
 1. Read recent ones and match their style:
    ```bash
    gh issue list -R <owner>/eks-forge --label doc-site --state all -L 5
    ```
 2. Draft it:
-   - Title: `docs: <what to cover>`.
+   - Title: `docs: <what changed in the catalog>`.
    - Body: one sentence citing each PR as `<owner>/<repo>#<N>` and what it changes. Then one
-     bullet per page to update.
+     bullet per change in the catalog a reader of the site would notice, such as a new bootstrap
+     pipeline, a changed `.hcl` file, a new unit or module, or a new step. End with: `Evaluate the
+     site docs against these changes and align them if necessary.`
 3. **Wait**: ask the user whether to open it, even in an autonomous run.
 4. Open it with
    `gh issue create -R <owner>/eks-forge --label doc-site --assignee @me --title "<title>" --body "<body>"`
