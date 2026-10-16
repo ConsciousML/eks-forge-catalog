@@ -193,3 +193,21 @@ git pull   # only if the main checkout is on main
 
 If an `eks-forge-app-of-apps` PR was merged, delete `.app-of-apps-branch` from the main checkout
 when it's there.
+
+## 9. Site Docs Issue
+
+Runs once the PRs are merged, so the issue cites the final change. Skip if the change affects
+no page owned by the `eks-forge` repo (see the `documentation-map-catalog` skill).
+
+1. Read recent ones and match their style:
+   ```bash
+   gh issue list -R <owner>/eks-forge --label doc-site --state all -L 5
+   ```
+2. Draft it:
+   - Title: `docs: <what to cover>`.
+   - Body: one sentence citing each PR as `<owner>/<repo>#<N>` and what it changes. Then one
+     bullet per page to update.
+3. **Wait**: ask the user whether to open it, even in an autonomous run.
+4. Open it with
+   `gh issue create -R <owner>/eks-forge --label doc-site --assignee @me --title "<title>" --body "<body>"`
+   and report the link.
