@@ -50,8 +50,12 @@ gh secret list
 
 You should see `TS_OAUTH_CLIENT_ID`, `TS_AUDIENCE`, and `TS_TAGS`. These are the secrets GitHub Actions uses to authenticate with Tailscale.
 
+:::warning
+Every member of your tailnet can reach every environment's private endpoints. See [Access Control (ACL) Policy](/docs/networking/tailscale/#1-access-control-acl-policy) for why, and [Restrict Tailnet Access to the VPCs](/docs/security/improvements/#restrict-tailnet-access-to-the-vpcs) to limit it.
+:::
+
 For more information, read:
-- [Tailscale](/docs/networking/tailscale/), on how EKS Forge implements it
+- [How Tailscale Works](/docs/networking/tailscale/), on how EKS Forge implements it
 - the [Tailscale ACL](/docs/reference/bootstrap/tailscale_acl/) reference
 - the [Tailscale WIF](/docs/reference/bootstrap/tailscale_wif/) reference
 - the [Infrastructure as Code](/docs/iac/) documentation

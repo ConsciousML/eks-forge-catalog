@@ -1,5 +1,5 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
-# Tailscale
+# How Tailscale Works
 
 EKS Forge deploys internal tooling ([ArgoCD](https://argo-cd.readthedocs.io/en/stable/), [Prometheus](https://prometheus.io/), [Hubble](https://github.com/cilium/hubble), etc.) as private endpoints inside the VPC, not reachable from the public internet. [Tailscale](https://tailscale.com/) is the VPN that lets developers reach them, and the identity provider CI uses to manage the resources that make that VPN work.
 
@@ -40,9 +40,15 @@ flowchart TD
 
 A [tailnet](https://tailscale.com/docs/concepts/tailnet)-wide [Access Control (ACL) policy](https://tailscale.com/docs/features/access-control/acls) applied by the [`tailscale/acl` bootstrap pipeline](/docs/reference/bootstrap/tailscale_acl/) from the [catalog repository](https://github.com/ConsciousML/eks-forge-catalog). This pipeline needs to be implemented only once per tailnet.
 
-[Tags](https://tailscale.com/docs/features/tags) label devices by role (`tag:ci`, `tag:k8s-operator`) instead of by user identity. The ACL declares these tags, along with grants (rules that let one tag create auth keys for another). It also auto-approves subnet routes for each environment's VPC CIDR, so tagged nodes can advertise routes without manual approval in the Tailscale admin panel.
+[Tags](https://tailscale.com/docs/features/tags) label devices by role (`tag:ci`, `tag:k8s-operator`) instead of by user identity. The ACL declares these tags, along with their [tag owners](https://tailscale.com/docs/reference/syntax/policy-file#tag-owners) (which tag can create auth keys for another). It also auto-approves subnet routes for each environment's VPC CIDR, so tagged nodes can advertise routes without manual approval in the Tailscale admin panel.
 
-This is the tailnet's central trust policy: every other piece below depends on a tag or grant it defines.
+This is the tailnet's central trust policy: every other piece below depends on a tag it defines.
+
+The policy defines no [grants](https://tailscale.com/docs/features/access-control/grants), so Tailscale applies its [default allow-all policy](https://tailscale.com/docs/reference/examples/acls#allow-all-default-acl): every tailnet member and tagged device reaches every environment's VPC CIDR on every port, including tools without a login such as Prometheus and the Hubble UI.
+
+:::warning
+Only invite users you trust to your tailnet, or restrict their access as described in [Restrict Tailnet Access to the VPCs](/docs/security/improvements/#restrict-tailnet-access-to-the-vpcs).
+:::
 
 ## 2. Workload Identity Federation (WIF)
 
