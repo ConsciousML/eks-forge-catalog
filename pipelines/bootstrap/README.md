@@ -1,6 +1,6 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 import DocCards from '@site/src/components/DocCards';
-import {DollarSign, KeyRound, Gauge, Globe, MessageSquare, Network} from 'lucide-react';
+import {DollarSign, KeyRound, Gauge, Globe, Lock, MessageSquare, Network} from 'lucide-react';
 
 # Bootstrap Pipelines
 
@@ -8,7 +8,18 @@ EKS Forge's [advanced features](/docs/overview/#features) rely on several tools 
 
 They're [Terragrunt stacks](/docs/iac/#stacks) that deploy account-level and repository-level resources, independent of any IaC environment (`dev`, `staging`, etc.). Each environment depends on these resources to function, so bootstrap pipelines need to run first.
 
-Complete each of these one-time setup guides:
+First, run the following bootstrap pipeline. It's needed by all the others to encrypt their state:
+
+<DocCards columns={2} items={[
+  {
+    icon: <Lock size={36} color="var(--ifm-color-primary-dark)" />,
+    title: 'Terraform State Encryption',
+    description: 'Encrypts your infrastructure state, so the secrets it holds can\'t be read from the state bucket',
+    link: '/docs/quickstart/bootstrap/terraform_state_encryption',
+  },
+]} />
+
+Then, complete each of these one-time setup guides:
 
 <DocCards columns={2} items={[
   {

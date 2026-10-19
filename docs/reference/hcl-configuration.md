@@ -48,7 +48,10 @@ The root configuration every unit includes through `include "root"`. It loads `r
 | `environment_alias` | Local | `environment_alias` from `environment.hcl`. |
 | `github_owner_catalog`, `github_repo_name_catalog` | Local | Catalog owner and repository name from `github.hcl`. |
 | `github_owner_app_of_apps`, `github_repo_name_app_of_apps` | Local | App-of-apps owner and repository name from `github.hcl`. |
-| `remote_state` | Block | S3 backend. Bucket `tofu-state-<account-id>-<region>-<environment>`, key `<unit-path>/tofu.tfstate`, lock table `terragrunt_lock_table`. Generates `backend.tf`. |
+| `bootstrap_environment` | Local | `environment` from `bootstrap/environment.hcl`. |
+| `state_kms_key_alias`, `state_kms_key_arn` | Local | Alias `alias/<bootstrap_environment>-tofu-state` and ARN of the KMS key created by the [Terraform State Encryption](/docs/reference/bootstrap/terraform_state_encryption/) bootstrap. |
+| `state_encryption` | Local | `false` for units whose path contains `state_kms_key`, since the key can't encrypt the state that creates it. `true` otherwise. |
+| `remote_state` | Block | S3 backend. Bucket `tofu-state-<account-id>-<region>-<environment>`, key `<unit-path>/tofu.tfstate`, lock table `terragrunt_lock_table`. Generates `backend.tf`. When `state_encryption` is `true`, S3 encrypts the state objects and the bucket default with the state KMS key, and OpenTofu encrypts each state and plan with it before writing. |
 | `generate "provider"` | Block | AWS provider for `aws_region`. Generates `providers_aws.tf`. |
 | `catalog` | Block | Points the [Terragrunt catalog](https://docs.terragrunt.com/reference/hcl/blocks/#catalog) at the catalog repository. |
 | `inputs` | Attribute | Merges the `region.hcl` and `environment.hcl` locals into every unit's inputs. |
