@@ -53,7 +53,7 @@ The root configuration every unit includes through `include "root"`. It loads `r
 | `state_encryption` | Local | `false` for units whose path contains `state_kms_key`, since the key can't encrypt the state that creates it. `true` otherwise. |
 | `remote_state` | Block | S3 backend. Bucket `tofu-state-<account-id>-<region>-<environment>`, key `<unit-path>/tofu.tfstate`, lock table `terragrunt_lock_table`. Generates `backend.tf`. When `state_encryption` is `true`, S3 encrypts the state objects and the bucket default with the state KMS key, and OpenTofu encrypts each state and plan with it before writing. |
 | `generate "provider"` | Block | AWS provider for `aws_region`. Generates `providers_aws.tf`. |
-| `catalog` | Block | Points the [Terragrunt catalog](https://docs.terragrunt.com/reference/hcl/blocks/#catalog) at the catalog repository. |
+| `catalog` | Block | Points the [Terragrunt catalog](https://docs.terragrunt.com/reference/hcl/blocks/#catalog) at the catalog repository, over SSH (`git@github.com:<owner>/<repo>.git`). |
 | `inputs` | Attribute | Merges the `region.hcl` and `environment.hcl` locals into every unit's inputs. |
 
 Units read its locals through `include.root.locals`.
