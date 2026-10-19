@@ -36,10 +36,6 @@ terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-gene
 
 Read [Infrastructure as Code](/docs/iac) for a high-level overview of TG.
 
-:::note
-On the first run, `--backend-bootstrap` automatically creates the [S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html) holding the [Terraform state](https://developer.hashicorp.com/terraform/language/state). More information in the [Terragrunt state backend documentation](https://docs.terragrunt.com/features/units/state-backend/).
-:::
-
 Then, retrieve the 4 nameservers from this pipeline output:
 ```bash
 terragrunt stack output --json setup_dns.route53_hosted_zone.name_servers
