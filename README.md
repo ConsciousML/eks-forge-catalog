@@ -28,6 +28,10 @@ This repository holds its reusable Terragrunt modules, units, and stacks, deploy
 
 For how the repositories fit together, see [Platform Architecture](https://eks-forge.readthedocs.io/latest/docs/architecture/#platform-architecture).
 
+## Get Started
+
+The [Quickstart](https://eks-forge.readthedocs.io/latest/docs/quickstart/) walks you through forking this repository and deploying a [fully-fledged](https://eks-forge.readthedocs.io/latest/docs/overview/#cluster-features) EKS cluster in the `dev` environment.
+
 ## Support
 
 Support is provided on a best-effort basis. If you have feedback, feature ideas, or wish to report a bug, please use the [issues](https://github.com/ConsciousML/eks-forge-catalog/issues) of this repository, or the [EKS Forge issues](https://github.com/ConsciousML/eks-forge/issues) for anything not specific to it.
