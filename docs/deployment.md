@@ -111,7 +111,7 @@ cd pipelines/dev/eks/stack
 terragrunt run --all destroy --non-interactive --no-stack-generate
 ```
 
-The [bootstrap](/docs/quickstart/bootstrap) resources stay in place, so you can reuse them for your next deployments. Among them, only the Route 53 hosted zones created by [DNS Bootstrap](/docs/quickstart/bootstrap/setup_dns/) are billed.
+The [bootstrap](/docs/quickstart/bootstrap) resources stay in place, so you can reuse them for your next deployments. Among them, only the Route 53 hosted zones created by [DNS Bootstrap](/docs/quickstart/bootstrap/setup_dns/) and the KMS key created by [Terraform State Encryption](/docs/quickstart/bootstrap/terraform_state_encryption/) are billed.
 
 ## What's Next
 Continue with [Production Deployment](/docs/deployment/get-started/) to deploy the `staging` and `prod` environments from the live repository.

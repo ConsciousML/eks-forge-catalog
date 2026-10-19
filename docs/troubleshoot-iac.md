@@ -276,14 +276,14 @@ encountered unencrypted payload without unencrypted method configured
 Migrate only when no one else runs Terragrunt against the same states. A run from an older catalog version can't read a migrated state.
 :::
 
-First, create the key if it doesn't exist yet. From the root of your catalog fork:
+First, create the key if it doesn't exist yet, by following [Terraform State Encryption](/docs/quickstart/bootstrap/terraform_state_encryption/).
+
+Then, from the root of your catalog fork, load your environment variables:
 ```bash
-cd pipelines/bootstrap/terraform_state_encryption
-terragrunt stack generate
-terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
+source .env
 ```
 
-Then allow OpenTofu to read plaintext states while it writes encrypted ones. This variable extends the generated encryption configuration with a fallback:
+Allow OpenTofu to read plaintext states while it writes encrypted ones. This variable extends the generated encryption configuration with a fallback:
 ```bash
 export TF_ENCRYPTION='method "unencrypted" "migrate" {}
 state {
