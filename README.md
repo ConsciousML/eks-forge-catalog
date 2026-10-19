@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  The catalog repository of EKS Forge
+  The Catalog repository of EKS Forge
 </p>
 
 <p align="center">
