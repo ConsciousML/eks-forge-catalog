@@ -1,7 +1,7 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 # Terraform State Encryption Bootstrap Reference
 
-The [`terraform_state_encryption` stack](../../stacks/terraform_state_encryption/), deployed by the [`terraform_state_encryption` pipeline](../../pipelines/bootstrap/terraform_state_encryption/), creates the [AWS KMS](https://aws.amazon.com/kms/) customer managed key that [`root.hcl`](/docs/reference/hcl_configuration/#roothcl) encrypts every state and plan with, and its alias.
+The [`terraform_state_encryption` stack](../../stacks/terraform_state_encryption/), deployed by the [`terraform_state_encryption` pipeline](../../pipelines/bootstrap/terraform_state_encryption/), creates the [AWS KMS](https://aws.amazon.com/kms/) [customer managed key](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key) that [`root.hcl`](/docs/reference/hcl_configuration/#roothcl) encrypts every state and plan with, and its [alias](https://docs.aws.amazon.com/kms/latest/developerguide/kms-alias.html).
 
 For setup steps, read the [Terraform State Encryption Bootstrap](/docs/quickstart/bootstrap/terraform_state_encryption).
 

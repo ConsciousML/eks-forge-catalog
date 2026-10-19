@@ -7,7 +7,7 @@ Your [Terraform state](https://opentofu.org/docs/language/state/) holds the pass
 This guide needs to be performed only once per catalog fork, before every other [bootstrap pipeline](/docs/quickstart/bootstrap) and the [deployment](/docs/quickstart/deployment/). They can't write their state until the key exists.
 :::
 
-This [bootstrap pipeline](/docs/quickstart/bootstrap) creates a customer managed KMS key, rotated every year, and an alias pointing at it. [`root.hcl`](/docs/reference/hcl_configuration/#roothcl) then encrypts your states twice with it: S3 encrypts the state objects it stores, and [OpenTofu](https://opentofu.org/docs/language/state/encryption/) encrypts each state and plan before writing it. The state bucket and your local `.terragrunt-cache` only hold ciphertext.
+This [bootstrap pipeline](/docs/quickstart/bootstrap) creates a [customer managed KMS key](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key), rotated every year, and an [alias](https://docs.aws.amazon.com/kms/latest/developerguide/kms-alias.html) pointing at it. [`root.hcl`](/docs/reference/hcl_configuration/#roothcl) then encrypts your states twice with it: S3 encrypts the state objects it stores, and [OpenTofu](https://opentofu.org/docs/language/state/encryption/) encrypts each state and plan before writing it. The state bucket and your local `.terragrunt-cache` only hold ciphertext.
 
 First, run the following [Terragrunt](/docs/iac) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
