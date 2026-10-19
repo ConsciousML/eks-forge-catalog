@@ -8,7 +8,7 @@ EKS Forge's [advanced features](/docs/overview/#features) rely on several tools 
 
 They're [Terragrunt stacks](/docs/iac/#stacks) that deploy account-level and repository-level resources, independent of any IaC environment (`dev`, `staging`, etc.). Each environment depends on these resources to function, so bootstrap pipelines need to run first.
 
-Run Terraform State Encryption first: every other pipeline encrypts its state with the key it creates. Then complete each of the other one-time setup guides:
+First, run Terraform State Encryption:
 
 <DocCards columns={2} items={[
   {
@@ -17,6 +17,11 @@ Run Terraform State Encryption first: every other pipeline encrypts its state wi
     description: 'Encrypts your infrastructure state, so the secrets it holds can\'t be read from the state bucket',
     link: '/docs/quickstart/bootstrap/terraform_state_encryption',
   },
+]} />
+
+Then, complete each of these one-time setup guides:
+
+<DocCards columns={2} items={[
   {
     icon: <Globe size={36} color="var(--ifm-color-primary-dark)" />,
     title: 'Setup DNS',
