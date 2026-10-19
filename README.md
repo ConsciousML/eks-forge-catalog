@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  The Terragrunt catalog of EKS Forge
+  The catalog repository of EKS Forge
 </p>
 
 <p align="center">
