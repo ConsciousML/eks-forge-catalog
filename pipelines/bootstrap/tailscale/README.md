@@ -21,6 +21,10 @@ You'll deploy two pipelines into your [tailnet](https://tailscale.com/docs/conce
 - the [Access Control (ACL)](https://tailscale.com/docs/features/access-control/acls), the tailnet's permission policy
 - [Workload Identity Federation](https://tailscale.com/docs/features/workload-identity-federation) (WIF), which lets CI authenticate to Tailscale without a stored secret
 
+:::warning
+The ACL pipeline replaces your tailnet's whole [policy file](https://tailscale.com/kb/1395/tailnet-policy-file). If yours isn't the Tailscale default, the apply fails instead of overwriting it. To keep your rules, copy them from the [ACL JSON Editor](https://console.tailscale.com/admin/acls/file) into the `acl` value of [`pipelines/bootstrap/tailscale/acl/terragrunt.stack.hcl`](acl/terragrunt.stack.hcl). Then, set `overwrite_existing_content = true` in the same file and run the commands below again.
+:::
+
 Deploy the ACL first, since WIF relies on the `tag:ci` the ACL defines. From the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog), run:
 
 ```bash
