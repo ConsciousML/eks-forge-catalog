@@ -4,15 +4,7 @@
 The reference for every environment variable used by EKS Forge.
 
 ## Prerequisite
-If you haven't already, copy the example file:
-```bash
-cp .env.example .env
-```
-`.env.example` is prefilled with every variable below, pointing to the doc that explains it. You only need to fill in the values.
-
-:::danger
-Once filled in, `.env` holds sensitive credentials. Never commit it to version control.
-:::
+Create your `.env` file, as in [Create the `.env` File](/docs/quickstart/configuration/#create-the-env-file). It's prefilled with every variable below, pointing to the doc that explains it. You only need to fill in the values.
 
 ## `GITHUB_TOKEN`
 
