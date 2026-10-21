@@ -14,6 +14,8 @@ cp .env.example .env
 Once filled in, `.env` holds sensitive credentials. Never commit it to version control.
 :::
 
+AWS credentials and the region aren't set in `.env`. Authenticate as in [Authenticate with the AWS CLI](/docs/quickstart/configuration/#authenticate-with-the-aws-cli). Terragrunt reads the region from `region.hcl`, and CI from the `AWS_REGION` GitHub Actions secret, created by the [AWS GitHub Actions Authentication](/docs/quickstart/bootstrap/aws_gh_actions_auth/) bootstrap.
+
 ## `GITHUB_TOKEN`
 
 This environment variable is needed for running the [GitHub Terraform provider](https://registry.terraform.io/providers/integrations/github/latest/docs).
@@ -72,18 +74,6 @@ CI sets them to `catalog-eks-ci` and `dev` respectively in [`.github/workflows/c
 export TG_ENVIRONMENT=<your-environment>
 export TG_ENVIRONMENT_ALIAS=<environment-to-reuse-helm-values-from>
 ```
-
-## `AWS_REGION`
-
-**Required by**: `.github/workflows/ci.yaml`
-
-The AWS region where the EKS stack is deployed.
-
-```bash
-export AWS_REGION=<your-region>   # e.g. us-east-1
-```
-
-> AWS credentials themselves are not managed via `.env`. Authenticate separately with `aws configure` or an AWS profile. See [Authenticate with the AWS CLI](/docs/quickstart/configuration/#authenticate-with-the-aws-cli).
 
 ## `EKS_LOCAL_ADMIN_ARN`
 
