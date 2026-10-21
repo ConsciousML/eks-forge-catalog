@@ -11,6 +11,8 @@ Run the following to create the EC2 Spot [service-linked role](https://docs.aws.
 aws iam create-service-linked-role --aws-service-name spot.amazonaws.com || true
 ```
 
+If the role already exists, you'll see an `InvalidInput` error saying `AWSServiceRoleForEC2Spot has been taken in this account`. You can ignore it.
+
 ## Run the Terragrunt Stack
 In your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog), run the following [Terragrunt](/docs/iac) commands from the root to deploy the `dev` environment:
 
