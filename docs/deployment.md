@@ -33,6 +33,10 @@ When it's done, connect `kubectl` to your `dev` EKS cluster by creating a [`kube
 aws eks update-kubeconfig --region <region-code> --name dev-cluster
 ```
 
+:::warning
+Run `kubectl` from your catalog fork. It calls the `aws` CLI to authenticate, and [mise](/docs/quickstart/installation/#install-the-cli-tools) only puts it on your `PATH` inside the repository. Elsewhere, `kubectl` fails with `exec: executable aws not found`.
+:::
+
 Next, verify `kubectl` is connected:
 ```bash
 kubectl get pods -n kube-system
