@@ -22,10 +22,6 @@ terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-gene
 
 Read [Infrastructure as Code](/docs/iac) for a high-level overview of Terragrunt.
 
-:::note
-The [Terraform State Encryption](/docs/quickstart/bootstrap/terraform_state_encryption/) pipeline created the bootstrap state bucket before its key existed, so without encryption. This pipeline is the next one to use that bucket, so the run warns that `Encryption is not enabled on the S3 remote state bucket`. Terragrunt then enables it by itself, and logs `Successfully enabled Server-Side Encryption`. You have nothing to do.
-:::
-
 Then, check that the IAM role exists:
 ```bash
 aws iam get-role --role-name bootstrap-catalog-eks-gh-terragrunt-role-catalog --query Role.Arn --output text
