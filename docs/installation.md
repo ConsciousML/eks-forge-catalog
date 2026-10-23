@@ -35,7 +35,7 @@ Stay at the root of your catalog repository.
 You'll use multiple CLI tools to deploy and operate EKS Forge.
 Luckily, the catalog comes with a [mise-en-place](https://mise.jdx.dev/) configuration that allows you to install them all effortlessly.
 
-Let's start by installing `mise`:
+Let's start by installing `mise`. Skip this step if `mise --version` already prints a version:
 ```bash
 curl https://mise.run | MISE_VERSION=v2026.4.0 sh
 ```
@@ -47,7 +47,7 @@ mise trust
 mise install
 ```
 
-Finally, run the following to automatically activate mise when starting a shell:
+Finally, run the following to automatically activate mise when starting a shell. Skip it if your shell config already runs `mise activate`:
 - For `zsh`: 
 ```bash
 echo 'eval "$(~/.local/bin/mise activate zsh)"' >> ~/.zshrc && source ~/.zshrc

@@ -52,3 +52,24 @@ locals {
 }
 ```
 You can also leave it as is if you plan to use `us-east-1`.
+
+3. Commit and push your changes. The CI/CD pipelines read these files from your fork on GitHub, not from your machine:
+```bash
+git add pipelines/github.hcl pipelines/region.hcl
+git commit -m "chore: configure the catalog fork"
+git push origin main
+```
+
+## Create the `.env` File
+The pipelines read the tokens they need (GitHub, Tailscale, Slack) from environment variables, which you'll keep in a `.env` file at the root of your fork. Each pipeline command starts with `source .env` to load them.
+
+Create it from the example file:
+```bash
+cp .env.example .env
+```
+
+Leave the values empty for now. The [bootstrap pipelines](/docs/quickstart/bootstrap/) tell you which one to fill in, and when.
+
+:::danger
+Once filled in, `.env` holds sensitive credentials. `.gitignore` already excludes it, so never force-add it to version control.
+:::

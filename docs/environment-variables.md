@@ -4,15 +4,7 @@
 The reference for every environment variable used by EKS Forge.
 
 ## Prerequisite
-If you haven't already, copy the example file:
-```bash
-cp .env.example .env
-```
-`.env.example` is prefilled with every variable below, pointing to the doc that explains it. You only need to fill in the values.
-
-:::danger
-Once filled in, `.env` holds sensitive credentials. Never commit it to version control.
-:::
+Create your `.env` file, as in [Create the `.env` File](/docs/quickstart/configuration/#create-the-env-file). It's prefilled with every variable below, pointing to the doc that explains it. You only need to fill in the values.
 
 ## `GITHUB_TOKEN`
 
@@ -72,18 +64,6 @@ CI sets them to `catalog-eks-ci` and `dev` respectively in [`.github/workflows/c
 export TG_ENVIRONMENT=<your-environment>
 export TG_ENVIRONMENT_ALIAS=<environment-to-reuse-helm-values-from>
 ```
-
-## `AWS_REGION`
-
-**Required by**: `.github/workflows/ci.yaml`
-
-The AWS region where the EKS stack is deployed.
-
-```bash
-export AWS_REGION=<your-region>   # e.g. us-east-1
-```
-
-> AWS credentials themselves are not managed via `.env`. Authenticate separately with `aws configure` or an AWS profile. See [Authenticate with the AWS CLI](/docs/quickstart/configuration/#authenticate-with-the-aws-cli).
 
 ## `EKS_LOCAL_ADMIN_ARN`
 
