@@ -19,6 +19,13 @@ locals {
 ```
 Replace the `base_domain` value with your base domain url. Keep the `subdomain_*` keys: they name the hostname of each app (e.g. `argocd.private.dev.yourdomain.com`).
 
+Then, commit and push it, so the CI/CD pipelines use your domain:
+```bash
+git add pipelines/dns.hcl
+git commit -m "chore: set the base domain"
+git push origin main
+```
+
 :::info
 Each subdirectory provisions its own hosted zone, giving that environment its own subdomain, named after the `environment` value in its `environment.hcl`:
 ```

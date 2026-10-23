@@ -53,6 +53,13 @@ locals {
 ```
 You can also leave it as is if you plan to use `us-east-1`.
 
+3. Commit and push your changes. The CI/CD pipelines read these files from your fork on GitHub, not from your machine:
+```bash
+git add pipelines/github.hcl pipelines/region.hcl
+git commit -m "chore: configure the catalog fork"
+git push origin main
+```
+
 ## Create the `.env` File
 The pipelines read the tokens they need (GitHub, Tailscale, Slack) from environment variables, which you'll keep in a `.env` file at the root of your fork. Each pipeline command starts with `source .env` to load them.
 
