@@ -140,7 +140,7 @@ The Helm provider for units that deploy Helm charts. Included alongside `provide
 
 | Name | Kind | Description |
 |------|------|-------------|
-| `generate "provider_helm"` | Block | Helm provider authenticated against the cluster from the `provider_k8s_base.hcl` data sources, with an `aws eks get-token` exec fallback. Generates `provider_helm.tf`. |
+| `generate "provider_helm"` | Block | Helm provider authenticated against the cluster from the `provider_k8s_base.hcl` data sources, with an `aws eks get-token` exec fallback. Logs into `oci://public.ecr.aws` with an ephemeral `aws_ecrpublic_authorization_token` (`us-east-1`), so chart pulls skip the anonymous rate limit. Generates `provider_helm.tf`. |
 
 ## Per Environment
 
