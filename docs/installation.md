@@ -6,7 +6,7 @@
 EKS Forge is a toolkit containing multiple [repository templates](/docs/overview/#how-does-eks-forge-work), each with their own responsibilities.
 They're meant to be forked and extended.
 
-To get started, you'll fork the catalog, a collection of [Terraform](https://developer.hashicorp.com/terraform) modules and [Terragrunt](https://docs.terragrunt.com/getting-started/terminology/#terragrunt) pipelines, re-usable across multiple environments (`dev`, `staging`, and `prod`).
+To get started, you'll fork the [catalog](https://github.com/ConsciousML/eks-forge-catalog), a collection of [Terraform](https://developer.hashicorp.com/terraform) modules and [Terragrunt](https://docs.terragrunt.com/getting-started/terminology/#terragrunt) pipelines, re-usable across multiple environments (`dev`, `staging`, and `prod`).
 
 First, create an empty repository from [GitHub's new repository page](https://github.com/new), private or public. Leave the README, `.gitignore`, and license options unset.
 
