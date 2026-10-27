@@ -30,8 +30,8 @@ terragrunt stack generate
 terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
 ```
 
-AWS approves some increases instantly. Others are reviewed manually and can take a day or more, which is normal.
+AWS approves some increases instantly. Others are reviewed manually and can take a day or more, which is normal. You don't need to wait for them: continue with the other [bootstrap pipelines](/docs/quickstart/bootstrap/), starting with [Setup DNS](/docs/quickstart/bootstrap/setup_dns/).
 
-Finally, re-run the check from the first step. Once AWS approves the requests, both values match the ones in the stack file. While AWS reviews them, track their status in the [Service Quotas request history console](https://console.aws.amazon.com/servicequotas/home/requests).
+Finally, before the [deployment](/docs/quickstart/deployment/), re-run the check from the first step. Once AWS approves the requests, both values match the ones in the stack file. While AWS reviews them, track their status in the [Service Quotas request history console](https://console.aws.amazon.com/servicequotas/home/requests).
 
 For more information about this bootstrap, read the [AWS EC2 Quotas](/docs/reference/bootstrap/aws_ec2_quotas/) reference.
