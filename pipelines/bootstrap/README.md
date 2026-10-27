@@ -23,6 +23,12 @@ Then, complete each of these one-time setup guides:
 
 <DocCards columns={2} items={[
   {
+    icon: <Gauge size={36} color="var(--ifm-color-primary-dark)" />,
+    title: 'AWS Service Quotas',
+    description: 'Raises your AWS account limits so it can actually launch enough servers for your cluster',
+    link: '/docs/quickstart/bootstrap/aws_service_quotas',
+  },
+  {
     icon: <Globe size={36} color="var(--ifm-color-primary-dark)" />,
     title: 'Setup DNS',
     description: 'Gives your apps a real domain name and HTTPS, so they can be reached securely from the internet',
@@ -45,12 +51,6 @@ Then, complete each of these one-time setup guides:
     title: 'Slack',
     description: 'Sends your cluster and infrastructure alerts to a Slack channel',
     link: '/docs/quickstart/bootstrap/slack',
-  },
-  {
-    icon: <Gauge size={36} color="var(--ifm-color-primary-dark)" />,
-    title: 'AWS Service Quotas',
-    description: 'Raises your AWS account limits so it can actually launch enough servers for your cluster',
-    link: '/docs/quickstart/bootstrap/aws_service_quotas',
   },
   {
     icon: <DollarSign size={36} color="var(--ifm-color-primary-dark)" />,
