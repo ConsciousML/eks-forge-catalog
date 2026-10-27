@@ -15,8 +15,8 @@ EKS Forge's EC2 usage exceeds a new account's default quotas (5 vCPU for both On
 
 First, check the account's current values for the two quotas EKS Forge uses:
 ```bash
-aws service-quotas get-service-quota --service-code ec2 --quota-code L-1216C47A # On-Demand Standard
-aws service-quotas get-service-quota --service-code ec2 --quota-code L-34B43A08 # Spot Standard
+aws service-quotas get-service-quota --service-code ec2 --quota-code L-1216C47A --query Quota.Value --output text # On-Demand Standard
+aws service-quotas get-service-quota --service-code ec2 --quota-code L-34B43A08 --query Quota.Value --output text # Spot Standard
 ```
 
 If both values are at least `ondemand_desired_value` and `spot_desired_value` in the [stack file](terragrunt.stack.hcl), skip the rest of this guide.

@@ -29,4 +29,4 @@ aws kms schedule-key-deletion --key-id $(aws kms describe-key --key-id alias/boo
 
 AWS deletes it after a waiting period, and you can restore it until then (see [Deletion](/docs/reference/terraform_modules/kms_key/#deletion)).
 
-Finally, in your domain registrar, remove the NS records of the `dev` and `ci` subdomains, and of any environment you added, for the same reason as for `staging` and `prod`.
+Finally, in your domain registrar, remove the NS records of the `dev` and `catalog-eks-ci` subdomains, and of any environment you added, for the same reason as for `staging` and `prod`.

@@ -11,6 +11,10 @@ Run the following to create the EC2 Spot [service-linked role](https://docs.aws.
 aws iam create-service-linked-role --aws-service-name spot.amazonaws.com || true
 ```
 
+:::note
+If the role already exists, you'll see an `InvalidInput` error saying `AWSServiceRoleForEC2Spot has been taken in this account`. You can ignore it.
+:::
+
 ## Run the Terragrunt Stack
 In your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog), run the following [Terragrunt](/docs/iac) commands from the root to deploy the `dev` environment:
 
@@ -28,6 +32,10 @@ When it's done, connect `kubectl` to your `dev` EKS cluster by creating a [`kube
 ```bash
 aws eks update-kubeconfig --region <region-code> --name dev-cluster
 ```
+
+:::warning
+Run `kubectl` from your catalog fork. It calls the `aws` CLI to authenticate, and [mise](/docs/quickstart/installation/#install-the-cli-tools) only puts it on your `PATH` inside the repository. Elsewhere, `kubectl` fails with `exec: executable aws not found`.
+:::
 
 Next, verify `kubectl` is connected:
 ```bash
