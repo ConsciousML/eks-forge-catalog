@@ -41,6 +41,8 @@ locals {
   # (eks-forge-app-of-apps repo), which appParams has no path to set.
   kube_prometheus_stack_release = "kube-prometheus-stack"
 
+  pagerduty_events_url = values.pagerduty_service_region == "eu" ? "https://events.eu.pagerduty.com/v2/enqueue" : "https://events.pagerduty.com/v2/enqueue"
+
   # Root and child Applications, so github.hcl alone switches the app of apps fork.
   repo_url = include.root.locals.github_locals.app_of_apps_repo_url
 }
@@ -331,6 +333,12 @@ inputs = {
         awsRegion       = include.root.locals.aws_region
         remoteKey       = dependency.alertmanager_slack_bot_secret.outputs.secret_name
       }
+      "alertmanager-pagerduty-secrets" = {
+        secretStoreName = "${include.root.locals.environment}-aws-secrets-manager-alertmanager-pagerduty"
+        awsRegion       = include.root.locals.aws_region
+        # Created by pipelines/bootstrap/pagerduty, outside this stack (units/pagerduty/aws_secret).
+        remoteKey = "${include.root.locals.environment}-alertmanager-pagerduty"
+      }
       # See local.kube_prometheus_stack_release above: fullnameOverride and the 3
       # httproute backendRefs.default.name overrides below must all agree on this same
       # literal. Only HCL locals can compose "<release>-grafana", plain YAML can't.
@@ -338,6 +346,10 @@ inputs = {
         "kube-prometheus-stack" = {
           fullnameOverride = local.kube_prometheus_stack_release
           environment      = include.root.locals.environment
+          pagerduty = {
+            enabled   = values.pagerduty_enabled
+            eventsUrl = local.pagerduty_events_url
+          }
           prometheus = {
             prometheusSpec = {
               externalUrl = "https://${local.domain_private_prometheus}"
