@@ -2,6 +2,11 @@ variable "token" {
   description = "PagerDuty REST API key (General Access, not read-only). Used to create the service and its integration"
   type        = string
   sensitive   = true
+
+  validation {
+    condition     = length(var.token) > 0
+    error_message = "token is empty. Set PAGERDUTY_TOKEN in .env."
+  }
 }
 
 variable "service_region" {
