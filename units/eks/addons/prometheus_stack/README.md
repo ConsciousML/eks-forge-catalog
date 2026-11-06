@@ -24,6 +24,7 @@ Deploys [kube-prometheus-stack](https://github.com/prometheus-community/helm-cha
 - **`grafana-httproute`, `prometheus-httproute`, `alertmanager-httproute`** (app-of-apps): instances of the generic [`httproute`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/charts/gateway-api/httproute) chart, exposing the stack's UIs
 - **`grafana-secrets`** (app-of-apps): an instance of the generic [`secret-sync`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/charts/external-secrets-operator/secret-sync) chart, syncs `grafana/aws_secret_password` into the cluster
 - **`alertmanager-secrets`** (app-of-apps): an instance of the generic [`secret-sync`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/charts/external-secrets-operator/secret-sync) chart, syncs `alertmanager/aws_secret_slack_bot` into the cluster so Alertmanager can send alerts to Slack
+- **`alertmanager-pagerduty-secrets`** (app-of-apps): an instance of the generic [`secret-sync`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/charts/external-secrets-operator/secret-sync) chart, syncs the PagerDuty integration key written by [`units/pagerduty/aws_secret`](../../../pagerduty/aws_secret/) into the cluster so Alertmanager can page
 
 ## Upstream Dependencies
 

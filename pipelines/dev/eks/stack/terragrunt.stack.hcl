@@ -689,6 +689,9 @@ unit "argocd_app_of_apps" {
     sync_options          = ["CreateNamespace=true"]
     prune                 = true
     helm_chart_version    = local.version_argocd_apps
+    # Off by default, so dev and CI never page.
+    pagerduty_enabled        = get_env("PAGERDUTY_ENABLED", "false") == "true"
+    pagerduty_service_region = get_env("PAGERDUTY_SERVICE_REGION", "")
     retry = {
       limit = 7
       backoff = {

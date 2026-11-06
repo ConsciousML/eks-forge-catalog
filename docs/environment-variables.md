@@ -53,6 +53,25 @@ Copy the Bot User OAuth Token (starts with `xoxb-`) shown under "OAuth Tokens" o
 export SLACK_BOT_TOKEN=<your-bot-token>
 ```
 
+## `PAGERDUTY_TOKEN` and `PAGERDUTY_SERVICE_REGION`
+
+**Required by**: `pipelines/bootstrap/pagerduty/`
+
+`PAGERDUTY_TOKEN` is a PagerDuty REST API key (General Access, not read-only), created under `Configuration > Integrations > API Access Keys`. `PAGERDUTY_SERVICE_REGION` is the service region of the PagerDuty account, chosen at signup. It's empty for US, `eu` for EU. The EKS stack also reads it to pick the Events API endpoint Alertmanager pages through.
+```bash
+export PAGERDUTY_TOKEN=<your-api-key>
+export PAGERDUTY_SERVICE_REGION=    # empty for US, eu for EU
+```
+
+## `PAGERDUTY_ENABLED`
+
+**Used by**: [`pipelines/dev/eks/stack/terragrunt.stack.hcl`](../pipelines/dev/eks/stack/terragrunt.stack.hcl) (optional)
+
+Set to `true` to send the `slo` page alerts (`component: slo`, `severity: critical`) to PagerDuty, on top of Slack. Defaults to `false`, so dev and CI never page.
+```bash
+export PAGERDUTY_ENABLED=true
+```
+
 ## `TG_ENVIRONMENT` and `TG_ENVIRONMENT_ALIAS`
 
 **Used by**: [`pipelines/dev/environment.hcl`](../pipelines/dev/environment.hcl) (optional)
