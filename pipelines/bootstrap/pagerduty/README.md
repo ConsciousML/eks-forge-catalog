@@ -1,7 +1,9 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 # PagerDuty Bootstrap
 
-In this guide, you'll set up [PagerDuty](https://www.pagerduty.com/) so Alertmanager can page the on-call engineer. Only `prod` pages. `dev` and CI get a PagerDuty service too, but they never page unless you set [`PAGERDUTY_ENABLED`](/docs/reference/environment_variable/#pagerduty_enabled) to `true`.
+In this guide, you'll set up [PagerDuty](https://www.pagerduty.com/) so Alertmanager can page you. An alert posted to Slack waits until someone reads the channel. A page doesn't wait: PagerDuty contacts you directly, by email by default, so you can act on the alert right away.
+
+Only `prod` pages. `dev` and CI get a PagerDuty service too, but they never page unless you set [`PAGERDUTY_ENABLED`](/docs/reference/environment_variable/#pagerduty_enabled) to `true`.
 
 :::warning
 This guide needs to be performed only once per catalog fork before running the [deployment](/docs/quickstart/deployment/).

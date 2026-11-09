@@ -55,7 +55,7 @@ Then, complete each of these one-time setup guides:
   {
     icon: <Siren size={36} color="var(--ifm-color-primary-dark)" />,
     title: 'PagerDuty',
-    description: 'Pages your on-call engineer when a prod alert needs action right away',
+    description: 'Contacts you directly when a prod alert needs action right away',
     link: '/docs/quickstart/bootstrap/pagerduty',
   },
   {
