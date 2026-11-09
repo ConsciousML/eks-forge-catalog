@@ -14,7 +14,7 @@ First, create your PagerDuty account:
 2. In `Work Email`, enter your email and click `Continue`. The trial rejects some personal email domains, such as `gmail.com`, `yahoo.com`, and `icloud.com`
 3. Fill in `First Name`, `Last Name`, `Company`, and `Country`, then click `Continue`
 4. Choose a `Password` and click `Continue`
-5. In `Name your account`, edit the account URL. It's pre-filled from your email domain (e.g. `hotmail.pagerduty.com`), but account URLs are unique across PagerDuty and need at least 5 characters, so pick your own (e.g. `your-org-name.pagerduty.com`)
+5. In `Name your account URL`, edit the account URL. It's pre-filled from your email domain (e.g. `hotmail.pagerduty.com`), but account URLs are unique across PagerDuty and need at least 5 characters, so pick your own (e.g. `your-org-name.pagerduty.com`)
 6. In `Select your service region`, choose `U.S.A.` or `E.U.`. You can't change it later, so note which one you chose
 7. Check the `Terms of Service` and `Privacy Policy` box, and click `Create Account`
 
