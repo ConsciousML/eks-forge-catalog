@@ -2,7 +2,7 @@
 
 This guide shows you how to create an [interface VPC endpoint](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-interface.html) for an AWS service from your [forked catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog), validate it in [`dev`](/docs/iac/#dev), and merge it.
 
-You need it when an app calls an AWS API that has no endpoint yet. Without one, the app's network policy has to allow egress to `world` on port 443, which opens the whole internet. The endpoint gets a fixed IP in each private subnet, so the policy can allow only those IPs instead (see [Reaching AWS APIs](/docs/security/how-network-policies-work/#reaching-aws-apis)).
+You need it when an app calls an AWS API that has no endpoint yet. Without one, the app's network policy has to allow egress to `world` on port 443, which opens the whole internet. The endpoint gets a fixed IP in each subnet it uses, so the policy can allow only those IPs instead (see [Reaching AWS APIs](/docs/security/how-network-policies-work/#reaching-aws-apis)).
 
 To write that rule once the endpoint exists, see [Allow an AWS API](/docs/security/write-network-policies/#allow-an-aws-api).
 
