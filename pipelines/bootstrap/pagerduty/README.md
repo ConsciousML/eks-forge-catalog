@@ -22,8 +22,6 @@ PagerDuty then opens an onboarding, which you can skip:
 1. The first step asks you to connect Slack. Click `Skip for now`
 2. Exit the onboarding
 
-Your account already has what the pipeline needs. To see it, click `Schedules` in the sidebar, then `Escalation Policies`. You should see a policy named `Default`, with you on it. The pipeline assigns its services to this policy. Your account also has an unused `Default Service`, which you can leave as is.
-
 Your signup email is your only contact method by default, which is enough to get paged.
 
 Next, create the API key Terraform uses to create the services:
