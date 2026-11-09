@@ -77,7 +77,7 @@ inputs = {
       for svc, offset in local.endpoint_host_offsets : svc => {
         service_endpoint      = local.service_endpoints[svc]
         private_dns_enabled   = true
-        subnet_ids            = dependency.vpc.outputs.private_subnets
+        subnet_ids            = [for ip in dependency.endpoint_cidrs.outputs.endpoint_ips[svc] : ip.subnet_id]
         subnet_configurations = dependency.endpoint_cidrs.outputs.endpoint_ips[svc]
       }
     },

@@ -97,7 +97,7 @@ VPC CIDR blocks and the pinned IPs of the VPC interface endpoints.
 |------|-------------|
 | `vpc_cidrs` | Map of environment name to VPC CIDR block. |
 | `endpoint_host_offsets` | Map of AWS service to the host offset of its interface endpoint's pinned IP within each private subnet. |
-| `app_param_key_map` | Map of AWS service to the key each `CiliumNetworkPolicy` consumer in the app-of-apps repository expects in `vpcEndpointCidrs`. Services without an entry, such as `ecr.api`, `ecr.dkr`, and `sts`, have no consumer. |
+| `app_param_key_map` | Map of AWS service to the key each `CiliumNetworkPolicy` consumer in the app-of-apps repository expects in `vpcEndpointCidrs`. |
 
 `vpc_cidrs` differs between repositories:
 

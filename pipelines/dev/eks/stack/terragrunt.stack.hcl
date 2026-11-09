@@ -182,6 +182,9 @@ unit "vpc_endpoint_cidrs" {
 
   values = {
     version = local.version
+
+    # DEV: 1 AZ, fck-nat is already a single-AZ point of failure. For production, use at least 2.
+    endpoint_az_count = 1
   }
 }
 
