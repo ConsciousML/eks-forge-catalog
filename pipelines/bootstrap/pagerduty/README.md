@@ -22,7 +22,7 @@ PagerDuty then opens an onboarding, which you can skip:
 1. The first step asks you to connect Slack. Click `Skip for now`
 2. Exit the onboarding
 
-Your signup email is your only contact method by default, which is enough to get paged.
+You'll get paged on your signup email.
 
 Next, create the API key Terraform uses to create the services:
 1. Click `Configuration`, then `Integrations`, then `API Access Keys`
