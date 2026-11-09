@@ -10,18 +10,33 @@ This guide needs to be performed only once per catalog fork before running the [
 :::
 
 First, create your PagerDuty account:
-1. Go to [PagerDuty's sign-up page](https://www.pagerduty.com/sign-up/) and fill in the form
-2. On the step where you name your account URL, choose the service region, `USA` or `EU`. You can't change it later
-3. Edit the account URL, which is pre-filled from your email domain (e.g. `hotmail.pagerduty.com`). Account URLs are unique across PagerDuty and need at least 5 characters, so pick your own (e.g. `your-org-name.pagerduty.com`)
+1. Go to [PagerDuty's sign-up page](https://www.pagerduty.com/sign-up/)
+2. In `Work Email`, enter your email and click `Continue`. The trial rejects some personal email domains, such as `gmail.com`, `yahoo.com`, and `icloud.com`
+3. Fill in `First Name`, `Last Name`, `Company`, and `Country`, then click `Continue`
+4. Choose a `Password` and click `Continue`
+5. In `Name your account`, edit the account URL. It's pre-filled from your email domain (e.g. `hotmail.pagerduty.com`), but account URLs are unique across PagerDuty and need at least 5 characters, so pick your own (e.g. `your-org-name.pagerduty.com`)
+6. In `Select your service region`, choose `U.S.A.` or `E.U.`. You can't change it later, so note which one you chose
+7. Check the `Terms of Service` and `Privacy Policy` box, and click `Create Account`
 
-PagerDuty then starts an onboarding. Click `Skip for now` on the Slack integration prompt, then exit the onboarding. You don't need it: your account already has an escalation policy named `Default`, with you on it, which the pipeline assigns its services to. You can see it in the sidebar, under `Schedules` > `Escalation Policies`. Your signup email is your only contact method by default, which is enough to get paged.
+PagerDuty then opens an onboarding. You don't need it, so skip it:
+1. On the Slack integration prompt, which comes first, click `Skip for now`
+2. Exit the onboarding
+
+Your account already has what the pipeline needs. To see it, click `Schedules` in the sidebar, then `Escalation Policies`. You should see a policy named `Default`, with you on it. The pipeline assigns its services to this policy. Your account also has an unused `Default Service`, which you can leave as is.
+
+Your signup email is your only contact method by default, which is enough to get paged.
 
 Next, create the API key Terraform uses to create the services:
-1. Go to `Configuration` > `Integrations` > `API Access Keys`, and click `Create New API Key`
-2. Give the key a description, leave `Read-only` unchecked, and create it
-3. Copy the key now. PagerDuty shows it only once
+1. Click `Configuration`, then `Integrations`, then `API Access Keys`
+2. Click `Create New API Key`
+3. Enter a description (e.g. `eks-forge`), leave `Read-only` unchecked, and create the key
+4. Copy the key now. PagerDuty shows it only once
 
-Then, add [`PAGERDUTY_TOKEN` and `PAGERDUTY_SERVICE_REGION`](/docs/reference/environment_variable/#pagerduty_token-and-pagerduty_service_region) to your `.env` file. Set `PAGERDUTY_SERVICE_REGION` to `eu` for an EU account, and leave it empty for a US account.
+Then, add the key and your service region to your `.env` file, as described in the [`PAGERDUTY_TOKEN` and `PAGERDUTY_SERVICE_REGION`](/docs/reference/environment_variable/#pagerduty_token-and-pagerduty_service_region) reference. Set `PAGERDUTY_SERVICE_REGION` to `eu` if you chose `E.U.`, and leave it empty if you chose `U.S.A.`:
+```bash
+export PAGERDUTY_TOKEN=<your-api-key>
+export PAGERDUTY_SERVICE_REGION=
+```
 
 You'll deploy two pipelines:
 - [`services`](services/), which creates a PagerDuty service for each environment (`dev-eks-forge` and `catalog-eks-ci-eks-forge`), and stores its integration key in AWS Secrets Manager for Alertmanager
