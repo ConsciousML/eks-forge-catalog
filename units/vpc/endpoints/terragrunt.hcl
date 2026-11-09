@@ -77,7 +77,7 @@ inputs = {
       for svc, offset in local.endpoint_host_offsets : svc => {
         service_endpoint    = local.service_endpoints[svc]
         private_dns_enabled = true
-        # Must match subnet_configurations. endpoint_az_count in ../endpoint_cidrs sets both.
+        # Subnet IDs read from the endpoint_ips map of ../endpoint_cidrs, so ENIs follow endpoint_az_count.
         subnet_ids            = [for ip in dependency.endpoint_cidrs.outputs.endpoint_ips[svc] : ip.subnet_id]
         subnet_configurations = dependency.endpoint_cidrs.outputs.endpoint_ips[svc]
       }
