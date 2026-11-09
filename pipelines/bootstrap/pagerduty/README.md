@@ -29,8 +29,9 @@ Your signup email is your only contact method by default, which is enough to get
 Next, create the API key Terraform uses to create the services:
 1. Click `Configuration`, then `Integrations`, then `API Access Keys`
 2. Click `Create New API Key`
-3. Enter a description (e.g. `eks-forge`), leave `Read-only` unchecked, and create the key
-4. Copy the key now. PagerDuty shows it only once
+3. In `Description`, enter a name to identify the key later (e.g. `eks-forge`)
+4. Leave `Read-only` unchecked, so Terraform can create resources, and click `Create Key`
+5. Copy the key now, since PagerDuty shows it only once, then click `Close`
 
 Then, add the key and your service region to your `.env` file, as described in the [`PAGERDUTY_TOKEN` and `PAGERDUTY_SERVICE_REGION`](/docs/reference/environment_variable/#pagerduty_token-and-pagerduty_service_region) reference. Set `PAGERDUTY_SERVICE_REGION` to `eu` if you chose `E.U.`, and leave it empty if you chose `U.S.A.`:
 ```bash
