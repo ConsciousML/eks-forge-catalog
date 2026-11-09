@@ -51,7 +51,13 @@ Open the `#dev-slo-critical` channel of your Slack workspace. You should see a m
 The `warning` one lands in `#dev-slo-warning`.
 
 ## Get Paged
-At the same time, PagerDuty pages you: you should get an email, and a push notification if you installed the app. In PagerDuty, click **Incidents**. You should see a triggered incident on the `dev-eks-forge` service, titled `podinfo is burning its availability error budget`.
+At the same time, PagerDuty pages you: you should get an email, and a push notification if you installed the app.
+
+Open the incident:
+- In the app, tap the push notification.
+- In the web console, open your account URL (e.g. `https://your-org-name.pagerduty.com`) in your browser and click **Incidents**.
+
+You should see a triggered incident on the `dev-eks-forge` service, titled `podinfo is burning its availability error budget`.
 
 Notice only the `critical` alert paged you. The `warning` one stayed in Slack.
 
