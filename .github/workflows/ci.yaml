@@ -133,8 +133,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          # The secret stores the empty US region as `us`, see units/pagerduty/github_secrets.
-          PAGERDUTY_SERVICE_REGION: ${{ secrets.PAGERDUTY_SERVICE_REGION != 'us' && secrets.PAGERDUTY_SERVICE_REGION || '' }}
         run: |
           cd pipelines
           terragrunt stack run init
@@ -143,8 +141,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          # The secret stores the empty US region as `us`, see units/pagerduty/github_secrets.
-          PAGERDUTY_SERVICE_REGION: ${{ secrets.PAGERDUTY_SERVICE_REGION != 'us' && secrets.PAGERDUTY_SERVICE_REGION || '' }}
         run: make trivy
 
       # Runs the checks as in pre-commits with prek (tflint, ...)
@@ -155,8 +151,7 @@ jobs:
       - name: Run Terragrunt plan
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          # The secret stores the empty US region as `us`, see units/pagerduty/github_secrets.
-          PAGERDUTY_SERVICE_REGION: ${{ secrets.PAGERDUTY_SERVICE_REGION != 'us' && secrets.PAGERDUTY_SERVICE_REGION || '' }}
+          PAGERDUTY_SERVICE_REGION: ${{ secrets.PAGERDUTY_SERVICE_REGION }}
         run: |
           cd ${{ env.TG_STACK_PATH }}
           terragrunt run --all plan --backend-bootstrap --non-interactive --no-stack-generate

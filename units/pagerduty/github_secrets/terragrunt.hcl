@@ -12,7 +12,7 @@ inputs = {
   github_owner     = include.root.locals.github_owner_catalog
   github_repo_name = values.github_repo_name
   secrets = {
-    # `us` stands for the empty US region, since a GitHub secret can't be empty. CI maps it back in ci.yaml.
+    # `us` stands for the empty US region, since a GitHub secret can't be empty. Consumers only check for `eu`.
     PAGERDUTY_SERVICE_REGION = values.service_region == "" ? "us" : values.service_region
   }
 }
