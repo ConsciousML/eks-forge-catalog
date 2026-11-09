@@ -9,7 +9,7 @@ This guide needs to be performed only once per catalog fork, before the other [b
 
 This [bootstrap pipeline](/docs/quickstart/bootstrap) creates a [customer managed KMS key](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key). Every other pipeline encrypts its state with it, so the passwords and keys your infrastructure creates can't be read from the state.
 
-Run the following [Terragrunt](/docs/iac) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
+Run the following [Terragrunt](/docs/iac/#terragrunt) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
 source .env
 cd pipelines/bootstrap/terraform_state_encryption

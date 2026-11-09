@@ -21,7 +21,7 @@ aws service-quotas get-service-quota --service-code ec2 --quota-code L-34B43A08 
 
 If both values are at least `ondemand_desired_value` and `spot_desired_value` in the [stack file](terragrunt.stack.hcl), skip the rest of this guide.
 
-Otherwise, run the following [Terragrunt](/docs/iac) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
+Otherwise, run the following [Terragrunt](/docs/iac/#terragrunt) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
 source .env
 cd pipelines/bootstrap/aws_service_quotas

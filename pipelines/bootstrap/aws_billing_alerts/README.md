@@ -29,7 +29,7 @@ locals {
 }
 ```
 
-Next, run the following [Terragrunt](/docs/iac) commands from the root directory of your [catalog repository fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
+Next, run the following [Terragrunt](/docs/iac/#terragrunt) commands from the root directory of your [catalog repository fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
 source .env
 cd pipelines/bootstrap/aws_billing_alerts

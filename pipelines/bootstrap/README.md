@@ -1,10 +1,10 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 import DocCards from '@site/src/components/DocCards';
-import {DollarSign, KeyRound, Gauge, Globe, Lock, MessageSquare, Network} from 'lucide-react';
+import {DollarSign, KeyRound, Gauge, Globe, Lock, MessageSquare, Network, Siren} from 'lucide-react';
 
 # Bootstrap Pipelines
 
-EKS Forge's [advanced features](/docs/overview/#features) rely on several tools (AWS, [Tailscale](https://tailscale.com/), [Slack](https://slack.com/intl/en-gb/), etc.) that need to be configured before you deploy the infrastructure. **Bootstrap pipelines** automate these configurations.
+EKS Forge's [advanced features](/docs/overview/#features) rely on several tools (AWS, [Tailscale](https://tailscale.com/), [Slack](https://slack.com/intl/en-gb/), [PagerDuty](https://www.pagerduty.com/), etc.) that need to be configured before you deploy the infrastructure. **Bootstrap pipelines** automate these configurations.
 
 They're [Terragrunt stacks](/docs/iac/#stacks) that deploy account-level and repository-level resources, independent of any IaC environment (`dev`, `staging`, etc.). Each environment depends on these resources to function, so bootstrap pipelines need to run first.
 
@@ -51,6 +51,12 @@ Then, complete each of these one-time setup guides:
     title: 'Slack',
     description: 'Sends your cluster and infrastructure alerts to a Slack channel',
     link: '/docs/quickstart/bootstrap/slack',
+  },
+  {
+    icon: <Siren size={36} color="var(--ifm-color-primary-dark)" />,
+    title: 'PagerDuty',
+    description: 'Contacts you directly when a prod alert needs action right away',
+    link: '/docs/quickstart/bootstrap/pagerduty',
   },
   {
     icon: <DollarSign size={36} color="var(--ifm-color-primary-dark)" />,

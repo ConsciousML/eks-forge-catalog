@@ -51,7 +51,7 @@ You'll deploy two stacks:
 - [`gh_secret`](gh_secret/), which adds the bot token to GitHub Actions secrets, so CI can use it without you managing the value by hand
 - [`channels`](channels/), which creates the Slack channels your cluster posts alerts to (e.g. `dev-k8s-critical`)
 
-Now, run the following [Terragrunt](/docs/iac/) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
+Now, run the following [Terragrunt](/docs/iac/#terragrunt) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
 source .env
 cd pipelines/bootstrap/slack

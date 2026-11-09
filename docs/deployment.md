@@ -16,7 +16,7 @@ If the role already exists, you'll see an `InvalidInput` error saying `AWSServic
 :::
 
 ## Run the Terragrunt Stack
-In your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog), run the following [Terragrunt](/docs/iac) commands from the root to deploy the `dev` environment:
+In your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog), run the following [Terragrunt](/docs/iac/#terragrunt) commands from the root to deploy the `dev` environment:
 
 ```bash
 source .env
