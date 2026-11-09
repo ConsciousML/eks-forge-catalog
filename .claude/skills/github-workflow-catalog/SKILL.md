@@ -124,7 +124,8 @@ session already holds the vars.
 
 Before the first apply, note whether the stack was already up. If it was, step 7 destroys nothing.
 
-Verify against live AWS state, not plan output. Fix and repeat until it passes. Then report what
+Verify against live AWS state, not plan output. Then run the end-to-end checks with the
+`terratest-dev-catalog` skill. Fix and repeat until it passes. Then report what
 was verified, and what was not.
 
 ## 6. Review
