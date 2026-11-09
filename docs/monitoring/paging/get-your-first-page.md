@@ -16,7 +16,14 @@ By default, `dev` never pages: its alerts only reach Slack. Add [`PAGERDUTY_ENAB
 export PAGERDUTY_ENABLED=true
 ```
 
-Then, apply the `dev` stack again by following the [Run the Terragrunt Stack](/docs/quickstart/deployment/#run-the-terragrunt-stack) step of the dev deployment.
+Then, apply the `dev` stack again from the root of your catalog fork, as in the [Run the Terragrunt Stack](/docs/quickstart/deployment/#run-the-terragrunt-stack) step of the dev deployment:
+```bash
+source .env
+cd pipelines/dev/eks/stack
+terragrunt stack clean
+terragrunt stack generate
+terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-generate
+```
 
 When it's done, connect to Tailscale and open `https://alertmanager.private.dev.<base_domain>/#/status` in your browser (replace `<base_domain>` with the `base_domain` you set in `pipelines/dns.hcl` during [DNS Bootstrap](/docs/quickstart/bootstrap/setup_dns/)). Search the **Config** section for `slo-critical-pagerduty`. You should see it as the receiver of the `slo` alerts with `severity="critical"`.
 
