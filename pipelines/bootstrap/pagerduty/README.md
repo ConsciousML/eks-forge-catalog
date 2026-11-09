@@ -24,7 +24,7 @@ PagerDuty then opens an onboarding, which you can skip:
 
 You'll get paged on your signup email.
 
-Next, create the API key Terraform uses to create the services:
+Next, create the API key the pipeline uses to configure your PagerDuty account:
 1. Click `Configuration`, then `Integrations`, then `API Access Keys`
 2. Click `Create New API Key`
 3. In `Description`, enter a name to identify the key later (e.g. `eks-forge`)
