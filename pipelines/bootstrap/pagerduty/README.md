@@ -18,7 +18,7 @@ First, create your PagerDuty account:
 6. In `Select your service region`, choose `U.S.A.` or `E.U.`. You can't change it later, so note which one you chose
 7. Check the `Terms of Service` and `Privacy Policy` box, and click `Create Account`
 
-PagerDuty then opens an onboarding. You don't need it, so skip it:
+PagerDuty then opens an onboarding, which you can skip:
 1. On the Slack integration prompt, which comes first, click `Skip for now`
 2. Exit the onboarding
 
