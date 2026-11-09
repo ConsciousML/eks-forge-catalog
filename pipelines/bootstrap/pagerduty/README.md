@@ -31,6 +31,8 @@ Next, create the API key the pipeline uses to configure your PagerDuty account:
 4. Leave `Read-only` unchecked, so Terraform can create resources, and click `Create Key`
 5. Copy the key now, since PagerDuty shows it only once, then click `Close`
 
+The pipeline uses this key to create PagerDuty services. A [service](https://docs.pagerduty.com/incident-management/services/services-and-integrations) stands for a system you're on call for, here one EKS Forge environment. Alertmanager sends its alerts to the service, and PagerDuty pages you.
+
 Then, add the key and your service region to your `.env` file, as described in the [`PAGERDUTY_TOKEN` and `PAGERDUTY_SERVICE_REGION`](/docs/reference/environment_variable/#pagerduty_token-and-pagerduty_service_region) reference. Set `PAGERDUTY_SERVICE_REGION` to `eu` if you chose `E.U.`, and leave it empty if you chose `U.S.A.`:
 ```bash
 export PAGERDUTY_TOKEN=<your-api-key>
@@ -38,7 +40,7 @@ export PAGERDUTY_SERVICE_REGION=
 ```
 
 You'll deploy two pipelines:
-- [`services`](services/), which creates a [PagerDuty service](https://docs.pagerduty.com/incident-management/services/services-and-integrations) for each environment (`dev-eks-forge` and `catalog-eks-ci-eks-forge`), and stores its integration key in AWS Secrets Manager for Alertmanager
+- [`services`](services/), which creates a PagerDuty service for each environment (`dev-eks-forge` and `catalog-eks-ci-eks-forge`), and stores its integration key in AWS Secrets Manager for Alertmanager
 - [`gh_secret`](gh_secret/), which adds `PAGERDUTY_SERVICE_REGION` to GitHub Actions secrets, so the environments CI deploys send events to your region's PagerDuty endpoint
 
 Now, run the following [Terragrunt](/docs/iac/) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
