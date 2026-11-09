@@ -57,7 +57,7 @@ export SLACK_BOT_TOKEN=<your-bot-token>
 
 **Required by**: `pipelines/bootstrap/pagerduty/`
 
-`PAGERDUTY_TOKEN` is a PagerDuty REST API key (General Access, not read-only), created under `Configuration > Integrations > API Access Keys`. `PAGERDUTY_SERVICE_REGION` is the service region of the PagerDuty account, chosen at signup. It's empty for US, `eu` for EU. The EKS stack also reads it to pick the Events API endpoint Alertmanager pages through.
+`PAGERDUTY_TOKEN` is a PagerDuty REST API key (General Access, not read-only), created under `Configuration > Integrations > API Access Keys`. `PAGERDUTY_SERVICE_REGION` is the service region of the PagerDuty account, chosen at signup. It's empty for US, `eu` for EU. The EKS stack also reads it to pick the Events API endpoint Alertmanager pages through. The bootstrap stores it as a GitHub Actions secret for CI, with `us` standing for the empty US region.
 ```bash
 export PAGERDUTY_TOKEN=<your-api-key>
 export PAGERDUTY_SERVICE_REGION=    # empty for US, eu for EU
