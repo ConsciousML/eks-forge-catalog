@@ -3,7 +3,7 @@
 
 Now that you've completed [Follow an Alert](/docs/monitoring/get-started/alerts/), you'll turn paging on in your `dev` cluster, make [podinfo](https://github.com/stefanprodan/podinfo) fail, get paged by [PagerDuty](https://www.pagerduty.com/), and acknowledge the incident.
 
-Before starting, make sure you've performed the [PagerDuty Bootstrap](/docs/quickstart/bootstrap/pagerduty/) and that your `dev` cluster is still running.
+Before starting, make sure your `dev` cluster is still running. If it isn't, deploy it by following the [Quickstart](/docs/quickstart/).
 
 ## Install the PagerDuty App
 PagerDuty pages you by email by default. We recommend installing its mobile app too: it pages you with a push notification, and lets you acknowledge an incident from your phone.
