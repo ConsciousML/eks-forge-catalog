@@ -12,7 +12,7 @@ This guide needs to be performed only once per catalog fork before running the [
 First, create your PagerDuty account:
 1. Go to [PagerDuty's sign-up page](https://www.pagerduty.com/sign-up/) and fill in the form
 2. On the step where you name your account URL, choose the service region, `USA` or `EU`. You can't change it later
-3. Edit the account URL, which is pre-filled from your email domain (e.g. `hotmail.pagerduty.com`). Account URLs are unique across PagerDuty and need at least 5 characters, so pick your own
+3. Edit the account URL, which is pre-filled from your email domain (e.g. `hotmail.pagerduty.com`). Account URLs are unique across PagerDuty and need at least 5 characters, so pick your own (e.g. `your-org-name.pagerduty.com`)
 
 PagerDuty then starts an onboarding. Click `Skip for now` on the Slack integration prompt, then exit the onboarding. You don't need it: your account already has an escalation policy named `Default`, with you on it, which the pipeline assigns its services to. You can see it in the sidebar, under `Schedules` > `Escalation Policies`. Your signup email is your only contact method by default, which is enough to get paged.
 
