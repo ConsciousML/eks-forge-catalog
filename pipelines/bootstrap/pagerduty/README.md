@@ -43,7 +43,7 @@ You'll deploy two pipelines:
 - [`services`](services/), which creates a PagerDuty service for each environment (`dev-eks-forge` and `catalog-eks-ci-eks-forge`), and stores its integration key in AWS Secrets Manager for Alertmanager
 - [`gh_secret`](gh_secret/), which adds `PAGERDUTY_SERVICE_REGION` to GitHub Actions secrets, so the environments CI deploys send events to your region's PagerDuty endpoint
 
-Now, run the following [Terragrunt](/docs/iac/) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
+Now, run the following [Terragrunt](/docs/iac/#terragrunt) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
 source .env
 cd pipelines/bootstrap/pagerduty
