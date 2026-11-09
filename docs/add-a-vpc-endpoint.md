@@ -62,7 +62,7 @@ global_services = ["route53", "iam", "<key>"]
 
 ## Validate in Dev
 
-Follow [Validate in Dev](/docs/iac/add-a-unit/#validate-in-dev). The endpoint takes the address at your offset in each private subnet. If the apply fails because one is already in use, pick a higher offset and apply again.
+Follow [Validate in Dev](/docs/iac/add-a-unit/#validate-in-dev). The endpoint takes the address at your offset in each endpoint subnet. If the apply fails because one is already in use, pick a higher offset and apply again.
 
 To check that the endpoint exists, print its state, replacing `<service-name>` with the name from [Find the Service Name](#find-the-service-name):
 ```bash

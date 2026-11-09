@@ -24,8 +24,15 @@ dependency "vpc" {
 }
 
 inputs = {
-  private_subnets             = dependency.vpc.outputs.private_subnets
-  private_subnets_cidr_blocks = dependency.vpc.outputs.private_subnets_cidr_blocks
+  # First endpoint_az_count private subnets, every one when unset.
+  private_subnets = slice(
+    dependency.vpc.outputs.private_subnets, 0,
+    try(values.endpoint_az_count, length(dependency.vpc.outputs.private_subnets))
+  )
+  private_subnets_cidr_blocks = slice(
+    dependency.vpc.outputs.private_subnets_cidr_blocks, 0,
+    try(values.endpoint_az_count, length(dependency.vpc.outputs.private_subnets_cidr_blocks))
+  )
 
   endpoint_host_offsets = local.endpoint_host_offsets
   app_param_key_map     = local.app_param_key_map

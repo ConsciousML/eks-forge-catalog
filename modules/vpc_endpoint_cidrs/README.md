@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
 # `vpc_endpoint_cidrs` Terraform Module Reference
 
-The [`vpc_endpoint_cidrs` module](../vpc\_endpoint\_cidrs/) computes the pinned ENI IP of each interface VPC endpoint from a private subnet CIDR and a per-service host offset. It reserves the range holding those IPs in each private subnet with an explicit [subnet CIDR reservation](https://docs.aws.amazon.com/vpc/latest/userguide/subnet-cidr-reservation.html), so AWS never assigns them to another network interface. It is the single source of the `cidrhost()` math read by [`units/vpc/endpoints`](../../units/vpc/endpoints/), which pairs each IP with its subnet ID, and by [`units/eks/addons/argocd/app_of_apps`](../../units/eks/addons/argocd/app\_of\_apps/), which passes the plain IP list as the `vpcEndpointCidrs` app parameter of a `CiliumNetworkPolicy`.
+The [`vpc_endpoint_cidrs` module](../vpc\_endpoint\_cidrs/) computes the pinned ENI IP of each interface VPC endpoint from a private subnet CIDR and a per-service host offset. It reserves the range holding those IPs in each private subnet it is given with an explicit [subnet CIDR reservation](https://docs.aws.amazon.com/vpc/latest/userguide/subnet-cidr-reservation.html), so AWS never assigns them to another network interface. It is the single source of the `cidrhost()` math read by [`units/vpc/endpoints`](../../units/vpc/endpoints/), which pairs each IP with its subnet ID, and by [`units/eks/addons/argocd/app_of_apps`](../../units/eks/addons/argocd/app\_of\_apps/), which passes the plain IP list as the `vpcEndpointCidrs` app parameter of a `CiliumNetworkPolicy`.
 
 ## Requirements
 

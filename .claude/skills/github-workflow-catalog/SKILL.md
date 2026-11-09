@@ -94,13 +94,14 @@ Opened before the deploy, so the user can review the change before anything is a
 If the change has an `eks-forge-app-of-apps` branch, open its PR too, with the same steps as
 below.
 
-1. Draft the PR:
+Never show the user a PR draft or wait for its validation. Open it directly.
+
+1. Write the PR:
    - Title: the main commit subject.
    - Body: `Closes #<issue>` when the issue is in this repo, otherwise
      `Part of <owner>/<repo>#<issue>`. Then one or two lines or bullets.
-2. **Wait** for the user to validate the draft. If they asked for an autonomous run, skip the wait.
-3. Commit and push with `git push -u origin <branch>`.
-4. Open it with `gh pr create --title "<title>" --body "<body>"` and report the link.
+2. Commit and push with `git push -u origin <branch>`.
+3. Open it with `gh pr create --title "<title>" --body "<body>"` and report the link.
 
 Never open it as a draft, CI fails on draft PRs. CI also fails on a leftover `TEMP:` marker or a
 missing provider lock file.
@@ -123,7 +124,8 @@ session already holds the vars.
 
 Before the first apply, note whether the stack was already up. If it was, step 7 destroys nothing.
 
-Verify against live AWS state, not plan output. Fix and repeat until it passes. Then report what
+Verify against live AWS state, not plan output. Then run the end-to-end checks with the
+`terratest-dev-catalog` skill. Fix and repeat until it passes. Then report what
 was verified, and what was not.
 
 ## 6. Review

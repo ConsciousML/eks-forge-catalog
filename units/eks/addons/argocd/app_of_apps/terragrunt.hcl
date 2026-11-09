@@ -189,14 +189,11 @@ dependency "vpc_endpoint_cidrs" {
     vpc_endpoint_cidrs = {
       secretsmanager       = ["10.2.0.10", "10.2.32.10", "10.2.64.10"]
       route53              = ["10.2.0.11", "10.2.32.11", "10.2.64.11"]
-      ecrApi               = ["10.2.0.12", "10.2.32.12", "10.2.64.12"]
       ec2                  = ["10.2.0.14", "10.2.32.14", "10.2.64.14"]
-      sts                  = ["10.2.0.15", "10.2.32.15", "10.2.64.15"]
       elasticloadbalancing = ["10.2.0.16", "10.2.32.16", "10.2.64.16"]
       sqs                  = ["10.2.0.17", "10.2.32.17", "10.2.64.17"]
       iam                  = ["10.2.0.18", "10.2.32.18", "10.2.64.18"]
       tagging              = ["10.2.0.19", "10.2.32.19", "10.2.64.19"]
-      shield               = ["10.2.0.20", "10.2.32.20", "10.2.64.20"]
       acm                  = ["10.2.0.21", "10.2.32.21", "10.2.64.21"]
     }
   }
@@ -247,7 +244,6 @@ inputs = {
           ec2                  = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.ec2
           elasticloadbalancing = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.elasticloadbalancing
           tagging              = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.tagging
-          shield               = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.shield
           acm                  = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.acm
         }
         "aws-load-balancer-controller" = {
