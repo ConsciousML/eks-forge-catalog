@@ -82,6 +82,8 @@ If the incident is still open in PagerDuty, click **Resolve**: Alertmanager no l
 ## What's Next
 You've been paged end to end: an alert fired in Prometheus, reached Slack, and paged you through PagerDuty.
 
+To learn why the alert fired, and why only the `critical` one paged you, see [How SLOs Work](/docs/monitoring/paging/how-slos-work/).
+
 To choose who else gets paged, and how, see [Manage On-Call in PagerDuty](/docs/monitoring/paging/manage-on-call-in-pagerduty/).
 
 When you're done with your `dev` cluster, go back to [Destroy the Infrastructure](/docs/quickstart/deployment/#destroy-the-infrastructure).
