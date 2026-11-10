@@ -39,6 +39,4 @@ From there, find the cause with `kubectl` and the tools you explored in this tut
 - [Explore Your Network Flows](/docs/monitoring/get-started/network-flows/) to check whether its traffic is dropped
 
 ## What's Next
-You've completed [Monitor Your Cluster](/docs/monitoring/get-started/). You now know where to find the metrics, logs, network flows, resource recommendations, control plane metrics, and alerts of your cluster.
-
-Next, see [Get Your First Page](/docs/monitoring/paging/get-your-first-page/) to get paged when podinfo fails.
+Next, see [Get Your First Page](/docs/monitoring/get-started/paging/) to get paged when podinfo fails.

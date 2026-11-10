@@ -80,7 +80,7 @@ Then, apply the `dev` stack again, as in [Turn Paging On](#turn-paging-on).
 If the incident is still open in PagerDuty, click **Resolve**: Alertmanager no longer reports to PagerDuty, so it won't resolve it for you.
 
 ## What's Next
-You've been paged end to end: an alert fired in Prometheus, reached Slack, and paged you through PagerDuty.
+You've completed [Monitor Your Cluster](/docs/monitoring/get-started/). You now know where to find the metrics, logs, network flows, resource recommendations, control plane metrics, and alerts of your cluster, and you've been paged end to end: an alert fired in Prometheus, reached Slack, and paged you through PagerDuty.
 
 To learn why the alert fired, and why only the `critical` one paged you, see [How SLO Alerting Works](/docs/monitoring/paging/how-slo-alerting-works/).
 
