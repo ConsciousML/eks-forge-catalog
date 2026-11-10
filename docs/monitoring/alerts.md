@@ -41,4 +41,4 @@ From there, find the cause with `kubectl` and the tools you explored in this tut
 ## What's Next
 You've completed [Monitor Your Cluster](/docs/monitoring/get-started/). You now know where to find the metrics, logs, network flows, resource recommendations, control plane metrics, and alerts of your cluster.
 
-When you're done with your `dev` cluster, go back to [Destroy the Infrastructure](/docs/quickstart/deployment/#destroy-the-infrastructure).
+Next, see [Get Your First Page](/docs/monitoring/paging/get-your-first-page/) to get paged when podinfo fails.
