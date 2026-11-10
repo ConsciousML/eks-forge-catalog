@@ -84,6 +84,8 @@ You've been paged end to end: an alert fired in Prometheus, reached Slack, and p
 
 To learn why the alert fired, and why only the `critical` one paged you, see [How SLO Alerting Works](/docs/monitoring/paging/how-slo-alerting-works/).
 
+To learn how the page reached PagerDuty, and why only `prod` pages by default, see [How Paging Works](/docs/monitoring/paging/how-paging-works/).
+
 To choose who else gets paged, and how, see [Manage On-Call in PagerDuty](/docs/monitoring/paging/manage-on-call-in-pagerduty/).
 
 When you're done with your `dev` cluster, go back to [Destroy the Infrastructure](/docs/quickstart/deployment/#destroy-the-infrastructure).
