@@ -3,9 +3,9 @@
 
 This guide shows you how to choose who [PagerDuty](https://www.pagerduty.com/) pages, and how. You need it when someone other than the person who signed up should be on call.
 
-It assumes you've followed the [PagerDuty Bootstrap](/docs/quickstart/bootstrap/pagerduty/). To see a page reach you end to end first, follow [Get Your First Page](/docs/monitoring/paging/get-your-first-page/).
+It assumes you've followed the [PagerDuty Bootstrap](/docs/quickstart/bootstrap/pagerduty/). To see a page reach you end to end first, follow [Get Your First Page](/docs/monitoring/get-started/paging/).
 
-Terraform manages none of this: you set it in the PagerDuty web console, at your account URL (e.g. `https://your-org-name.pagerduty.com`). Every EKS Forge service (`dev-eks-forge`, `catalog-eks-ci-eks-forge`, `staging-eks-forge`, and `prod-eks-forge`) pages through the same escalation policy, so what you set here applies to every environment.
+Terraform manages none of this: you set it in the PagerDuty web console, at your account URL (e.g. `https://your-org-name.pagerduty.com`). Every EKS Forge service (`dev-eks-forge`, `catalog-eks-ci-eks-forge`, `staging-eks-forge`, and `prod-eks-forge`) pages through the same escalation policy, so what you set here applies to every environment. For which alerts page, and in which environments, see [How Paging Works](/docs/monitoring/paging/how-paging-works/).
 
 The [Free plan](https://www.pagerduty.com/pricing/incident-management/) limits what you can set up. Each step below names the limit that applies to it.
 
@@ -19,7 +19,7 @@ Prefer push and email: they're unlimited. SMS and voice are capped:
 - **Trial**: 100 per user and 500 per account. Past that, PagerDuty blocks SMS and voice until its Support lifts the block, even if you upgrade.
 - **Free plan**: 100 per month, across the whole account.
 
-For push notifications, each person installs the mobile app, as in [Install the PagerDuty App](/docs/monitoring/paging/get-your-first-page/#install-the-pagerduty-app).
+For push notifications, each person installs the mobile app, as in [Install the PagerDuty App](/docs/monitoring/get-started/paging/#install-the-pagerduty-app).
 
 ## Create the On-Call Schedule
 Create a schedule that rotates the people you added, from **Schedules** › **Schedules** › **New Schedule**, as in PagerDuty's [Schedule Basics](https://docs.pagerduty.com/incident-management/schedules/schedule-basics). The Free plan allows one schedule.

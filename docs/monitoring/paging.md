@@ -5,6 +5,9 @@ Now that you've completed [Follow an Alert](/docs/monitoring/get-started/alerts/
 
 Before starting, make sure your `dev` cluster is still running. If it isn't, deploy it by following the [Quickstart](/docs/quickstart/).
 
+## Why We Need Paging
+An alert posted to Slack waits until someone reads the channel. A page doesn't: PagerDuty contacts the person on call directly, at any hour, so EKS Forge only pages for SLO alerts that mean users are failing right now (see [How Paging Works](/docs/monitoring/paging/how-paging-works/)).
+
 ## Install the PagerDuty App
 PagerDuty pages you by email by default. We recommend installing its mobile app too: it pages you with a push notification, and lets you acknowledge an incident from your phone.
 
@@ -80,7 +83,11 @@ Then, apply the `dev` stack again, as in [Turn Paging On](#turn-paging-on).
 If the incident is still open in PagerDuty, click **Resolve**: Alertmanager no longer reports to PagerDuty, so it won't resolve it for you.
 
 ## What's Next
-You've been paged end to end: an alert fired in Prometheus, reached Slack, and paged you through PagerDuty.
+You've completed [Monitor Your Cluster](/docs/monitoring/get-started/). You now know where to find the metrics, logs, network flows, resource recommendations, control plane metrics, and alerts of your cluster, and you've been paged end to end: an alert fired in Prometheus, reached Slack, and paged you through PagerDuty.
+
+To learn why the alert fired, and why only the `critical` one paged you, see [How SLO Alerting Works](/docs/monitoring/paging/how-slo-alerting-works/).
+
+To learn how the page reached PagerDuty, and why only `prod` pages by default, see [How Paging Works](/docs/monitoring/paging/how-paging-works/).
 
 To choose who else gets paged, and how, see [Manage On-Call in PagerDuty](/docs/monitoring/paging/manage-on-call-in-pagerduty/).
 

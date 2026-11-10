@@ -3,7 +3,7 @@
 
 In this guide, you'll set up [PagerDuty](https://www.pagerduty.com/) so Alertmanager can page you. An alert posted to Slack waits until someone reads the channel. A page doesn't wait: PagerDuty contacts you directly, by email by default, so you can act on the alert right away.
 
-Only `prod` pages. `dev` and CI get a PagerDuty service too, but they never page unless you set [`PAGERDUTY_ENABLED`](/docs/reference/environment_variable/#pagerduty_enabled) to `true`.
+Only `prod` pages. `dev` and CI get a PagerDuty service too, but they never page unless you set [`PAGERDUTY_ENABLED`](/docs/reference/environment_variable/#pagerduty_enabled) to `true` (see [Paging Is Opt-In per Environment](/docs/monitoring/paging/how-paging-works/#paging-is-opt-in-per-environment)).
 
 :::warning
 This guide needs to be performed only once per catalog fork before running the [deployment](/docs/quickstart/deployment/).

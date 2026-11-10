@@ -1,7 +1,7 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 # PagerDuty Service Bootstrap Reference
 
-The [`pagerduty_service` stack](../../stacks/pagerduty_service/), deployed by the [`pagerduty/services` pipeline](../../pipelines/bootstrap/pagerduty/services/), creates that environment's PagerDuty service, named `<environment>-eks-forge`, on the existing `Default` escalation policy. It stores the service's Events API v2 integration key in the `<environment>-alertmanager-pagerduty` AWS Secrets Manager secret, under `routing_key`, for Alertmanager to page through. Run once per environment.
+The [`pagerduty_service` stack](../../stacks/pagerduty_service/), deployed by the [`pagerduty/services` pipeline](../../pipelines/bootstrap/pagerduty/services/), creates that environment's PagerDuty service, named `<environment>-eks-forge`, on the existing `Default` escalation policy. It stores the service's Events API v2 integration key in the `<environment>-alertmanager-pagerduty` AWS Secrets Manager secret, under `routing_key`, for Alertmanager to page through (see [From the Routing Key to a Page](/docs/monitoring/paging/how-paging-works/#from-the-routing-key-to-a-page)). Run once per environment.
 
 For setup steps, read the [PagerDuty Bootstrap](/docs/quickstart/bootstrap/pagerduty).
 
