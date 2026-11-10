@@ -57,7 +57,7 @@ export SLACK_BOT_TOKEN=<your-bot-token>
 
 **Required by**: `pipelines/bootstrap/pagerduty/`
 
-`PAGERDUTY_TOKEN` is a PagerDuty REST API key (General Access, not read-only), created under `Configuration > Integrations > API Access Keys`. `PAGERDUTY_SERVICE_REGION` is the service region of the PagerDuty account, chosen at signup. It's empty for US, `eu` for EU. The EKS stack also reads it to pick the Events API endpoint Alertmanager pages through. The bootstrap stores it as a GitHub Actions secret for CI, with `us` standing for the empty US region.
+`PAGERDUTY_TOKEN` is a PagerDuty REST API key (General Access, not read-only), created under `Configuration > Integrations > API Access Keys`. `PAGERDUTY_SERVICE_REGION` is the service region of the PagerDuty account, chosen at signup. It's empty for US, `eu` for EU. The EKS stack also reads it to pick the Events API endpoint Alertmanager pages through (see [The Service Region](/docs/monitoring/paging/how-paging-works/#the-service-region)). The bootstrap stores it as a GitHub Actions secret for CI, with `us` standing for the empty US region.
 ```bash
 export PAGERDUTY_TOKEN=<your-api-key>
 export PAGERDUTY_SERVICE_REGION=    # empty for US, eu for EU
@@ -67,7 +67,7 @@ export PAGERDUTY_SERVICE_REGION=    # empty for US, eu for EU
 
 **Used by**: [`pipelines/dev/eks/stack/terragrunt.stack.hcl`](../pipelines/dev/eks/stack/terragrunt.stack.hcl) (optional)
 
-Set to `true` to send the `slo` page alerts (`component: slo`, `severity: critical`) to PagerDuty, on top of Slack. Defaults to `false`, so dev and CI never page.
+Set to `true` to send the `slo` page alerts (`component: slo`, `severity: critical`) to PagerDuty, on top of Slack. Defaults to `false`, so dev and CI never page (see [Paging Is Opt-In per Environment](/docs/monitoring/paging/how-paging-works/#paging-is-opt-in-per-environment)).
 ```bash
 export PAGERDUTY_ENABLED=true
 ```

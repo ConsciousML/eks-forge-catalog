@@ -5,7 +5,7 @@ This guide shows you how to choose who [PagerDuty](https://www.pagerduty.com/) p
 
 It assumes you've followed the [PagerDuty Bootstrap](/docs/quickstart/bootstrap/pagerduty/). To see a page reach you end to end first, follow [Get Your First Page](/docs/monitoring/paging/get-your-first-page/).
 
-Terraform manages none of this: you set it in the PagerDuty web console, at your account URL (e.g. `https://your-org-name.pagerduty.com`). Every EKS Forge service (`dev-eks-forge`, `catalog-eks-ci-eks-forge`, `staging-eks-forge`, and `prod-eks-forge`) pages through the same escalation policy, so what you set here applies to every environment.
+Terraform manages none of this: you set it in the PagerDuty web console, at your account URL (e.g. `https://your-org-name.pagerduty.com`). Every EKS Forge service (`dev-eks-forge`, `catalog-eks-ci-eks-forge`, `staging-eks-forge`, and `prod-eks-forge`) pages through the same escalation policy, so what you set here applies to every environment. For which alerts page, and in which environments, see [How Paging Works](/docs/monitoring/paging/how-paging-works/).
 
 The [Free plan](https://www.pagerduty.com/pricing/incident-management/) limits what you can set up. Each step below names the limit that applies to it.
 
