@@ -3,6 +3,8 @@
 
 Now that you've completed [Follow an Alert](/docs/monitoring/get-started/alerts/), you'll turn paging on in your `dev` cluster, make [podinfo](https://github.com/stefanprodan/podinfo) fail, get paged by [PagerDuty](https://www.pagerduty.com/), and acknowledge the incident.
 
+An alert posted to Slack waits until someone reads the channel. A page doesn't: PagerDuty contacts the person on call directly, at any hour, so EKS Forge only pages for SLO alerts that mean users are failing right now (see [How Paging Works](/docs/monitoring/paging/how-paging-works/)).
+
 Before starting, make sure your `dev` cluster is still running. If it isn't, deploy it by following the [Quickstart](/docs/quickstart/).
 
 ## Install the PagerDuty App
