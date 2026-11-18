@@ -1,12 +1,5 @@
-resource "helm_release" "this" {
-  name       = var.name
-  repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argocd-apps"
-  version    = var.helm_chart_version
-  namespace  = var.namespace
-  timeout    = 600
-
-  values = [yamlencode({
+locals {
+  values = yamlencode({
     applications = {
       (var.name) = {
         namespace  = var.namespace
@@ -40,5 +33,35 @@ resource "helm_release" "this" {
         }
       }
     }
+  })
+}
+
+resource "helm_release" "this" {
+  name       = var.name
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argocd-apps"
+  version    = var.helm_chart_version
+  namespace  = var.namespace
+  timeout    = 600
+  values     = [local.values]
+}
+
+# Helm has no readiness check for an Application. A post-install hook Job blocks the apply
+# until the root and its child Applications are Synced and Healthy.
+resource "helm_release" "wait" {
+  name      = "${var.name}-wait"
+  chart     = "${path.module}/../../charts/argocd-app-of-apps-wait"
+  namespace = var.namespace
+  # Above the Job's activeDeadlineSeconds, so the Job fails first with its own reason.
+  timeout = var.wait_timeout + 60
+
+  values = [yamlencode({
+    appName            = var.name
+    waitTimeout        = var.wait_timeout
+    rootValuesChecksum = sha256(local.values)
+    nodeSelector       = var.node_selector
+    tolerations        = var.tolerations
   })]
+
+  depends_on = [helm_release.this]
 }

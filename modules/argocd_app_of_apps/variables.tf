@@ -99,3 +99,21 @@ variable "retry" {
     }
   }
 }
+
+variable "wait_timeout" {
+  description = "Seconds the apply waits for the root Application and its child Applications to be Synced and Healthy before failing"
+  type        = number
+  default     = 1800
+}
+
+variable "node_selector" {
+  description = "Node selector of the wait Job's pod"
+  type        = map(string)
+  default     = {}
+}
+
+variable "tolerations" {
+  description = "Tolerations of the wait Job's pod"
+  type        = list(any)
+  default     = []
+}

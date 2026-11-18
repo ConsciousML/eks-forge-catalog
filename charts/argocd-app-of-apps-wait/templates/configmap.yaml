@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-script
+  namespace: {{ .Release.Namespace }}
+data:
+  wait.sh: |
+    #!/bin/sh
+    set -eu
+
+    ns={{ .Release.Namespace | quote }}
+    root={{ required "appName is required" .Values.appName | quote }}
+
+    log_info() { echo "[INFO] $*" >&2; }
+
+    # The controller removes the annotation once the refresh is done. The status read
+    # afterwards is current, not the one from the last reconcile.
+    refresh() {
+      log_info "Refreshing $1"
+      kubectl annotate application/"$1" -n "$ns" argocd.argoproj.io/refresh=normal --overwrite
+      until [ -z "$(kubectl get application/"$1" -n "$ns" \
+        -o jsonpath='{.metadata.annotations.argocd\.argoproj\.io/refresh}')" ]; do
+        sleep 5
+      done
+    }
+
+    # --timeout=-1s waits up to a week. activeDeadlineSeconds bounds the whole Job.
+    synced() {
+      log_info "Waiting for $1 to be Synced"
+      kubectl wait application/"$1" -n "$ns" --timeout=-1s --for=jsonpath='{.status.sync.status}'=Synced
+    }
+
+    healthy() {
+      log_info "Waiting for $1 to be Healthy"
+      kubectl wait application/"$1" -n "$ns" --timeout=-1s --for=jsonpath='{.status.health.status}'=Healthy
+    }
+
+    refresh "$root"
+    synced "$root"
+    for child in $(kubectl get application/"$root" -n "$ns" \
+      -o jsonpath='{.status.resources[?(@.kind=="Application")].name}'); do
+      refresh "$child"
+      synced "$child"
+      healthy "$child"
+    done
+    healthy "$root"
+    log_info "Done, $root and its child Applications are Synced and Healthy"

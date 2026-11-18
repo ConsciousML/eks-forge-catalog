@@ -1,0 +1,58 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    # Post hook: Helm blocks the release, and so the apply, until it completes.
+    helm.sh/hook: post-install,post-upgrade
+    # A failed Job stays for kubectl logs.
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 0
+  # Kept under the Helm timeout, so the Job fails with its own reason first.
+  activeDeadlineSeconds: {{ .Values.waitTimeout }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}
+      annotations:
+        # Changes with the root's values, so the release upgrades and the hook reruns.
+        checksum/root-values: {{ .Values.rootValuesChecksum | quote }}
+    spec:
+      serviceAccountName: {{ .Release.Name }}
+      restartPolicy: Never
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: wait
+          image: alpine/k8s:1.30.0
+          command: ["sh", "/scripts/wait.sh"]
+          # kubectl caches discovery data under $HOME/.kube. The root filesystem is read-only.
+          env:
+            - name: HOME
+              value: /tmp
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: script
+              mountPath: /scripts
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: script
+          configMap:
+            name: {{ .Release.Name }}-script
+            defaultMode: 0555
+        - name: tmp
+          emptyDir: {}
