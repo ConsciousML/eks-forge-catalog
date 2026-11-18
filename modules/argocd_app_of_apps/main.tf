@@ -46,13 +46,13 @@ resource "helm_release" "this" {
   values     = [local.values]
 }
 
-# Helm has no readiness check for an Application. A post-install hook Job blocks the apply
-# until the root and its child Applications are Synced and Healthy.
+# Helm has no readiness check for an Application. Its hook Job blocks the apply until the
+# root and child Applications are Synced and Healthy.
 resource "helm_release" "wait" {
   name      = "${var.name}-wait"
   chart     = "${path.module}/../../charts/argocd-app-of-apps-wait"
   namespace = var.namespace
-  # Above the Job's activeDeadlineSeconds (wait_timeout + 60), so the Job fails first.
+  # Above the Job's activeDeadlineSeconds (wait_timeout + 60).
   timeout = var.wait_timeout + 120
 
   values = [yamlencode({

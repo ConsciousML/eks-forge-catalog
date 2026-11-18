@@ -4,20 +4,20 @@ metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
   annotations:
-    # Post hook: Helm blocks the release, and so the apply, until it completes.
+    # Helm blocks the apply until the hook Job completes. A plain Job isn't waited on.
     helm.sh/hook: post-install,post-upgrade
-    # A failed Job stays for kubectl logs.
+    # A failed Job is kept for kubectl logs.
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
 spec:
   backoffLimit: 0
-  # Backstop above the script's own deadline (waitTimeout). Kept under the Helm timeout.
+  # Backstop only. The script fails first, at waitTimeout. Under the Helm timeout.
   activeDeadlineSeconds: {{ add .Values.waitTimeout 60 }}
   template:
     metadata:
       labels:
         app.kubernetes.io/name: {{ .Release.Name }}
       annotations:
-        # Changes with the root's values, so the release upgrades and the hook reruns.
+        # Changes with the root's values. Upgrades the release, so the hook reruns.
         checksum/root-values: {{ .Values.rootValuesChecksum | quote }}
     spec:
       serviceAccountName: {{ .Release.Name }}
@@ -33,10 +33,10 @@ spec:
           type: RuntimeDefault
       containers:
         - name: wait
-          # Within one minor version of the cluster's Kubernetes version.
+          # kubectl must be within one minor version of the cluster.
           image: alpine/k8s:1.36.5
           command: ["sh", "/scripts/wait.sh"]
-          # kubectl caches discovery data under $HOME/.kube. The root filesystem is read-only.
+          # kubectl writes its cache to $HOME/.kube. The root filesystem is read-only.
           env:
             - name: HOME
               value: /tmp

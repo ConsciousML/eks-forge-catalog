@@ -11,8 +11,8 @@ data:
     ns={{ .Release.Namespace | quote }}
     root={{ required "appName is required" .Values.appName | quote }}
 
-    # The script fails before activeDeadlineSeconds. A pod killed at the deadline is deleted
-    # with its logs.
+    # Epoch seconds. Shared by every wait. The script fails before activeDeadlineSeconds,
+    # which deletes the pod and its logs.
     deadline=$(( $(date +%s) + {{ .Values.waitTimeout }} ))
 
     log_info() { echo "[INFO] $*" >&2; }
@@ -26,8 +26,9 @@ data:
 
     remaining() { echo $(( deadline - $(date +%s) )); }
 
-    # The controller removes the annotation once the refresh is done. The status read
-    # afterwards is current, not the one from the last reconcile.
+    # .status is cached from the last reconcile (about every 3m). Without a refresh, a wait
+    # right after helm upgrade passes on the old status. The controller removes the
+    # annotation once .status is recomputed.
     refresh() {
       log_info "Refreshing $1"
       kubectl annotate application/"$1" -n "$ns" argocd.argoproj.io/refresh=normal --overwrite
@@ -38,7 +39,7 @@ data:
       done
     }
 
-    # $1 is the app, $2 the field under .status, $3 the expected value.
+    # $1 app, $2 .status field (sync or health), $3 expected value.
     await() {
       log_info "Waiting for $1 to be $3"
       left=$(remaining)
@@ -50,6 +51,7 @@ data:
     synced() { await "$1" sync Synced; }
     healthy() { await "$1" health Healthy; }
 
+    # Root Synced first: its .status.resources lists every child only after its sync.
     refresh "$root"
     synced "$root"
     for child in $(kubectl get application/"$root" -n "$ns" \
@@ -58,5 +60,6 @@ data:
       synced "$child"
       healthy "$child"
     done
+    # Root health comes from child health (argocd-cm Lua check), so it's read last.
     healthy "$root"
     log_info "Done, $root and its child Applications are Synced and Healthy"
