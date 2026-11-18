@@ -10,8 +10,8 @@ metadata:
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
 spec:
   backoffLimit: 0
-  # Kept under the Helm timeout, so the Job fails with its own reason first.
-  activeDeadlineSeconds: {{ .Values.waitTimeout }}
+  # Backstop above the script's own deadline (waitTimeout). Kept under the Helm timeout.
+  activeDeadlineSeconds: {{ add .Values.waitTimeout 60 }}
   template:
     metadata:
       labels:
@@ -33,7 +33,8 @@ spec:
           type: RuntimeDefault
       containers:
         - name: wait
-          image: alpine/k8s:1.30.0
+          # Within one minor version of the cluster's Kubernetes version.
+          image: alpine/k8s:1.36.5
           command: ["sh", "/scripts/wait.sh"]
           # kubectl caches discovery data under $HOME/.kube. The root filesystem is read-only.
           env:

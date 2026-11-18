@@ -11,7 +11,20 @@ data:
     ns={{ .Release.Namespace | quote }}
     root={{ required "appName is required" .Values.appName | quote }}
 
+    # The script fails before activeDeadlineSeconds. A pod killed at the deadline is deleted
+    # with its logs.
+    deadline=$(( $(date +%s) + {{ .Values.waitTimeout }} ))
+
     log_info() { echo "[INFO] $*" >&2; }
+
+    fail() {
+      echo "[ERROR] $1 not $2 after {{ .Values.waitTimeout }}s:" \
+        "$(kubectl get application/"$1" -n "$ns" \
+          -o jsonpath='sync={.status.sync.status} health={.status.health.status} {.status.health.message}')" >&2
+      exit 1
+    }
+
+    remaining() { echo $(( deadline - $(date +%s) )); }
 
     # The controller removes the annotation once the refresh is done. The status read
     # afterwards is current, not the one from the last reconcile.
@@ -20,20 +33,22 @@ data:
       kubectl annotate application/"$1" -n "$ns" argocd.argoproj.io/refresh=normal --overwrite
       until [ -z "$(kubectl get application/"$1" -n "$ns" \
         -o jsonpath='{.metadata.annotations.argocd\.argoproj\.io/refresh}')" ]; do
+        [ "$(remaining)" -gt 0 ] || fail "$1" Refreshed
         sleep 5
       done
     }
 
-    # --timeout=-1s waits up to a week. activeDeadlineSeconds bounds the whole Job.
-    synced() {
-      log_info "Waiting for $1 to be Synced"
-      kubectl wait application/"$1" -n "$ns" --timeout=-1s --for=jsonpath='{.status.sync.status}'=Synced
+    # $1 is the app, $2 the field under .status, $3 the expected value.
+    await() {
+      log_info "Waiting for $1 to be $3"
+      left=$(remaining)
+      [ "$left" -gt 0 ] || fail "$1" "$3"
+      kubectl wait application/"$1" -n "$ns" --timeout="${left}s" \
+        --for=jsonpath="{.status.$2.status}=$3" || fail "$1" "$3"
     }
 
-    healthy() {
-      log_info "Waiting for $1 to be Healthy"
-      kubectl wait application/"$1" -n "$ns" --timeout=-1s --for=jsonpath='{.status.health.status}'=Healthy
-    }
+    synced() { await "$1" sync Synced; }
+    healthy() { await "$1" health Healthy; }
 
     refresh "$root"
     synced "$root"

@@ -52,8 +52,8 @@ resource "helm_release" "wait" {
   name      = "${var.name}-wait"
   chart     = "${path.module}/../../charts/argocd-app-of-apps-wait"
   namespace = var.namespace
-  # Above the Job's activeDeadlineSeconds, so the Job fails first with its own reason.
-  timeout = var.wait_timeout + 60
+  # Above the Job's activeDeadlineSeconds (wait_timeout + 60), so the Job fails first.
+  timeout = var.wait_timeout + 120
 
   values = [yamlencode({
     appName            = var.name
