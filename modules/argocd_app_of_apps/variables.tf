@@ -30,7 +30,7 @@ variable "repo_url" {
 variable "path" {
   description = "Path within the repository containing the application manifests"
   type        = string
-  default     = "apps"
+  default     = "apps/core"
 }
 
 variable "target_revision" {
