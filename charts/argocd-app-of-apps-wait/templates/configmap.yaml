@@ -6,6 +6,8 @@ metadata:
 data:
   wait.sh: |
     #!/bin/sh
+    # Helm can't wait on an Application. Blocks the apply until the root and every child
+    # Application are Synced and Healthy. Otherwise fails, naming the stuck one.
     set -eu
 
     ns={{ .Release.Namespace | quote }}
