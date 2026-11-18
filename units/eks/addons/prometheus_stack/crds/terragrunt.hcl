@@ -21,6 +21,7 @@ dependency "eks_cluster" {
 }
 
 inputs = {
+  # cluster_name comes from provider_k8s_base.hcl.
   name               = "prometheus-operator-crds"
   repository         = "https://prometheus-community.github.io/helm-charts"
   chart              = "prometheus-operator-crds"

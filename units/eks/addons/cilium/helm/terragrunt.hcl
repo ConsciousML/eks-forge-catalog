@@ -29,6 +29,7 @@ dependency "prometheus_operator_crds" {
 }
 
 inputs = {
+  # cluster_name comes from provider_k8s_base.hcl.
   name               = "cilium"
   repository         = "https://helm.cilium.io"
   chart              = "cilium"

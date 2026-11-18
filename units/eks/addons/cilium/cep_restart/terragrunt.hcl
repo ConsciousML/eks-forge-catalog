@@ -21,6 +21,7 @@ dependency "cilium" {
 }
 
 inputs = {
+  # cluster_name comes from provider_k8s_base.hcl.
   name = "cilium-cep-restart"
   # Bundled locally alongside modules/helm_release, travels with the same git fetch.
   chart            = "../../charts/cilium-cep-restart"

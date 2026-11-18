@@ -203,6 +203,7 @@ dependency "vpc_endpoint_cidrs" {
 }
 
 inputs = {
+  # cluster_name comes from provider_k8s_base.hcl.
   repo_url              = local.repo_url
   name                  = values.name
   namespace             = values.namespace
