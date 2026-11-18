@@ -219,8 +219,6 @@ inputs = {
   retry                 = values.retry
   node_selector         = values.node_selector
   tolerations           = values.tolerations
-  # TEMP: short timeout to test the wait Job failure.
-  wait_timeout = 300
   helm_values = {
     config = {
       spec = {
@@ -396,8 +394,6 @@ inputs = {
       }
       "blackbox-exporter" = {
         "prometheus-blackbox-exporter" = {
-          # TEMP: broken image to test the wait Job failure.
-          image = { tag = "v0.0.0-does-not-exist" }
           serviceMonitor = {
             targets = [
               { name = "grafana", url = "https://${local.domain_private_grafana}" },
