@@ -1,0 +1,5 @@
+appName: ""
+waitTimeout: 1800
+rootValuesChecksum: ""
+nodeSelector: {}
+tolerations: []

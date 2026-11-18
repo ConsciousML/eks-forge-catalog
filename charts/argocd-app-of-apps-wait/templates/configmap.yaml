@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-script
+  namespace: {{ .Release.Namespace }}
+data:
+  wait.sh: |
+    #!/bin/sh
+    # Helm can't wait on an Application. Blocks the apply until the root and every child
+    # Application are Synced and Healthy. Otherwise fails, naming the stuck one.
+    set -eu
+
+    ns={{ .Release.Namespace | quote }}
+    root={{ required "appName is required" .Values.appName | quote }}
+
+    # Epoch seconds. Shared by every wait. The script fails before activeDeadlineSeconds,
+    # which deletes the pod and its logs.
+    deadline=$(( $(date +%s) + {{ .Values.waitTimeout }} ))
+
+    log_info() { echo "[INFO] $*" >&2; }
+
+    fail() {
+      echo "[ERROR] $1 not $2 after {{ .Values.waitTimeout }}s:" \
+        "$(kubectl get application/"$1" -n "$ns" \
+          -o jsonpath='sync={.status.sync.status} health={.status.health.status} {.status.health.message}')" >&2
+      exit 1
+    }
+
+    remaining() { echo $(( deadline - $(date +%s) )); }
+
+    # .status is cached from the last reconcile (about every 3m). Without a refresh, a wait
+    # right after helm upgrade passes on the old status. The controller removes the
+    # annotation once .status is recomputed.
+    refresh() {
+      log_info "Refreshing $1"
+      kubectl annotate application/"$1" -n "$ns" argocd.argoproj.io/refresh=normal --overwrite
+      until [ -z "$(kubectl get application/"$1" -n "$ns" \
+        -o jsonpath='{.metadata.annotations.argocd\.argoproj\.io/refresh}')" ]; do
+        [ "$(remaining)" -gt 0 ] || fail "$1" Refreshed
+        sleep 5
+      done
+    }
+
+    # $1 app, $2 .status field (sync or health), $3 expected value.
+    await() {
+      log_info "Waiting for $1 to be $3"
+      left=$(remaining)
+      [ "$left" -gt 0 ] || fail "$1" "$3"
+      kubectl wait application/"$1" -n "$ns" --timeout="${left}s" \
+        --for=jsonpath="{.status.$2.status}=$3" || fail "$1" "$3"
+    }
+
+    synced() { await "$1" sync Synced; }
+    healthy() { await "$1" health Healthy; }
+
+    # Root Synced first: its .status.resources lists every child only after its sync.
+    refresh "$root"
+    synced "$root"
+    for child in $(kubectl get application/"$root" -n "$ns" \
+      -o jsonpath='{.status.resources[?(@.kind=="Application")].name}'); do
+      refresh "$child"
+      synced "$child"
+      healthy "$child"
+    done
+    # Root health comes from child health (argocd-cm Lua check), so it's read last.
+    healthy "$root"
+    log_info "Done, $root and its child Applications are Synced and Healthy"

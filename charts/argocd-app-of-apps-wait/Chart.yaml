@@ -1,0 +1,5 @@
+apiVersion: v2
+name: argocd-app-of-apps-wait
+description: Waits until an ArgoCD root Application and its child Applications are Synced and Healthy
+type: application
+version: 0.1.0

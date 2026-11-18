@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    # Helm blocks the apply until the hook Job completes. A plain Job isn't waited on.
+    helm.sh/hook: post-install,post-upgrade
+    # A failed Job is kept for kubectl logs.
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 0
+  # Backstop only. The script fails first, at waitTimeout. Under the Helm timeout.
+  activeDeadlineSeconds: {{ add .Values.waitTimeout 60 }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}
+      annotations:
+        # Changes with the root's values. Upgrades the release, so the hook reruns.
+        checksum/root-values: {{ .Values.rootValuesChecksum | quote }}
+    spec:
+      serviceAccountName: {{ .Release.Name }}
+      restartPolicy: Never
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: wait
+          # kubectl must be within one minor version of the cluster.
+          image: alpine/k8s:1.36.5
+          command: ["sh", "/scripts/wait.sh"]
+          # kubectl writes its cache to $HOME/.kube. The root filesystem is read-only.
+          env:
+            - name: HOME
+              value: /tmp
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: script
+              mountPath: /scripts
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: script
+          configMap:
+            name: {{ .Release.Name }}-script
+            defaultMode: 0555
+        - name: tmp
+          emptyDir: {}

@@ -704,6 +704,9 @@ unit "argocd_app_of_apps" {
         max_duration = "2m"
       }
     }
+    # The wait Job runs next to the ArgoCD controller.
+    node_selector = local.critical_node_selector
+    tolerations   = local.critical_tolerations
   }
 }
 
