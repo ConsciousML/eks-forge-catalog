@@ -23,6 +23,8 @@ dependency "argocd" {
 }
 
 locals {
+  cluster_name_full = include.provider_k8s_base.locals.cluster_name_full
+
   domains_hcl                 = find_in_parent_folders("domains.hcl")
   domain_public_podinfo       = read_terragrunt_config(local.domains_hcl).locals.domain_public_podinfo
   domain_private_argocd       = read_terragrunt_config(local.domains_hcl).locals.domain_private_argocd
@@ -201,7 +203,7 @@ dependency "vpc_endpoint_cidrs" {
 }
 
 inputs = {
-  cluster_name          = dependency.eks_cluster.outputs.cluster_name
+  # cluster_name comes from provider_k8s_base.hcl.
   repo_url              = local.repo_url
   name                  = values.name
   namespace             = values.namespace
@@ -247,7 +249,7 @@ inputs = {
           acm                  = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.acm
         }
         "aws-load-balancer-controller" = {
-          clusterName = dependency.eks_cluster.outputs.cluster_name
+          clusterName = local.cluster_name_full
           region      = local.region
           vpcId       = dependency.vpc.outputs.vpc_id
         }
@@ -260,9 +262,9 @@ inputs = {
           route53 = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.route53
         }
         "external-dns" = {
-          txtOwnerId = dependency.eks_cluster.outputs.cluster_name
+          txtOwnerId = local.cluster_name_full
           # The %%% is for escaping Terragrunt templates
-          txtPrefix     = "%%%{record_type}-external-dns-private-${dependency.eks_cluster.outputs.cluster_name}."
+          txtPrefix     = "%%%{record_type}-external-dns-private-${local.cluster_name_full}."
           domainFilters = [dependency.route53_hosted_zone_private.outputs.domain_name]
         }
       }
@@ -271,9 +273,9 @@ inputs = {
           route53 = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.route53
         }
         "external-dns" = {
-          txtOwnerId = dependency.eks_cluster.outputs.cluster_name
+          txtOwnerId = local.cluster_name_full
           # The %%% is for escaping Terragrunt templates
-          txtPrefix     = "%%%{record_type}-external-dns-public-${dependency.eks_cluster.outputs.cluster_name}."
+          txtPrefix     = "%%%{record_type}-external-dns-public-${local.cluster_name_full}."
           domainFilters = [dependency.route53_hosted_zone_public.outputs.domain_name]
         }
       }
@@ -315,8 +317,8 @@ inputs = {
         remoteKey       = dependency.tailscale_oauth_client_secret.outputs.secret_name
       }
       "tailscale-connector" = {
-        name            = "${dependency.eks_cluster.outputs.cluster_name}-connector"
-        hostnamePrefix  = dependency.eks_cluster.outputs.cluster_name
+        name            = "${local.cluster_name_full}-connector"
+        hostnamePrefix  = local.cluster_name_full
         advertiseRoutes = [dependency.vpc.outputs.vpc_cidr_block]
       }
       "grafana-secrets" = {

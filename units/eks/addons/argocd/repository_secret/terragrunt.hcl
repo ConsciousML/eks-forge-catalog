@@ -24,9 +24,9 @@ dependency "argocd" {
 }
 
 inputs = {
-  cluster_name = dependency.eks_cluster.outputs.cluster_name
-  enabled      = include.root.locals.github_locals.app_of_apps_private
-  repo_url     = include.root.locals.github_locals.app_of_apps_repo_url
+  # cluster_name comes from provider_k8s_base.hcl.
+  enabled  = include.root.locals.github_locals.app_of_apps_private
+  repo_url = include.root.locals.github_locals.app_of_apps_repo_url
   # Written by the app_of_apps_deploy_key bootstrap.
   secret_name = include.root.locals.github_locals.app_of_apps_deploy_key_secret_name
 }

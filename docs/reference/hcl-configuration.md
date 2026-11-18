@@ -130,7 +130,7 @@ Shared setup for units that talk to the Kubernetes API. Included by units that a
 |------|------|-------------|
 | `cluster_name_full` | Local | `cluster_name_full` from `cluster_name_env.hcl`. |
 | `cluster_exists` | Local | `true` if `aws eks describe-cluster` finds the cluster, `false` on `ResourceNotFoundException`. Fails on any other error. |
-| `dependency "eks_cluster"` | Block | Dependency on the `cluster` unit, with mock outputs for `init`, `plan`, `validate`, `graph`, and `destroy`. |
+| `cluster_name` | Input | `cluster_name_full`, passed to every unit that includes the file. |
 | `exclude` | Block | Excludes the unit from `init`, `validate`, `plan`, and `destroy` while the cluster doesn't exist. |
 | `generate "provider_k8s_base"` | Block | `aws_eks_cluster` and `aws_eks_cluster_auth` data sources named `this`. Generates `provider_k8s_base.tf`. |
 
