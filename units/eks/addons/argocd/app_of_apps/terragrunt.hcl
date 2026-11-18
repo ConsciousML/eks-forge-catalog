@@ -39,7 +39,7 @@ locals {
 
   # Shared by kube-prometheus-stack's fullnameOverride and the 3 httproute
   # backendRef names below. Only HCL can compose "<release>-grafana", so it lives here.
-  # Must also match tool.helm.releaseName for kube-prometheus-stack in apps/values.yaml
+  # Must also match tool.helm.releaseName for kube-prometheus-stack in apps/core/values.yaml
   # (eks-forge-app-of-apps repo), which appParams has no path to set.
   kube_prometheus_stack_release = "kube-prometheus-stack"
 

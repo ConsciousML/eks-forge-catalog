@@ -40,7 +40,7 @@ The Job runs again only when the root Application's values change. A change made
 | <a name="input_name"></a> [name](#input\_name) | Name of the ArgoCD Application resource | `string` | `"app-of-apps"` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace where the ArgoCD Application resource is created | `string` | `"argocd"` | no |
 | <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | Node selector of the wait Job's pod | `map(string)` | `{}` | no |
-| <a name="input_path"></a> [path](#input\_path) | Path within the repository containing the application manifests | `string` | `"apps"` | no |
+| <a name="input_path"></a> [path](#input\_path) | Path within the repository containing the application manifests | `string` | `"apps/core"` | no |
 | <a name="input_project"></a> [project](#input\_project) | ArgoCD project the Application belongs to | `string` | `"default"` | no |
 | <a name="input_prune"></a> [prune](#input\_prune) | Whether ArgoCD should delete resources that are no longer tracked | `bool` | `true` | no |
 | <a name="input_repo_url"></a> [repo\_url](#input\_repo\_url) | Git repository URL that ArgoCD will sync from | `string` | n/a | yes |

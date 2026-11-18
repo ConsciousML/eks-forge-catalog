@@ -682,7 +682,7 @@ unit "argocd_app_of_apps" {
     version   = local.version
     name      = "app-of-apps"
     namespace = "argocd"
-    path      = "apps"
+    path      = "apps/core"
     # Fully qualified git ref: resolves directly instead of scanning all branches/tags.
     target_revision       = local.app_of_apps_target_revision
     project               = "default"
