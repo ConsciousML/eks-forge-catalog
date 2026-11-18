@@ -36,7 +36,6 @@ dependency "karpenter_node_pool_critical" {
 }
 
 inputs = {
-  cluster_name     = dependency.eks_cluster.outputs.cluster_name
   name             = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"

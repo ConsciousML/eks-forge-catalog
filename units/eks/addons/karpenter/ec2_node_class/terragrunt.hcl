@@ -37,8 +37,7 @@ dependency "karpenter_helm" {
 }
 
 inputs = {
-  cluster_name = dependency.eks_cluster.outputs.cluster_name
-  name         = values.name
+  name = values.name
   # Bundled locally alongside modules/helm_release, travels with the same git fetch.
   chart            = "../../charts/karpenter-ec2-node-class"
   namespace        = "kube-system"

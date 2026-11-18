@@ -15,13 +15,20 @@ terraform {
   source = "git::git@github.com:${include.root.locals.github_owner_catalog}/${include.root.locals.github_repo_name_catalog}.git//modules/helm_release/?ref=${values.version}"
 }
 
+dependency "eks_cluster" {
+  config_path = "../../../cluster"
+  mock_outputs = {
+    cluster_endpoint = "https://mock.eks.amazonaws.com"
+  }
+  mock_outputs_allowed_terraform_commands = ["init", "plan", "validate", "graph", "destroy"]
+}
+
 dependency "prometheus_operator_crds" {
   config_path  = "../../prometheus_stack/crds"
   skip_outputs = true
 }
 
 inputs = {
-  cluster_name       = dependency.eks_cluster.outputs.cluster_name
   name               = "cilium"
   repository         = "https://helm.cilium.io"
   chart              = "cilium"

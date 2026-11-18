@@ -56,7 +56,7 @@ For complete examples, see [`units/vpc/vpc/terragrunt.hcl`](https://github.com/C
 </TabItem>
 <TabItem value="kubernetes" label="Kubernetes add-on">
 
-Create `units/eks/addons/<name>/helm/terragrunt.hcl` (e.g. `units/eks/addons/cilium/helm/terragrunt.hcl`). On top of the root configuration, include the Kubernetes and Helm provider files. They add the dependency on the EKS cluster, and skip the unit while the cluster doesn't exist yet:
+Create `units/eks/addons/<name>/helm/terragrunt.hcl` (e.g. `units/eks/addons/cilium/helm/terragrunt.hcl`). On top of the root configuration, include the Kubernetes and Helm provider files. They pass the cluster name to the module, and skip the unit while the cluster doesn't exist yet:
 ```hcl
 # units/eks/addons/<name>/helm/terragrunt.hcl
 
@@ -81,7 +81,7 @@ terraform {
 }
 ```
 
-Make it run after `cilium_cep_restart`, so its pods start once `cilium-agent` is ready and get a [CiliumEndpoint](https://docs.cilium.io/en/stable/network/kubernetes/ciliumendpoint/) without a restart:
+Make it run after `cilium_cep_restart`, so its pods start once `cilium-agent` is ready and get a [CiliumEndpoint](https://docs.cilium.io/en/stable/network/kubernetes/ciliumendpoint/) without a restart. It also orders the unit after the EKS cluster. A unit with no dependency that runs after the cluster declares `dependency "eks_cluster"` with `skip_outputs = true`, as `units/eks/addons/prometheus_stack/crds/terragrunt.hcl` does:
 ```hcl
 dependency "cilium_cep_restart" {
   config_path  = "../../cilium/cep_restart"
@@ -89,10 +89,9 @@ dependency "cilium_cep_restart" {
 }
 ```
 
-Describe the [Helm chart](https://helm.sh/docs/topics/charts/) in `inputs`, replacing `<release-name>`, `<chart-repository-url>`, `<chart-name>`, and `<namespace>` with your chart's details. The cluster name comes from the dependency the provider file added:
+Describe the [Helm chart](https://helm.sh/docs/topics/charts/) in `inputs`, replacing `<release-name>`, `<chart-repository-url>`, `<chart-name>`, and `<namespace>` with your chart's details. `cluster_name` comes from the Kubernetes provider file:
 ```hcl
 inputs = {
-  cluster_name       = dependency.eks_cluster.outputs.cluster_name
   name               = "<release-name>"          # e.g. "cilium"
   repository         = "<chart-repository-url>"  # e.g. "https://helm.cilium.io"
   chart              = "<chart-name>"            # e.g. "cilium"

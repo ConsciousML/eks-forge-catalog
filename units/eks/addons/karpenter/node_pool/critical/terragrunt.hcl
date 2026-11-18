@@ -16,11 +16,8 @@ terraform {
 }
 
 dependency "eks_cluster" {
-  config_path = "../../../../cluster"
-  mock_outputs = {
-    cluster_name = "mock-cluster"
-  }
-  mock_outputs_allowed_terraform_commands = ["init", "plan", "validate", "graph", "destroy"]
+  config_path  = "../../../../cluster"
+  skip_outputs = true
 }
 
 dependency "karpenter_ec2_node_class" {
@@ -32,8 +29,7 @@ dependency "karpenter_ec2_node_class" {
 }
 
 inputs = {
-  cluster_name = dependency.eks_cluster.outputs.cluster_name
-  name         = values.name
+  name = values.name
   # Bundled locally alongside modules/helm_release, travels with the same git fetch.
   chart            = "../../charts/karpenter-node-pool"
   namespace        = "kube-system"

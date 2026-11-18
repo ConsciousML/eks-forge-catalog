@@ -21,8 +21,7 @@ dependency "cilium" {
 }
 
 inputs = {
-  cluster_name = dependency.eks_cluster.outputs.cluster_name
-  name         = "cilium-cep-restart"
+  name = "cilium-cep-restart"
   # Bundled locally alongside modules/helm_release, travels with the same git fetch.
   chart            = "../../charts/cilium-cep-restart"
   namespace        = "kube-system"

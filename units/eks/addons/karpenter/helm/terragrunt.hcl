@@ -44,7 +44,6 @@ dependency "cilium_cep_restart" {
 }
 
 inputs = {
-  cluster_name = dependency.eks_cluster.outputs.cluster_name
   # Must match the Pod Identity association's expected ServiceAccount name (units/eks/addons/karpenter/iam).
   name               = "karpenter"
   repository         = "oci://public.ecr.aws/karpenter"
