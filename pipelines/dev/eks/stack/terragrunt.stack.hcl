@@ -1218,7 +1218,8 @@ unit "domain_name_hubble" {
 
 # --- Optional features ---
 # Off unless <FEATURE>_ENABLED is "true". Destroy a feature before disabling it, since a
-# disabled feature is no longer generated.
+# disabled feature is no longer generated. Run `terragrunt stack clean` after changing one, since
+# `stack generate` keeps a feature's directory.
 
 stack "example" {
   source  = "${get_repo_root()}/stacks/example"
