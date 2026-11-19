@@ -6,6 +6,6 @@ unit "feature_toggles" {
     version          = values.version
     github_token     = values.github_token
     github_repo_name = values.github_repo_name
-    enabled_features = values.enabled_features
+    enabled_toggles  = values.enabled_toggles
   }
 }

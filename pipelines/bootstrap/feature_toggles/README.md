@@ -17,7 +17,7 @@ To disable a feature, destroy it first, as described in its reference. Then remo
 unset FEATURE_EXAMPLE_ENABLED
 ```
 
-You'll deploy one stack, [`feature_toggles`](../../../stacks/feature_toggles/), which adds a GitHub Actions variable for each enabled feature, and removes the variable of each disabled one.
+You'll deploy one stack, [`feature_toggles`](../../../stacks/feature_toggles/), which adds a GitHub Actions variable for each `FEATURE_<NAME>_ENABLED` set to `true` in your shell, and removes the variable of each one that isn't.
 
 Now, run the following [Terragrunt](/docs/iac/#terragrunt) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash

@@ -12,5 +12,5 @@ inputs = {
   github_owner     = include.root.locals.github_owner_catalog
   github_repo_name = values.github_repo_name
   # The FEATURE_ prefix is reserved for feature toggles. .github/actions/setup exports only those.
-  variables = { for f in values.enabled_features : "FEATURE_${upper(f)}_ENABLED" => "true" }
+  variables = { for t in values.enabled_toggles : t => "true" }
 }

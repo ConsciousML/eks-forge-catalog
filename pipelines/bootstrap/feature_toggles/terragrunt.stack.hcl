@@ -5,8 +5,8 @@ locals {
   github_owner_catalog     = local.github_locals.github_owner_catalog
   github_repo_name_catalog = local.github_locals.github_repo_name_catalog
 
-  # Every optional feature stack of pipelines/dev/eks/stack/terragrunt.stack.hcl.
-  features = ["example"]
+  # Every FEATURE_<NAME>_ENABLED=true of the shell. get_env can't list variables by pattern.
+  enabled_toggles = compact(split("\n", run_cmd("--terragrunt-quiet", "sh", "-c", "env | grep -E '^FEATURE_[A-Z0-9_]+_ENABLED=true$' | cut -d= -f1 || true")))
 }
 
 stack "feature_toggles" {
@@ -19,6 +19,6 @@ stack "feature_toggles" {
     github_repo_name_catalog = local.github_repo_name_catalog
     github_token             = get_env("GITHUB_TOKEN")
     github_repo_name         = local.github_repo_name_catalog
-    enabled_features         = [for f in local.features : f if get_env("FEATURE_${upper(f)}_ENABLED", "false") == "true"]
+    enabled_toggles          = local.enabled_toggles
   }
 }
