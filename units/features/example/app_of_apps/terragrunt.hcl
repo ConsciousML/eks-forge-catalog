@@ -1,0 +1,86 @@
+include "root" {
+  path   = find_in_parent_folders("root.hcl")
+  expose = true
+}
+
+include "provider_k8s_base" {
+  path   = find_in_parent_folders("provider_k8s_base.hcl")
+  expose = true
+}
+
+include "provider_helm" {
+  path   = find_in_parent_folders("provider_helm.hcl")
+  expose = true
+}
+
+terraform {
+  source = "git::git@github.com:${include.root.locals.github_owner_catalog}/${include.root.locals.github_repo_name_catalog}.git//modules/argocd_app_of_apps/?ref=${values.version}"
+}
+
+# The core argocd_app_of_apps dependency comes from stacks/example's autoinclude.
+
+locals {
+  region_hcl = find_in_parent_folders("region.hcl")
+  region     = read_terragrunt_config(local.region_hcl).locals.region
+
+  repo_url = include.root.locals.github_locals.app_of_apps_repo_url
+}
+
+dependency "s3" {
+  config_path = "../s3"
+  mock_outputs = {
+    s3_bucket_id = "mock-example"
+  }
+  mock_outputs_allowed_terraform_commands = ["init", "plan", "validate", "graph", "destroy"]
+}
+
+dependency "iam_role" {
+  config_path  = "../iam_role"
+  skip_outputs = true
+}
+
+inputs = {
+  # cluster_name comes from provider_k8s_base.hcl.
+  repo_url              = local.repo_url
+  name                  = "example-apps"
+  namespace             = "argocd"
+  path                  = "apps/features/example"
+  target_revision       = values.target_revision
+  project               = "default"
+  destination_namespace = "argocd"
+  destination_server    = "https://kubernetes.default.svc"
+  # Deleting the root Application cascades to its child Applications.
+  finalizers         = ["resources-finalizer.argocd.argoproj.io"]
+  sync_options       = ["CreateNamespace=true"]
+  prune              = true
+  helm_chart_version = values.helm_chart_version
+  retry = {
+    limit = 7
+    backoff = {
+      duration     = "5s"
+      factor       = 2
+      max_duration = "2m"
+    }
+  }
+  node_selector = values.node_selector
+  tolerations   = values.tolerations
+  helm_values = {
+    config = {
+      spec = {
+        source = {
+          repoURL        = local.repo_url
+          targetRevision = values.target_revision
+        }
+      }
+    }
+    global = {
+      environment = include.root.locals.environment_alias
+    }
+    appParams = {
+      "example-s3-lister" = {
+        bucket = dependency.s3.outputs.s3_bucket_id
+        region = local.region
+      }
+    }
+  }
+}

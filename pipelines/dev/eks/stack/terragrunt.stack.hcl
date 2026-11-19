@@ -4,6 +4,10 @@ locals {
   version_fck_nat = "1.6.1"
   version_cluster = "21.15.1"
 
+  github_locals            = read_terragrunt_config(find_in_parent_folders("github.hcl")).locals
+  github_owner_catalog     = local.github_locals.github_owner_catalog
+  github_repo_name_catalog = local.github_locals.github_repo_name_catalog
+
   # Write your app-of-apps dev branch name in a gitignored .app-of-apps-branch file at the repo
   # root to sync from it. Syncs from main when the file is missing.
   app_of_apps_target_revision = "refs/heads/${try(trimspace(file("${get_repo_root()}/.app-of-apps-branch")), "main")}"
@@ -1209,5 +1213,30 @@ unit "domain_name_hubble" {
 
   values = {
     version = local.version
+  }
+}
+
+# --- Optional features ---
+# Off unless <FEATURE>_ENABLED is "true". Destroy a feature before disabling it, since a
+# disabled feature is no longer generated.
+
+stack "example" {
+  source  = "${get_repo_root()}/stacks/example"
+  path    = "example"
+  enabled = get_env("EXAMPLE_ENABLED", "false") == "true"
+
+  values = {
+    version                     = local.version
+    github_owner_catalog        = local.github_owner_catalog
+    github_repo_name_catalog    = local.github_repo_name_catalog
+    cluster_path                = unit.cluster.path
+    app_of_apps_path            = unit.argocd_app_of_apps.path
+    app_of_apps_target_revision = local.app_of_apps_target_revision
+    helm_chart_version          = local.version_argocd_apps
+    version_s3                  = local.version_s3
+    # DEV: allows destroying the bucket without emptying it first, set to false for prod.
+    force_destroy = true
+    node_selector = local.critical_node_selector
+    tolerations   = local.critical_tolerations
   }
 }
