@@ -17,6 +17,7 @@ Run via [`pipelines/bootstrap/aws_gh_actions_auth`](../../pipelines/bootstrap/aw
 - **[iam_policies](iam_policies/)**: Attaches managed IAM policy ARNs to the role from `iam_role`, granting the permissions Terragrunt needs to run in CI
 - **[secrets/action](secrets/action/)**: Stores the region and `iam_role`'s ARN as GitHub Actions secrets so workflows can assume the role without hardcoded credentials
 - **[secrets/eks_local_admin](secrets/eks_local_admin/)**: Stores `EKS_LOCAL_ADMIN_ARN` as a GitHub Actions secret. The [CD workflow](https://github.com/ConsciousML/eks-forge-live/blob/main/.github/workflows/cd.yaml) reads it via `get_env` and injects it into the cluster `access_entries` (see [prod EKS stack](https://github.com/ConsciousML/eks-forge-live/blob/main/live/prod/eks/terragrunt.stack.hcl)), so the local admin retains kubectl access after CI deploys the cluster
+- **[variables/feature_toggles](variables/feature_toggles/)**: Stores a `FEATURE_<NAME>_ENABLED` GitHub Actions variable for each enabled optional feature. Run via [`pipelines/bootstrap/feature_toggles`](../../pipelines/bootstrap/feature_toggles/). [`.github/actions/setup`](../../.github/actions/setup/) exports every `FEATURE_` variable in CI
 - **[deploy_key](deploy_key/)**: Generates SSH deploy keys and registers them on target repositories, enabling Terragrunt to pull code from private repositories during CI. Instantiated in the bootstrap stack once read-only (remote sources) and once with write access (terraform-docs commits)
 
 ## Upstream Dependencies

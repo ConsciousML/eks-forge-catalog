@@ -72,16 +72,20 @@ Set to `true` to send the `slo` page alerts (`component: slo`, `severity: critic
 export PAGERDUTY_ENABLED=true
 ```
 
-## `EXAMPLE_ENABLED`
+## `FEATURE_EXAMPLE_ENABLED`
 
-**Used by**: [`pipelines/dev/eks/stack/terragrunt.stack.hcl`](../pipelines/dev/eks/stack/terragrunt.stack.hcl) (optional)
+**Used by**: [`pipelines/dev/eks/stack/terragrunt.stack.hcl`](../pipelines/dev/eks/stack/terragrunt.stack.hcl) and [`pipelines/bootstrap/feature_toggles/`](../pipelines/bootstrap/feature_toggles/) (optional)
 
-Set to `true` to deploy the [`example` optional feature](../units/features/example/). Defaults to `false`, so the stack deploys core only. `terragrunt stack generate` keeps the directory of a feature generated earlier, so run `terragrunt stack clean` after changing this variable, as in [Run the Terragrunt Stack](/docs/quickstart/deployment/#run-the-terragrunt-stack). A disabled feature is no longer generated, so it can't be destroyed afterwards. Destroy it while it's still enabled, then unset the variable:
+Set to `true` to deploy the [`example` optional feature](../units/features/example/). Defaults to `false`, so the stack deploys core only. `terragrunt stack generate` keeps the directory of a feature generated earlier, so run `terragrunt stack clean` after changing this variable, as in [Run the Terragrunt Stack](/docs/quickstart/deployment/#run-the-terragrunt-stack).
+
+Every optional feature has a `FEATURE_<NAME>_ENABLED` toggle. The `FEATURE_` prefix is reserved for these toggles, since CI exports every GitHub Actions variable starting with it. The [Feature Toggles Bootstrap](../pipelines/bootstrap/feature_toggles/) pushes the enabled toggles to GitHub Actions variables, so CI deploys the same features.
+
+A disabled feature is no longer generated, so it can't be destroyed afterwards. Destroy it while it's still enabled, then unset the variable and rerun the Feature Toggles Bootstrap:
 ```bash
 cd pipelines/dev/eks/stack/.terragrunt-stack/example && terragrunt run --all destroy
 ```
 ```bash
-export EXAMPLE_ENABLED=true
+export FEATURE_EXAMPLE_ENABLED=true
 ```
 
 ## `TG_ENVIRONMENT` and `TG_ENVIRONMENT_ALIAS`

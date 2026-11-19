@@ -125,6 +125,7 @@ jobs:
           ts-oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           ts-audience: ${{ secrets.TS_AUDIENCE }}
           ts-tags: ${{ secrets.TS_TAGS }}
+          vars-json: ${{ toJSON(vars) }}
 
       - name: Ensure EC2 Spot service-linked role exists
         run: aws iam create-service-linked-role --aws-service-name spot.amazonaws.com || true
