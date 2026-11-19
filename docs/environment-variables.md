@@ -72,6 +72,18 @@ Set to `true` to send the `slo` page alerts (`component: slo`, `severity: critic
 export PAGERDUTY_ENABLED=true
 ```
 
+## `EXAMPLE_ENABLED`
+
+**Used by**: [`pipelines/dev/eks/stack/terragrunt.stack.hcl`](../pipelines/dev/eks/stack/terragrunt.stack.hcl) (optional)
+
+Set to `true` to deploy the [`example` optional feature](../units/features/example/). Defaults to `false`, so the stack deploys core only. `terragrunt stack generate` keeps the directory of a feature generated earlier, so run `terragrunt stack clean` after changing this variable, as in [Run the Terragrunt Stack](/docs/quickstart/deployment/#run-the-terragrunt-stack). A disabled feature is no longer generated, so it can't be destroyed afterwards. Destroy it while it's still enabled, then unset the variable:
+```bash
+cd pipelines/dev/eks/stack/.terragrunt-stack/example && terragrunt run --all destroy
+```
+```bash
+export EXAMPLE_ENABLED=true
+```
+
 ## `TG_ENVIRONMENT` and `TG_ENVIRONMENT_ALIAS`
 
 **Used by**: [`pipelines/dev/environment.hcl`](../pipelines/dev/environment.hcl) (optional)
