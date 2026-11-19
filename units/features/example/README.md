@@ -2,7 +2,7 @@
 
 Provisions the AWS side of the `example` optional feature, a minimal feature proving the optional feature mechanism end to end. A pod lists an S3 bucket through Pod Identity.
 
-The [`example` stack](../../../stacks/example/) groups these units. An environment's stack file declares it as a `stack` block, enabled by [`EXAMPLE_ENABLED`](../../../docs/environment-variables.md#example_enabled).
+The [`example` stack](../../../stacks/example/) groups these units. An environment's stack file declares it as a `stack` block, enabled by [`FEATURE_EXAMPLE_ENABLED`](../../../docs/environment-variables.md#feature_example_enabled).
 
 ## Concepts
 

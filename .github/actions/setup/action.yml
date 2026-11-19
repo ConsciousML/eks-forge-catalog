@@ -20,6 +20,9 @@ inputs:
   ts-tags:
     description: 'Tailscale tags to assign to the runner device when joining the tailnet'
     required: true
+  vars-json:
+    description: 'The vars context as JSON (toJSON(vars)), since a composite action cannot read vars'
+    required: true
 
 runs:
   using: 'composite'
@@ -62,3 +65,12 @@ runs:
         oauth-client-id: ${{ inputs.ts-oauth-client-id }}
         audience: ${{ inputs.ts-audience }}
         tags: ${{ inputs.ts-tags }}
+
+    # FEATURE_ is reserved for feature toggles (pipelines/bootstrap/feature_toggles).
+    - name: Export feature toggles
+      shell: bash
+      env:
+        VARS: ${{ inputs.vars-json }}
+      run: |
+        jq -r 'to_entries[] | select((.key | test("^FEATURE_[A-Z0-9_]+_ENABLED$")) and .value == "true") | "\(.key)=true"' \
+          <<< "$VARS" >> "$GITHUB_ENV"
