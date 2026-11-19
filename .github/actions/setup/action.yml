@@ -72,5 +72,5 @@ runs:
       env:
         VARS: ${{ inputs.vars-json }}
       run: |
-        jq -r 'to_entries[] | select(.key | startswith("FEATURE_")) | "\(.key)=\(.value)"' \
+        jq -r 'to_entries[] | select((.key | test("^FEATURE_[A-Z0-9_]+_ENABLED$")) and .value == "true") | "\(.key)=true"' \
           <<< "$VARS" >> "$GITHUB_ENV"
