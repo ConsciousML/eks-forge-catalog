@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Fail on leftover TEMP markers
         run: |
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Fail on units missing a provider lock file
         run: make check-lock-files
@@ -60,13 +60,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           ssh-key: ${{ secrets.TERRAFORM_DOCS_DEPLOY_KEY }}
 
       - name: Render terraform docs and push changes back to PR
-        uses: terraform-docs/gh-actions@v1.4.1
+        uses: terraform-docs/gh-actions@6de6da0cefcc6b4b7a5cbea4d79d97060733093c # v1.4.1
         with:
           working-dir: .
           config-file: .terraform-docs.yml
@@ -80,7 +80,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
@@ -111,7 +111,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       # A composite action that sets up GH actions to run TG:
       # - Loads deploy keys to enable TG to pull private repositories
@@ -126,9 +126,6 @@ jobs:
           ts-audience: ${{ secrets.TS_AUDIENCE }}
           ts-tags: ${{ secrets.TS_TAGS }}
           vars-json: ${{ toJSON(vars) }}
-
-      - name: Ensure EC2 Spot service-linked role exists
-        run: aws iam create-service-linked-role --aws-service-name spot.amazonaws.com || true
 
       - name: Initialize Terragrunt stack
         env:
@@ -147,7 +144,7 @@ jobs:
       # Runs the checks as in pre-commits with prek (tflint, ...)
       # This prevents any discrepancies between the pre-commit checks and the CI checks
       - name: Run pre-commit hooks (prek)
-        uses: j178/prek-action@v2.0.4
+        uses: j178/prek-action@bdca6f102f98e2b4c7029491a53dfd366469e33d # v2.0.4
 
       - name: Run Terragrunt plan
         env:

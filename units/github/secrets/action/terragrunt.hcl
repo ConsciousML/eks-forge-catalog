@@ -17,10 +17,7 @@ terraform {
 
 inputs = {
   github_token     = values.github_token
-  github_owner     = include.root.locals.github_owner_catalog
+  github_owner     = values.github_owner
   github_repo_name = values.github_repo_name
-  secrets = {
-    AWS_REGION   = include.root.locals.aws_region
-    AWS_ROLE_ARN = dependency.iam_role_github_actions.outputs.role_arn
-  }
+  secrets          = { (values.role_arn_secret_name) = dependency.iam_role_github_actions.outputs.role_arn }
 }
