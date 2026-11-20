@@ -3,7 +3,7 @@
 
 The [`aws_gh_actions_auth` stack](../../stacks/aws_gh_actions_auth/) provisions the [OIDC](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)-based trust between GitHub Actions and AWS, letting CI assume an IAM role and run Terragrunt without long-lived AWS keys.
 
-The catalog pipeline ([`pipelines/bootstrap/aws_gh_actions_auth`](../../pipelines/bootstrap/aws_gh_actions_auth/terragrunt.stack.hcl)) grants a read-only plan role: `ReadOnlyAccess`, the state lock, the state KMS key, and the ArgoCD repository secret. CI can't create, change, or delete resources. It can decrypt only the state encrypted with the catalog's state KMS key, so anyone with push access can read the secrets that state holds. State encrypted with another key, such as live's, stays unreadable.
+The catalog pipeline ([`pipelines/bootstrap/aws_gh_actions_auth`](../../pipelines/bootstrap/aws_gh_actions_auth/terragrunt.stack.hcl)) sets `read_only = true`. See [Read-Only Plan Role](#read-only-plan-role). create, change, or delete resources. It can decrypt only the state encrypted with the catalog's state KMS key, so anyone with push access can read the secrets that state holds. State encrypted with another key, such as live's, stays unreadable.
 
 For setup steps, read the [AWS GitHub Actions Authentication Bootstrap](/docs/quickstart/bootstrap/aws_gh_actions_auth).
 
@@ -30,9 +30,11 @@ For setup steps, read the [AWS GitHub Actions Authentication Bootstrap](/docs/qu
 | `github_repo_name` | GitHub repository name. | `string` | - | Yes |
 | `subject_claim_prefix` | Prefix of the OIDC `sub` claim GitHub issues for the repository. Read from the GitHub API, so it holds the owner and repository IDs when the repository uses [immutable subject claims](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims). | `string` | `repo:<github_owner>/<github_repo_name>` | No |
 | `github_branch` | Branch allowed to assume the role. `*` allows all branches. | `string` | - | Yes |
-| `inline_policies` | Inline IAM policies (`name`, `policy` JSON) attached directly to the role. | `list(object)` | - | Yes |
+| `inline_policies` | Inline IAM policies (`name`, `policy` JSON) attached directly to the role. | `list(object)` | `[]` | No |
 | `max_session_duration` | Maximum session duration (seconds) for the assumed role. | `number` | `3600` | No |
-| `policy_arns` | IAM policy ARNs attached to the role. | `list(string)` | - | Yes |
+| `policy_arns` | IAM policy ARNs attached to the role. | `list(string)` | `[]` | No |
+| `read_only` | Attaches the plan-only policies. See [Read-Only Plan Role](#read-only-plan-role). | `bool` | `false` | No |
+| `plan_secret_names` | Secrets Manager secret names the plan reads, with `read_only`. | `list(string)` | `[]` | No |
 | `github_token` | GitHub personal access token with `repo` permissions. | `string` | - | Yes |
 | `deploy_key_repositories` | Repositories granted read-only deploy key access, so Terragrunt can pull remote source code from them. | `list(string)` | - | Yes |
 | `deploy_key_secret_names` | GitHub Actions secret name for each entry in `deploy_key_repositories`, same order. | `list(string)` | - | Yes |
@@ -45,6 +47,16 @@ The [GitHub Actions OIDC provider](https://docs.aws.amazon.com/IAM/latest/UserGu
 Set `create_oidc_provider = false` when another repository already created it in the same AWS account. Setting it `true` a second time fails with `EntityAlreadyExists`. Give each repository's role a distinct `iam_role_name` to avoid conflicts.
 
 In EKS Forge, use `create_oidc_provider = true` in your [catalog](https://github.com/ConsciousML/eks-forge-catalog) fork and `create_oidc_provider = false` and in [live](https://github.com/ConsciousML/eks-forge-live) fork.
+
+## Read-Only Plan Role
+
+With `read_only = true`, the role gets `ReadOnlyAccess` and a `TerragruntPlan` inline policy (see [`units/github/iam_role`](../../units/github/iam_role/terragrunt.hcl)):
+
+- writes to the state lock table
+- `kms:Decrypt` and `kms:GenerateDataKey` on the state KMS key, both read from the caller's `root.hcl`
+- `secretsmanager:GetSecretValue` on `plan_secret_names`
+
+The role can't create, change, or delete resources. It decrypts only state encrypted with its repository's state KMS key, so anyone with push access can read the secrets in that state. State encrypted with another repository's key stays unreadable.
 
 ## GitHub Actions Workflow Setup Action
 
