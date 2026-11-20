@@ -7,12 +7,8 @@ locals {
 
   github_token = get_env("GITHUB_TOKEN")
 
-  aws_region = read_terragrunt_config(find_in_parent_folders("region.hcl")).locals.region
-  account_id = get_aws_account_id()
-  # State buckets the CI init and plan read (pipelines/root.hcl). CI, bootstrap, and dev pipelines under pipelines/bootstrap.
-  ci_state_buckets = [
-    for env in ["catalog-eks-ci", "bootstrap-catalog-eks", "dev"] : "tofu-state-${local.account_id}-${local.aws_region}-${env}"
-  ]
+  aws_region          = read_terragrunt_config(find_in_parent_folders("region.hcl")).locals.region
+  account_id          = get_aws_account_id()
   lock_table_arn      = "arn:aws:dynamodb:${local.aws_region}:${local.account_id}:table/terragrunt_lock_table"
   state_kms_key_alias = "alias/${read_terragrunt_config(find_in_parent_folders("bootstrap/environment.hcl")).locals.environment}-tofu-state"
 
@@ -62,12 +58,6 @@ stack "aws_gh_actions_auth" {
               Effect   = "Allow"
               Action   = "secretsmanager:GetSecretValue"
               Resource = "arn:aws:secretsmanager:${local.aws_region}:${local.account_id}:secret:${local.github_locals.app_of_apps_deploy_key_secret_name}-*"
-            },
-            {
-              Sid         = "DenyS3ReadsOutsideCIStateBuckets"
-              Effect      = "Deny"
-              Action      = "s3:GetObject"
-              NotResource = [for b in local.ci_state_buckets : "arn:aws:s3:::${b}/*"]
             },
             {
               Sid         = "DenySSMReadsOutsideAWSPublic"
