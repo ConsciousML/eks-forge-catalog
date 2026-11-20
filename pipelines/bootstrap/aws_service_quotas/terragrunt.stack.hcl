@@ -8,6 +8,8 @@ locals {
   # Edit before deploying. See README.md for how to check current quota values and headroom.
   ondemand_desired_value = 32
   spot_desired_value     = 32
+  # G and VT Spot quota, 0 by default. Requested only when the gpu feature is enabled.
+  gpu_spot_desired_value = get_env("FEATURE_GPU_ENABLED", "false") == "true" ? 16 : 0
 }
 
 stack "ec2_quotas" {
@@ -20,5 +22,6 @@ stack "ec2_quotas" {
 
     ondemand_desired_value = local.ondemand_desired_value
     spot_desired_value     = local.spot_desired_value
+    gpu_spot_desired_value = local.gpu_spot_desired_value
   }
 }

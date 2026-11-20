@@ -21,3 +21,16 @@ unit "ec2_spot_quota" {
     desired_value = values.spot_desired_value
   }
 }
+
+unit "ec2_gpu_spot_quota" {
+  enabled = values.gpu_spot_desired_value > 0
+  source  = "git::git@github.com:${values.github_owner_catalog}/${values.github_repo_name_catalog}.git//units/service_quota?ref=${values.version}"
+  path    = "ec2_gpu_spot_quota"
+
+  values = {
+    version       = values.version
+    service_code  = "ec2"
+    quota_code    = "L-3819A6DF" # All G and VT Spot Instance Requests
+    desired_value = values.gpu_spot_desired_value
+  }
+}

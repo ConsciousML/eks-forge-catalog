@@ -19,7 +19,12 @@ aws service-quotas get-service-quota --service-code ec2 --quota-code L-1216C47A 
 aws service-quotas get-service-quota --service-code ec2 --quota-code L-34B43A08 --query Quota.Value --output text # Spot Standard
 ```
 
-If both values are at least `ondemand_desired_value` and `spot_desired_value` in the [stack file](terragrunt.stack.hcl), skip the rest of this guide.
+If you enable the [`gpu` feature](/docs/reference/environment_variable/#feature_gpu_enabled), also check its G and VT Spot quota, which is 0 on a new account:
+```bash
+aws service-quotas get-service-quota --service-code ec2 --quota-code L-3819A6DF --query Quota.Value --output text # G and VT Spot
+```
+
+If each value is at least its `*_desired_value` in the [stack file](terragrunt.stack.hcl), skip the rest of this guide.
 
 Otherwise, run the following [Terragrunt](/docs/iac/#terragrunt) commands from the root directory of your [catalog fork](/docs/quickstart/installation/#fork-the-eks-forge-catalog):
 ```bash
@@ -32,6 +37,6 @@ terragrunt run --all apply --backend-bootstrap --non-interactive --no-stack-gene
 
 AWS approves some increases instantly. Others are reviewed manually and can take a day or more, which is normal. You don't need to wait for them: continue with the other [bootstrap pipelines](/docs/quickstart/bootstrap/), starting with [Setup DNS](/docs/quickstart/bootstrap/setup_dns/).
 
-Finally, before the [deployment](/docs/quickstart/deployment/), re-run the check from the first step. Once AWS approves the requests, both values match the ones in the stack file. While AWS reviews them, track their status in the [Service Quotas request history console](https://console.aws.amazon.com/servicequotas/home/requests).
+Finally, before the [deployment](/docs/quickstart/deployment/), re-run the check from the first step. Once AWS approves the requests, the values match the ones in the stack file. While AWS reviews them, track their status in the [Service Quotas request history console](https://console.aws.amazon.com/servicequotas/home/requests).
 
 For more information about this bootstrap, read the [AWS EC2 Quotas](/docs/reference/bootstrap/aws_ec2_quotas/) reference.

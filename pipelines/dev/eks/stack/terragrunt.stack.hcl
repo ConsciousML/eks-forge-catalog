@@ -549,6 +549,11 @@ unit "argocd" {
                   hs.message = obj.status.health.message
                 end
               end
+              -- An app whose manifests aren't rendered yet has no resources, so reports Healthy.
+              if hs.status == "Healthy" and (obj.status.sync == nil or obj.status.sync.status ~= "Synced") then
+                hs.status = "Progressing"
+                hs.message = "Waiting for sync"
+              end
             end
             return hs
           LUA
@@ -1221,23 +1226,92 @@ unit "domain_name_hubble" {
 # disabled feature is no longer generated. Run `terragrunt stack clean` after changing one, since
 # `stack generate` keeps a feature's directory.
 
-stack "example" {
-  source  = "${get_repo_root()}/stacks/example"
-  path    = "example"
-  enabled = get_env("FEATURE_EXAMPLE_ENABLED", "false") == "true"
+stack "gpu" {
+  source  = "${get_repo_root()}/stacks/gpu"
+  path    = "gpu"
+  enabled = get_env("FEATURE_GPU_ENABLED", "false") == "true"
 
   values = {
-    version                     = local.version
-    github_owner_catalog        = local.github_owner_catalog
-    github_repo_name_catalog    = local.github_repo_name_catalog
-    cluster_path                = unit.cluster.path
-    app_of_apps_path            = unit.argocd_app_of_apps.path
-    app_of_apps_target_revision = local.app_of_apps_target_revision
-    helm_chart_version          = local.version_argocd_apps
-    version_s3                  = local.version_s3
-    # DEV: allows destroying the bucket without emptying it first, set to false for prod.
-    force_destroy = true
-    node_selector = local.critical_node_selector
-    tolerations   = local.critical_tolerations
+    version                        = local.version
+    github_owner_catalog           = local.github_owner_catalog
+    github_repo_name_catalog       = local.github_repo_name_catalog
+    core_karpenter_iam_path        = unit.karpenter_iam.path
+    core_karpenter_helm_path       = unit.karpenter_helm.path
+    core_app_of_apps_path          = unit.argocd_app_of_apps.path
+    app_of_apps_target_revision    = local.app_of_apps_target_revision
+    app_of_apps_helm_chart_version = local.version_argocd_apps
+
+    # Prefix of the EC2NodeClass and NodePool names. The gpu namespace DaemonSets select
+    # karpenter.sh/nodepool=gpu-node-pool.
+    name = "gpu"
+    # Picks the NVIDIA AMI variant on GPU instances.
+    ec2_node_class_ami_alias        = "al2023@latest"
+    ec2_node_class_kubelet_max_pods = 110
+    # Kubelet and containerd on the local NVMe, which every allowed family ships. The root EBS
+    # volume keeps the AMI's 20 GiB for the OS.
+    ec2_node_class_instance_store_policy = "RAID0"
+
+    node_pool_requirements = [
+      {
+        key      = "karpenter.sh/capacity-type"
+        operator = "In"
+        # DEV: assess spot or on-demand for prod. GPU spot capacity is scarcer and interrupted more.
+        values = ["spot"]
+      },
+      {
+        key      = "kubernetes.io/arch"
+        operator = "In"
+        values   = ["amd64"]
+      },
+      {
+        key      = "kubernetes.io/os"
+        operator = "In"
+        values   = ["linux"]
+      },
+      # NVIDIA only, CUDA compute capability 7.5 or higher, whole GPUs, and local NVMe.
+      {
+        key      = "karpenter.k8s.aws/instance-family"
+        operator = "In"
+        values   = ["g4dn", "g5", "g6", "gr6", "g7", "g6e", "g7e"]
+      },
+      {
+        key      = "karpenter.k8s.aws/instance-gpu-count"
+        operator = "In"
+        values   = ["1"]
+      }
+    ]
+    node_pool_taints = [
+      {
+        key    = "karpenter.sh/workload-class"
+        value  = "gpu"
+        effect = "NoSchedule"
+      }
+    ]
+    node_pool_startup_taints = local.karpenter_node_pool_startup_taints
+    node_pool_disruption = {
+      consolidationPolicy = "WhenEmptyOrUnderutilized"
+      consolidateAfter    = "5m"
+      budgets = [
+        # Empty GPU nodes cost the most for nothing.
+        {
+          nodes   = "100%"
+          reasons = ["Empty"]
+        },
+        # Replacing a busy GPU node restarts its workload.
+        {
+          nodes   = "1"
+          reasons = ["Underutilized", "Drifted"]
+        }
+      ]
+    }
+    # Matches gpu_spot_desired_value in pipelines/bootstrap/aws_service_quotas.
+    node_pool_limits_cpu = "16"
+    # Bounds how long a karpenter.sh/do-not-disrupt pod blocks drift and expiry.
+    node_pool_termination_grace_period = "1h"
+    node_pool_expire_after             = "720h"
+
+    # Wait Job blocking until gpu-apps is Synced and Healthy.
+    app_of_apps_wait_job_node_selector = local.critical_node_selector
+    app_of_apps_wait_job_tolerations   = local.critical_tolerations
   }
 }
