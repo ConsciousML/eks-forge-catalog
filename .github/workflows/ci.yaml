@@ -144,7 +144,7 @@ jobs:
         run: |
           cd pipelines
           # Trivy needs modules only. The CI role can't read state outside the CI bucket.
-          terragrunt stack run init -- -backend=false
+          TG_NO_DEPENDENCY_OUTPUTS=true terragrunt stack run init -- -backend=false
 
       - name: Run Trivy config scan
         env:
