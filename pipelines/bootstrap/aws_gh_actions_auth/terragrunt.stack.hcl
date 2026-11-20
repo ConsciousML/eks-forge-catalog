@@ -7,6 +7,13 @@ locals {
 
   github_token = get_env("GITHUB_TOKEN")
 
+  aws_region = read_terragrunt_config(find_in_parent_folders("region.hcl")).locals.region
+  account_id = get_aws_account_id()
+  # Keep in sync with TG_ENVIRONMENT in .github/workflows/ci.yaml and the bucket in pipelines/root.hcl.
+  ci_state_bucket     = "tofu-state-${local.account_id}-${local.aws_region}-catalog-eks-ci"
+  lock_table_arn      = "arn:aws:dynamodb:${local.aws_region}:${local.account_id}:table/terragrunt_lock_table"
+  state_kms_key_alias = "alias/${read_terragrunt_config(find_in_parent_folders("bootstrap/environment.hcl")).locals.environment}-tofu-state"
+
   # GitHub's `sub` prefix for the repository. Holds owner and repo IDs with immutable subject claims.
   subject_claim_prefix = run_cmd("--terragrunt-quiet", "gh", "api", "repos/${local.github_owner_catalog}/${local.github_repo_name_catalog}/actions/oidc/customization/sub", "--jq", ".sub_claim_prefix // error(\"sub_claim_prefix missing from GitHub API response\")")
 }
@@ -23,63 +30,55 @@ stack "aws_gh_actions_auth" {
     subject_claim_prefix     = local.subject_claim_prefix
     github_token             = local.github_token
     iam_role_name            = "gh-terragrunt-role-catalog"
+    # Read-only, CI only plans. Never reads state outside the CI bucket.
     policy_arns = [
-      "arn:aws:iam::aws:policy/AdministratorAccess",
+      "arn:aws:iam::aws:policy/ReadOnlyAccess",
     ]
     inline_policies = [
       {
-        name = "EKSFullAccess"
+        name = "TerragruntPlan"
         policy = jsonencode({
           Version = "2012-10-17"
           Statement = [
             {
-              Sid    = "EKSFullAccess"
-              Effect = "Allow"
-              Action = [
-                "eks:CreateCluster",
-                "eks:DeleteCluster",
-                "eks:DescribeCluster",
-                "eks:ListClusters",
-                "eks:UpdateClusterConfig",
-                "eks:UpdateClusterVersion",
-                "eks:DescribeUpdate",
-                "eks:TagResource",
-                "eks:UntagResource",
-                "eks:ListTagsForResource",
-                "eks:CreateFargateProfile",
-                "eks:DeleteFargateProfile",
-                "eks:DescribeFargateProfile",
-                "eks:ListFargateProfiles",
-                "eks:CreateNodegroup",
-                "eks:DeleteNodegroup",
-                "eks:DescribeNodegroup",
-                "eks:ListNodegroups",
-                "eks:UpdateNodegroupConfig",
-                "eks:UpdateNodegroupVersion",
-                "eks:CreateAddon",
-                "eks:DeleteAddon",
-                "eks:DescribeAddon",
-                "eks:DescribeAddonVersions",
-                "eks:ListAddons",
-                "eks:UpdateAddon",
-                "eks:CreateAccessEntry",
-                "eks:DeleteAccessEntry",
-                "eks:DescribeAccessEntry",
-                "eks:ListAccessEntries",
-                "eks:AssociateAccessPolicy",
-                "eks:DisassociateAccessPolicy",
-                "eks:ListAssociatedAccessPolicies",
-                "eks:AssociateIdentityProviderConfig",
-                "eks:DisassociateIdentityProviderConfig",
-                "eks:DescribeIdentityProviderConfig",
-                "eks:ListIdentityProviderConfigs",
-                "eks:CreatePodIdentityAssociation",
-                "eks:DeletePodIdentityAssociation",
-                "eks:DescribePodIdentityAssociation",
-                "eks:ListPodIdentityAssociations"
-              ]
+              Sid      = "StateLock"
+              Effect   = "Allow"
+              Action   = ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:DeleteItem"]
+              Resource = local.lock_table_arn
+            },
+            {
+              Sid      = "StateEncryption"
+              Effect   = "Allow"
+              Action   = ["kms:Decrypt", "kms:GenerateDataKey"]
               Resource = "*"
-            }
+              Condition = {
+                "ForAnyValue:StringEquals" = { "kms:ResourceAliases" = local.state_kms_key_alias }
+              }
+            },
+            {
+              Sid      = "ArgoCDRepositorySecret"
+              Effect   = "Allow"
+              Action   = "secretsmanager:GetSecretValue"
+              Resource = "arn:aws:secretsmanager:${local.aws_region}:${local.account_id}:secret:${local.github_locals.app_of_apps_deploy_key_secret_name}-*"
+            },
+            {
+              Sid         = "DenyS3ReadsOutsideCIState"
+              Effect      = "Deny"
+              Action      = "s3:GetObject"
+              NotResource = "arn:aws:s3:::${local.ci_state_bucket}/*"
+            },
+            {
+              Sid         = "DenySSMReadsOutsideAWSPublic"
+              Effect      = "Deny"
+              Action      = ["ssm:GetParameter", "ssm:GetParameters", "ssm:GetParametersByPath", "ssm:GetParameterHistory"]
+              NotResource = "arn:aws:ssm:*::parameter/aws/*"
+            },
+            {
+              Sid         = "DenyDynamoDBReadsOutsideLockTable"
+              Effect      = "Deny"
+              Action      = ["dynamodb:GetItem", "dynamodb:BatchGetItem", "dynamodb:Query", "dynamodb:Scan"]
+              NotResource = local.lock_table_arn
+            },
           ]
         })
       }
