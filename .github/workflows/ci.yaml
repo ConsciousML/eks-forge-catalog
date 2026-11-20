@@ -163,6 +163,4 @@ jobs:
           PAGERDUTY_SERVICE_REGION: ${{ secrets.PAGERDUTY_SERVICE_REGION }}
         run: |
           cd ${{ env.TG_STACK_PATH }}
-          # Re-inits with the backend. The Trivy init step ran without one.
-          terragrunt run --all init --non-interactive --no-stack-generate -- -reconfigure
           terragrunt run --all plan --backend-bootstrap --non-interactive --no-stack-generate
