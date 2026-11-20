@@ -37,6 +37,5 @@ unit "github_secrets" {
     github_owner         = values.github_owner
     github_repo_name     = values.github_repo_name
     role_arn_secret_name = try(values.role_arn_secret_name, "AWS_ROLE_ARN")
-    write_region         = try(values.write_region, true)
   }
 }

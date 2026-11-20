@@ -3,7 +3,7 @@
 
 Two stacks provision the [OIDC](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)-based trust between GitHub Actions and AWS, letting CI assume an IAM role and run Terragrunt without long-lived AWS keys:
 
-- [`aws_gh_actions_auth`](../../stacks/aws_gh_actions_auth/): the OIDC provider and the deploy keys, once per repository
+- [`aws_gh_actions_auth`](../../stacks/aws_gh_actions_auth/): the OIDC provider, the deploy keys, and the `AWS_REGION` secret, once per repository
 - [`aws_gh_actions_role`](../../stacks/aws_gh_actions_role/): one IAM role and the GitHub Actions secret holding its ARN, once per role
 
 The catalog pipeline ([`pipelines/bootstrap/aws_gh_actions_auth`](../../pipelines/bootstrap/aws_gh_actions_auth/terragrunt.stack.hcl)) creates one role with `read_only = true`. See [Read-Only Plan Role](#read-only-plan-role).
@@ -15,6 +15,7 @@ For setup steps, read the [AWS GitHub Actions Authentication Bootstrap](/docs/qu
 | Stack | Name | Unit | Module |
 |-------|------|------|--------|
 | `aws_gh_actions_auth` | `github_oidc_provider` | [`units/github/oidc_provider`](../../units/github/oidc_provider/) | [`oidc_provider`](/docs/reference/terraform_modules/oidc_provider/) |
+| `aws_gh_actions_auth` | `github_secrets_region` | [`units/github/secrets/region`](../../units/github/secrets/region/) | [`github_secrets`](/docs/reference/terraform_modules/github_secrets/) |
 | `aws_gh_actions_auth` | `deploy_key` | [`units/github/deploy_key`](../../units/github/deploy_key/) | [`deploy_key`](/docs/reference/terraform_modules/deploy_key/) |
 | `aws_gh_actions_role` | `iam_role_github_actions` | [`units/github/iam_role`](../../units/github/iam_role/) | [`iam_role_github_actions`](/docs/reference/terraform_modules/iam_role_github_actions/) |
 | `aws_gh_actions_role` | `iam_policies` | [`units/github/iam_policies`](../../units/github/iam_policies/) | [`iam_policies`](/docs/reference/terraform_modules/iam_policies/) |
@@ -28,6 +29,7 @@ For setup steps, read the [AWS GitHub Actions Authentication Bootstrap](/docs/qu
 | `oidc_client_id_list` | Audiences allowed to request tokens from the OIDC provider (GitHub Actions: `["sts.amazonaws.com"]`). | `list(string)` | - | Yes |
 | `oidc_thumbprint_list` | Server certificate thumbprints for the provider. Not needed for GitHub Actions, already in AWS's trusted CA library. | `list(string)` | - | Yes |
 | `create_oidc_provider` | Whether to create the GitHub OIDC provider. See [OIDC Provider](#oidc-provider). | `bool` | - | Yes |
+| `github_owner` | GitHub username or organization name that owns the repository. | `string` | - | Yes |
 | `github_repo_name` | GitHub repository name. | `string` | - | Yes |
 | `github_token` | GitHub personal access token with `repo` permissions. | `string` | - | Yes |
 | `deploy_key_repositories` | Repositories granted read-only deploy key access, so Terragrunt can pull remote source code from them. | `list(string)` | - | Yes |
@@ -50,7 +52,6 @@ For setup steps, read the [AWS GitHub Actions Authentication Bootstrap](/docs/qu
 | `plan_secret_names` | Secrets Manager secret names the plan reads, with `read_only`. | `list(string)` | `[]` | No |
 | `max_session_duration` | Maximum session duration (seconds) for the assumed role. | `number` | `3600` | No |
 | `role_arn_secret_name` | GitHub Actions secret holding the role ARN. | `string` | `"AWS_ROLE_ARN"` | No |
-| `write_region` | Whether to also write the `AWS_REGION` secret. Set `false` on every role stack of a repository but one. | `bool` | `true` | No |
 
 ## OIDC Provider
 
@@ -72,7 +73,7 @@ The role can't create, change, or delete resources. It decrypts only state encry
 
 ## Multiple Roles
 
-Each job can assume its own role. Add one `aws_gh_actions_role` stack per role, each with a distinct `iam_role_name` and `role_arn_secret_name`, and `write_region = false` on all but one. For example, an `AdministratorAccess` role in `AWS_ROLE_ARN` for jobs that apply, and a `read_only` role in `AWS_PLAN_ROLE_ARN` for jobs that only plan.
+Each job can assume its own role. Add one `aws_gh_actions_role` stack per role, each with a distinct `iam_role_name` and `role_arn_secret_name`. For example, an `AdministratorAccess` role in `AWS_ROLE_ARN` for jobs that apply, and a `read_only` role in `AWS_PLAN_ROLE_ARN` for jobs that only plan.
 
 ## GitHub Actions Workflow Setup Action
 

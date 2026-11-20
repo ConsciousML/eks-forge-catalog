@@ -18,6 +18,7 @@ stack "aws_gh_actions_auth" {
     version                  = local.version
     github_owner_catalog     = local.github_owner_catalog
     github_repo_name_catalog = local.github_repo_name_catalog
+    github_owner             = local.github_owner_catalog
     github_repo_name         = local.github_repo_name_catalog
     github_token             = local.github_token
     oidc_url                 = "https://token.actions.githubusercontent.com"

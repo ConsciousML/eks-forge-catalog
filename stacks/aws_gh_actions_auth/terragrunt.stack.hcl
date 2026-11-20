@@ -25,3 +25,15 @@ unit "deploy_key" {
     read_only          = true
   }
 }
+
+unit "github_secrets_region" {
+  source = "git::git@github.com:${values.github_owner_catalog}/${values.github_repo_name_catalog}.git//units/github/secrets/region?ref=${values.version}"
+  path   = "github/secrets/region"
+
+  values = {
+    version          = values.version
+    github_token     = values.github_token
+    github_owner     = values.github_owner
+    github_repo_name = values.github_repo_name
+  }
+}

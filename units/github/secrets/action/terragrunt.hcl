@@ -19,9 +19,5 @@ inputs = {
   github_token     = values.github_token
   github_owner     = values.github_owner
   github_repo_name = values.github_repo_name
-  # write_region false on every role stack but one, so a single state owns AWS_REGION.
-  secrets = merge(
-    { (values.role_arn_secret_name) = dependency.iam_role_github_actions.outputs.role_arn },
-    values.write_region ? { AWS_REGION = include.root.locals.aws_region } : {},
-  )
+  secrets          = { (values.role_arn_secret_name) = dependency.iam_role_github_actions.outputs.role_arn }
 }
