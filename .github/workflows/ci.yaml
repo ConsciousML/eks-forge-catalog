@@ -143,7 +143,8 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         run: |
           cd pipelines
-          terragrunt stack run init
+          # Trivy needs modules only. The CI role can't read state outside the CI bucket.
+          terragrunt stack run init -- -backend=false
 
       - name: Run Trivy config scan
         env:
