@@ -1241,7 +1241,8 @@ stack "gpu" {
     app_of_apps_target_revision    = local.app_of_apps_target_revision
     app_of_apps_helm_chart_version = local.version_argocd_apps
 
-    # EC2NodeClass and NodePool name. The gpu namespace DaemonSets select karpenter.sh/nodepool=gpu.
+    # Prefix of the EC2NodeClass and NodePool names. The gpu namespace DaemonSets select
+    # karpenter.sh/nodepool=gpu-node-pool.
     name = "gpu"
     # Picks the NVIDIA AMI variant on GPU instances.
     ec2_node_class_ami_alias        = "al2023@latest"

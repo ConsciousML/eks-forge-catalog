@@ -21,7 +21,7 @@ terraform {
 
 inputs = {
   # cluster_name comes from provider_k8s_base.hcl.
-  name = values.name
+  name = "${values.name}-ec2-node-class"
   # Bundled locally alongside modules/helm_release, travels with the same git fetch.
   chart            = "../../charts/karpenter-ec2-node-class"
   namespace        = "kube-system"
@@ -29,7 +29,7 @@ inputs = {
   # Karpenter's uninstall waits for every node of this class to be deprovisioned.
   timeout = 600
   helm_values = {
-    name                = values.name
+    name                = "${values.name}-ec2-node-class"
     nodeRole            = dependency.karpenter_iam.outputs.node_iam_role_name
     clusterName         = include.provider_k8s_base.locals.cluster_name_full
     amiAlias            = values.ami_alias

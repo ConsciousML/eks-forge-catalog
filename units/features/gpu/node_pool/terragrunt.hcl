@@ -27,14 +27,13 @@ dependency "ec2_node_class" {
 
 inputs = {
   # cluster_name comes from provider_k8s_base.hcl.
-  # The EC2NodeClass release already holds values.name in kube-system.
   name = "${values.name}-node-pool"
   # Bundled locally alongside modules/helm_release, travels with the same git fetch.
   chart            = "../../charts/karpenter-node-pool"
   namespace        = "kube-system"
   create_namespace = false
   helm_values = {
-    name = values.name
+    name = "${values.name}-node-pool"
     # helm_release's "name" output is the EC2NodeClass's metadata.name.
     ec2NodeClassName       = dependency.ec2_node_class.outputs.name
     requirements           = values.requirements

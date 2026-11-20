@@ -16,8 +16,8 @@ The [`gpu` stack](../../../stacks/gpu/) groups these units. An environment's sta
 
 ## What's Inside
 
-- **[ec2_node_class](ec2_node_class/)**: the `gpu` `EC2NodeClass`, via the chart bundled under [`charts/karpenter-ec2-node-class`](../../../charts/karpenter-ec2-node-class/). `instanceStorePolicy: RAID0` puts kubelet, containerd images, and `emptyDir` on the instance's local NVMe. The root EBS volume keeps the AMI's size
-- **[node_pool](node_pool/)**: the `gpu` `NodePool`, via the chart bundled under [`charts/karpenter-node-pool`](../../../charts/karpenter-node-pool/). It carries the `karpenter.sh/workload-class=gpu:NoSchedule` taint and Cilium's startup taint
+- **[ec2_node_class](ec2_node_class/)**: the `gpu-ec2-node-class` `EC2NodeClass`, via the chart bundled under [`charts/karpenter-ec2-node-class`](../../../charts/karpenter-ec2-node-class/). `instanceStorePolicy: RAID0` puts kubelet, containerd images, and `emptyDir` on the instance's local NVMe. The root EBS volume keeps the AMI's size
+- **[node_pool](node_pool/)**: the `gpu-node-pool` `NodePool`, via the chart bundled under [`charts/karpenter-node-pool`](../../../charts/karpenter-node-pool/). It carries the `karpenter.sh/workload-class=gpu:NoSchedule` taint and Cilium's startup taint
 - **[app_of_apps](app_of_apps/)**: the `gpu-apps` root `Application`, syncing `apps/features/gpu` from the same app-of-apps revision as core. It applies after every other unit of the feature and destroys before them. Its finalizer deletes the child apps, and so the `gpu` namespace
 - **[`gpu-namespaces`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/manifests/features/gpu/namespaces)** (app-of-apps): the `gpu` namespace. Not deployed by these units
 - **[`gpu-nvidia-device-plugin`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/charts/features/gpu/nvidia-device-plugin)** (app-of-apps): the DaemonSet advertising `nvidia.com/gpu` on GPU nodes. Not deployed by these units
