@@ -9,8 +9,10 @@ locals {
 
   aws_region = read_terragrunt_config(find_in_parent_folders("region.hcl")).locals.region
   account_id = get_aws_account_id()
-  # Keep in sync with TG_ENVIRONMENT in .github/workflows/ci.yaml and the bucket in pipelines/root.hcl.
-  ci_state_bucket     = "tofu-state-${local.account_id}-${local.aws_region}-catalog-eks-ci"
+  # State buckets the CI init and plan read (pipelines/root.hcl). CI, bootstrap, and dev pipelines under pipelines/bootstrap.
+  ci_state_buckets = [
+    for env in ["catalog-eks-ci", "bootstrap-catalog-eks", "dev"] : "tofu-state-${local.account_id}-${local.aws_region}-${env}"
+  ]
   lock_table_arn      = "arn:aws:dynamodb:${local.aws_region}:${local.account_id}:table/terragrunt_lock_table"
   state_kms_key_alias = "alias/${read_terragrunt_config(find_in_parent_folders("bootstrap/environment.hcl")).locals.environment}-tofu-state"
 
@@ -30,7 +32,7 @@ stack "aws_gh_actions_auth" {
     subject_claim_prefix     = local.subject_claim_prefix
     github_token             = local.github_token
     iam_role_name            = "gh-terragrunt-role-catalog"
-    # Read-only, CI only plans. Never reads state outside the CI bucket.
+    # Read-only, CI only plans.
     policy_arns = [
       "arn:aws:iam::aws:policy/ReadOnlyAccess",
     ]
@@ -62,10 +64,10 @@ stack "aws_gh_actions_auth" {
               Resource = "arn:aws:secretsmanager:${local.aws_region}:${local.account_id}:secret:${local.github_locals.app_of_apps_deploy_key_secret_name}-*"
             },
             {
-              Sid         = "DenyS3ReadsOutsideCIState"
+              Sid         = "DenyS3ReadsOutsideCIStateBuckets"
               Effect      = "Deny"
               Action      = "s3:GetObject"
-              NotResource = "arn:aws:s3:::${local.ci_state_bucket}/*"
+              NotResource = [for b in local.ci_state_buckets : "arn:aws:s3:::${b}/*"]
             },
             {
               Sid         = "DenySSMReadsOutsideAWSPublic"
