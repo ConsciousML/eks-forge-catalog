@@ -5,15 +5,15 @@ unit "ec2_node_class" {
   values = {
     version               = values.version
     name                  = values.name
-    ami_alias             = values.ami_alias
-    kubelet_max_pods      = values.kubelet_max_pods
-    instance_store_policy = values.instance_store_policy
+    ami_alias             = values.ec2_node_class_ami_alias
+    kubelet_max_pods      = values.ec2_node_class_kubelet_max_pods
+    instance_store_policy = values.ec2_node_class_instance_store_policy
   }
 
   # Applies after Karpenter's CRDs and node role, destroys before them.
   autoinclude {
     dependency "karpenter_iam" {
-      config_path = values.karpenter_iam_path
+      config_path = values.core_karpenter_iam_path
       mock_outputs = {
         node_iam_role_name = "mock-node-role"
       }
@@ -21,7 +21,7 @@ unit "ec2_node_class" {
     }
 
     dependency "karpenter_helm" {
-      config_path  = values.karpenter_helm_path
+      config_path  = values.core_karpenter_helm_path
       skip_outputs = true
     }
   }
@@ -32,14 +32,15 @@ unit "node_pool" {
   path   = "node_pool"
 
   values = {
-    version        = values.version
-    name           = values.name
-    requirements   = values.requirements
-    taints         = values.taints
-    startup_taints = values.startup_taints
-    limits_cpu     = values.limits_cpu
-    expire_after   = values.expire_after
-    disruption     = values.disruption
+    version                  = values.version
+    name                     = values.name
+    requirements             = values.node_pool_requirements
+    taints                   = values.node_pool_taints
+    startup_taints           = values.node_pool_startup_taints
+    limits_cpu               = values.node_pool_limits_cpu
+    termination_grace_period = values.node_pool_termination_grace_period
+    expire_after             = values.node_pool_expire_after
+    disruption               = values.node_pool_disruption
   }
 }
 
@@ -50,15 +51,15 @@ unit "app_of_apps" {
   values = {
     version                = values.version
     target_revision        = values.app_of_apps_target_revision
-    helm_chart_version     = values.helm_chart_version
-    wait_job_node_selector = values.wait_job_node_selector
-    wait_job_tolerations   = values.wait_job_tolerations
+    helm_chart_version     = values.app_of_apps_helm_chart_version
+    wait_job_node_selector = values.app_of_apps_wait_job_node_selector
+    wait_job_tolerations   = values.app_of_apps_wait_job_tolerations
   }
 
   # Applies once core's root app is Healthy.
   autoinclude {
     dependency "core_app_of_apps" {
-      config_path  = values.app_of_apps_path
+      config_path  = values.core_app_of_apps_path
       skip_outputs = true
     }
   }

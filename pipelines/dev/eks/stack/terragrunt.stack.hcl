@@ -1227,25 +1227,25 @@ stack "gpu" {
   enabled = get_env("FEATURE_GPU_ENABLED", "false") == "true"
 
   values = {
-    version                     = local.version
-    github_owner_catalog        = local.github_owner_catalog
-    github_repo_name_catalog    = local.github_repo_name_catalog
-    karpenter_iam_path          = unit.karpenter_iam.path
-    karpenter_helm_path         = unit.karpenter_helm.path
-    app_of_apps_path            = unit.argocd_app_of_apps.path
-    app_of_apps_target_revision = local.app_of_apps_target_revision
-    helm_chart_version          = local.version_argocd_apps
+    version                        = local.version
+    github_owner_catalog           = local.github_owner_catalog
+    github_repo_name_catalog       = local.github_repo_name_catalog
+    core_karpenter_iam_path        = unit.karpenter_iam.path
+    core_karpenter_helm_path       = unit.karpenter_helm.path
+    core_app_of_apps_path          = unit.argocd_app_of_apps.path
+    app_of_apps_target_revision    = local.app_of_apps_target_revision
+    app_of_apps_helm_chart_version = local.version_argocd_apps
 
     # EC2NodeClass and NodePool name. The gpu namespace DaemonSets select karpenter.sh/nodepool=gpu.
     name = "gpu"
     # Picks the NVIDIA AMI variant on GPU instances.
-    ami_alias        = "al2023@latest"
-    kubelet_max_pods = 110
+    ec2_node_class_ami_alias        = "al2023@latest"
+    ec2_node_class_kubelet_max_pods = 110
     # Kubelet and containerd on the local NVMe, which every allowed family ships. The root EBS
     # volume keeps the AMI's 20 GiB for the OS.
-    instance_store_policy = "RAID0"
+    ec2_node_class_instance_store_policy = "RAID0"
 
-    requirements = [
+    node_pool_requirements = [
       {
         key      = "karpenter.sh/capacity-type"
         operator = "In"
@@ -1274,15 +1274,15 @@ stack "gpu" {
         values   = ["1"]
       }
     ]
-    taints = [
+    node_pool_taints = [
       {
         key    = "karpenter.sh/workload-class"
         value  = "gpu"
         effect = "NoSchedule"
       }
     ]
-    startup_taints = local.karpenter_node_pool_startup_taints
-    disruption = {
+    node_pool_startup_taints = local.karpenter_node_pool_startup_taints
+    node_pool_disruption = {
       consolidationPolicy = "WhenEmptyOrUnderutilized"
       consolidateAfter    = "5m"
       budgets = [
@@ -1299,13 +1299,13 @@ stack "gpu" {
       ]
     }
     # Matches gpu_spot_desired_value in pipelines/bootstrap/aws_service_quotas.
-    limits_cpu = "16"
+    node_pool_limits_cpu = "16"
     # Bounds how long a karpenter.sh/do-not-disrupt pod blocks drift and expiry.
-    termination_grace_period = "1h"
-    expire_after             = "720h"
+    node_pool_termination_grace_period = "1h"
+    node_pool_expire_after             = "720h"
 
     # Wait Job blocking until gpu-apps is Synced and Healthy.
-    wait_job_node_selector = local.critical_node_selector
-    wait_job_tolerations   = local.critical_tolerations
+    app_of_apps_wait_job_node_selector = local.critical_node_selector
+    app_of_apps_wait_job_tolerations   = local.critical_tolerations
   }
 }

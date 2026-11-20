@@ -63,6 +63,6 @@ GPU memory per family in the stack's allowlist, as Karpenter labels it:
 
 ## Upstream Dependencies
 
-- **[`karpenter/iam`](../../eks/addons/karpenter/iam/)** (core): `ec2_node_class` reads the node IAM role name from it. The stack's `autoinclude` declares the dependency, from the `karpenter_iam_path` value
-- **[`karpenter/helm`](../../eks/addons/karpenter/helm/)** (core): `ec2_node_class` applies once Karpenter and its CRDs exist. The stack's `autoinclude` declares the dependency, from the `karpenter_helm_path` value
-- **[`argocd/app_of_apps`](../../eks/addons/argocd/app_of_apps/)** (core): `app_of_apps` applies once core's root app is Synced and Healthy. The stack's `autoinclude` declares the dependency, from the `app_of_apps_path` value
+- **[`karpenter/iam`](../../eks/addons/karpenter/iam/)** (core): `ec2_node_class` reads the node IAM role name from it. The stack's `autoinclude` declares the dependency, from the `core_karpenter_iam_path` value
+- **[`karpenter/helm`](../../eks/addons/karpenter/helm/)** (core): `ec2_node_class` applies once Karpenter and its CRDs exist. The stack's `autoinclude` declares the dependency, from the `core_karpenter_helm_path` value
+- **[`argocd/app_of_apps`](../../eks/addons/argocd/app_of_apps/)** (core): `app_of_apps` applies once core's root app is Synced and Healthy. The stack's `autoinclude` declares the dependency, from the `core_app_of_apps_path` value
