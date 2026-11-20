@@ -17,10 +17,11 @@ terraform {
 
 inputs = {
   github_token     = values.github_token
-  github_owner     = include.root.locals.github_owner_catalog
+  github_owner     = values.github_owner
   github_repo_name = values.github_repo_name
-  secrets = {
-    AWS_REGION   = include.root.locals.aws_region
-    AWS_ROLE_ARN = dependency.iam_role_github_actions.outputs.role_arn
-  }
+  # write_region false on every role stack but one, so a single state owns AWS_REGION.
+  secrets = merge(
+    { (values.role_arn_secret_name) = dependency.iam_role_github_actions.outputs.role_arn },
+    values.write_region ? { AWS_REGION = include.root.locals.aws_region } : {},
+  )
 }
