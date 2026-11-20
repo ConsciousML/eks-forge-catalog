@@ -130,7 +130,7 @@ jobs:
       # TEMP: proves the plan role denials, remove before merge.
       - name: Check plan role denials
         run: |
-          denied() { if out=$("$@" 2>&1); then echo "ALLOWED: $*"; exit 1; fi; grep -q AccessDenied <<<"$out" || { echo "$out"; exit 1; }; echo "denied: $*"; }
+          denied() { if out=$("$@" 2>&1); then echo "ALLOWED: $*"; exit 1; fi; grep -qE "AccessDenied|Forbidden" <<<"$out" || { echo "$out"; exit 1; }; echo "denied: $*"; }
           acct=$(aws sts get-caller-identity --query Account --output text)
           denied aws iam create-user --user-name plan-role-deny-check
           denied aws s3 cp "s3://tofu-state-${acct}-${AWS_REGION}-dev/bootstrap/pagerduty/services/dev/stack/.terragrunt-stack/pagerduty_service/.terragrunt-stack/pagerduty/aws_secret/tofu.tfstate" -
