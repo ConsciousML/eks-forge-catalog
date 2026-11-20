@@ -127,15 +127,6 @@ jobs:
           ts-tags: ${{ secrets.TS_TAGS }}
           vars-json: ${{ toJSON(vars) }}
 
-      # TEMP: proves the plan role denials, remove before merge.
-      - name: Check plan role denials
-        run: |
-          denied() { if out=$("$@" 2>&1); then echo "ALLOWED: $*"; exit 1; fi; grep -qE "AccessDenied|Forbidden" <<<"$out" || { echo "$out"; exit 1; }; echo "denied: $*"; }
-          acct=$(aws sts get-caller-identity --query Account --output text)
-          denied aws iam create-user --user-name plan-role-deny-check
-          denied aws s3 cp "s3://tofu-state-${acct}-${AWS_REGION}-prod/bootstrap/pagerduty/services/prod/stack/.terragrunt-stack/pagerduty_service/.terragrunt-stack/pagerduty/aws_secret/tofu.tfstate" -
-          denied aws secretsmanager get-secret-value --secret-id dev-argocd-password
-
       - name: Initialize Terragrunt stack
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
