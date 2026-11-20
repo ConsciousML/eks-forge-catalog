@@ -75,6 +75,11 @@ The role can't create, change, or delete resources. It decrypts only state encry
 
 Each job can assume its own role. Add one `aws_gh_actions_role` stack per role, each with a distinct `iam_role_name` and `role_arn_secret_name`. For example, an `AdministratorAccess` role in `AWS_ROLE_ARN` for jobs that apply, and a `read_only` role in `AWS_PLAN_ROLE_ARN` for jobs that only plan.
 
+A `read_only` role that plans against a running cluster also needs:
+
+- every secret the plan refreshes in `plan_secret_names`. Each entry becomes `secret:<entry>-*`, so `<environment>-*` covers the secrets the units create.
+- an EKS access entry with `AmazonEKSAdminViewPolicy` (the cluster `access_entries` value), so the Helm and Kubernetes providers can read the cluster, including Helm's release Secrets.
+
 ## GitHub Actions Workflow Setup Action
 
 The `setup` action reads deploy keys from GitHub Actions secrets named by `deploy_key_secret_names`, one `deploy-keys` line per entry, in the same order.
