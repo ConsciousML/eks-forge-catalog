@@ -549,6 +549,11 @@ unit "argocd" {
                   hs.message = obj.status.health.message
                 end
               end
+              -- An app whose manifests aren't rendered yet has no resources, so reports Healthy.
+              if hs.status == "Healthy" and (obj.status.sync == nil or obj.status.sync.status ~= "Synced") then
+                hs.status = "Progressing"
+                hs.message = "Waiting for sync"
+              end
             end
             return hs
           LUA
