@@ -1,7 +1,9 @@
 {/* This doc is aggregated into the EKS Forge documentation site: https://eks-forge.readthedocs.io/latest/. It is not meant to be read directly in this repository. */}
 # AWS GitHub Actions Authentication Bootstrap Reference
 
-The [`aws_gh_actions_auth` stack](../../stacks/aws_gh_actions_auth/) provisions the [OIDC](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)-based trust between GitHub Actions and AWS, letting CI assume an IAM role and deploy Terragrunt without long-lived AWS keys.
+The [`aws_gh_actions_auth` stack](../../stacks/aws_gh_actions_auth/) provisions the [OIDC](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)-based trust between GitHub Actions and AWS, letting CI assume an IAM role and run Terragrunt without long-lived AWS keys.
+
+The catalog pipeline ([`pipelines/bootstrap/aws_gh_actions_auth`](../../pipelines/bootstrap/aws_gh_actions_auth/terragrunt.stack.hcl)) grants a read-only plan role: `ReadOnlyAccess`, the state lock, the state KMS key, and the ArgoCD repository secret. It denies reads of S3 objects outside the CI state bucket, of SSM parameters outside `/aws/`, and of DynamoDB tables other than the lock table. CI can't create, change, or delete resources. It can still decrypt the CI state, so anyone with push access can read the secrets it holds.
 
 For setup steps, read the [AWS GitHub Actions Authentication Bootstrap](/docs/quickstart/bootstrap/aws_gh_actions_auth).
 
