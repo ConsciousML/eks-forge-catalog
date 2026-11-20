@@ -52,8 +52,8 @@ inputs = {
       max_duration = "2m"
     }
   }
-  node_selector = values.node_selector
-  tolerations   = values.tolerations
+  node_selector = values.wait_job_node_selector
+  tolerations   = values.wait_job_tolerations
   helm_values = {
     config = {
       spec = {

@@ -48,11 +48,11 @@ unit "app_of_apps" {
   path   = "app_of_apps"
 
   values = {
-    version            = values.version
-    target_revision    = values.app_of_apps_target_revision
-    helm_chart_version = values.helm_chart_version
-    node_selector      = values.node_selector
-    tolerations        = values.tolerations
+    version                = values.version
+    target_revision        = values.app_of_apps_target_revision
+    helm_chart_version     = values.helm_chart_version
+    wait_job_node_selector = values.wait_job_node_selector
+    wait_job_tolerations   = values.wait_job_tolerations
   }
 
   # Applies once core's root app is Healthy.

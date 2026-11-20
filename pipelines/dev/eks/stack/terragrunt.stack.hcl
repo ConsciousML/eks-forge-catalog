@@ -1241,7 +1241,8 @@ stack "gpu" {
     # Picks the NVIDIA AMI variant on GPU instances.
     ami_alias        = "al2023@latest"
     kubelet_max_pods = 110
-    # Every allowed family ships local NVMe. The root volume keeps the AMI's 20 GiB.
+    # Kubelet and containerd on the local NVMe, which every allowed family ships. The root EBS
+    # volume keeps the AMI's 20 GiB for the OS.
     instance_store_policy = "RAID0"
 
     requirements = [
@@ -1285,16 +1286,26 @@ stack "gpu" {
       consolidationPolicy = "WhenEmptyOrUnderutilized"
       consolidateAfter    = "5m"
       budgets = [
+        # Empty GPU nodes cost the most for nothing.
         {
-          nodes = "50%"
+          nodes   = "100%"
+          reasons = ["Empty"]
+        },
+        # Replacing a busy GPU node restarts its workload.
+        {
+          nodes   = "1"
+          reasons = ["Underutilized", "Drifted"]
         }
       ]
     }
     # Matches gpu_spot_desired_value in pipelines/bootstrap/aws_service_quotas.
-    limits_cpu   = "16"
-    expire_after = "720h"
+    limits_cpu = "16"
+    # Bounds how long a karpenter.sh/do-not-disrupt pod blocks drift and expiry.
+    termination_grace_period = "1h"
+    expire_after             = "720h"
 
-    node_selector = local.critical_node_selector
-    tolerations   = local.critical_tolerations
+    # Wait Job blocking until gpu-apps is Synced and Healthy.
+    wait_job_node_selector = local.critical_node_selector
+    wait_job_tolerations   = local.critical_tolerations
   }
 }
