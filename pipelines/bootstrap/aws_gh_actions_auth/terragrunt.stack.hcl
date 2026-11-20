@@ -7,9 +7,8 @@ locals {
 
   github_token = get_env("GITHUB_TOKEN")
 
-  aws_region          = read_terragrunt_config(find_in_parent_folders("region.hcl")).locals.region
-  account_id          = get_aws_account_id()
-  lock_table_arn      = "arn:aws:dynamodb:${local.aws_region}:${local.account_id}:table/terragrunt_lock_table"
+  aws_region = read_terragrunt_config(find_in_parent_folders("region.hcl")).locals.region
+  # Same alias as pipelines/root.hcl.
   state_kms_key_alias = "alias/${read_terragrunt_config(find_in_parent_folders("bootstrap/environment.hcl")).locals.environment}-tofu-state"
 
   # GitHub's `sub` prefix for the repository. Holds owner and repo IDs with immutable subject claims.
@@ -41,35 +40,22 @@ stack "aws_gh_actions_auth" {
             {
               Sid      = "StateLock"
               Effect   = "Allow"
-              Action   = ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:DeleteItem"]
-              Resource = local.lock_table_arn
+              Action   = ["dynamodb:PutItem", "dynamodb:DeleteItem"]
+              Resource = "*"
             },
             {
-              Sid      = "StateEncryption"
-              Effect   = "Allow"
-              Action   = ["kms:Decrypt", "kms:GenerateDataKey"]
-              Resource = "*"
-              Condition = {
-                "ForAnyValue:StringEquals" = { "kms:ResourceAliases" = local.state_kms_key_alias }
-              }
+              # Catalog key only, so live state stays unreadable.
+              Sid       = "StateEncryption"
+              Effect    = "Allow"
+              Action    = ["kms:Decrypt", "kms:GenerateDataKey"]
+              Resource  = "*"
+              Condition = { "ForAnyValue:StringEquals" = { "kms:ResourceAliases" = local.state_kms_key_alias } }
             },
             {
               Sid      = "ArgoCDRepositorySecret"
               Effect   = "Allow"
               Action   = "secretsmanager:GetSecretValue"
-              Resource = "arn:aws:secretsmanager:${local.aws_region}:${local.account_id}:secret:${local.github_locals.app_of_apps_deploy_key_secret_name}-*"
-            },
-            {
-              Sid         = "DenySSMReadsOutsideAWSPublic"
-              Effect      = "Deny"
-              Action      = ["ssm:GetParameter", "ssm:GetParameters", "ssm:GetParametersByPath", "ssm:GetParameterHistory"]
-              NotResource = "arn:aws:ssm:*::parameter/aws/*"
-            },
-            {
-              Sid         = "DenyDynamoDBReadsOutsideLockTable"
-              Effect      = "Deny"
-              Action      = ["dynamodb:GetItem", "dynamodb:BatchGetItem", "dynamodb:Query", "dynamodb:Scan"]
-              NotResource = local.lock_table_arn
+              Resource = "arn:aws:secretsmanager:${local.aws_region}:${get_aws_account_id()}:secret:${local.github_locals.app_of_apps_deploy_key_secret_name}-*"
             },
           ]
         })

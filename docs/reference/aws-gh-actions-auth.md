@@ -3,7 +3,7 @@
 
 The [`aws_gh_actions_auth` stack](../../stacks/aws_gh_actions_auth/) provisions the [OIDC](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)-based trust between GitHub Actions and AWS, letting CI assume an IAM role and run Terragrunt without long-lived AWS keys.
 
-The catalog pipeline ([`pipelines/bootstrap/aws_gh_actions_auth`](../../pipelines/bootstrap/aws_gh_actions_auth/terragrunt.stack.hcl)) grants a read-only plan role: `ReadOnlyAccess`, the state lock, the state KMS key, and the ArgoCD repository secret. It denies reads of SSM parameters outside `/aws/` and of DynamoDB tables other than the lock table. CI can't create, change, or delete resources. It can decrypt only the state encrypted with the catalog's state KMS key, so anyone with push access can read the secrets that state holds. State encrypted with another key, such as live's, stays unreadable.
+The catalog pipeline ([`pipelines/bootstrap/aws_gh_actions_auth`](../../pipelines/bootstrap/aws_gh_actions_auth/terragrunt.stack.hcl)) grants a read-only plan role: `ReadOnlyAccess`, the state lock, the state KMS key, and the ArgoCD repository secret. CI can't create, change, or delete resources. It can decrypt only the state encrypted with the catalog's state KMS key, so anyone with push access can read the secrets that state holds. State encrypted with another key, such as live's, stays unreadable.
 
 For setup steps, read the [AWS GitHub Actions Authentication Bootstrap](/docs/quickstart/bootstrap/aws_gh_actions_auth).
 

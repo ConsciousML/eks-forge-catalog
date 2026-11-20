@@ -134,7 +134,6 @@ jobs:
           acct=$(aws sts get-caller-identity --query Account --output text)
           denied aws iam create-user --user-name plan-role-deny-check
           denied aws s3 cp "s3://tofu-state-${acct}-${AWS_REGION}-prod/bootstrap/pagerduty/services/prod/stack/.terragrunt-stack/pagerduty_service/.terragrunt-stack/pagerduty/aws_secret/tofu.tfstate" -
-          denied aws ssm get-parameter --name /plan-role-deny-check
           denied aws secretsmanager get-secret-value --secret-id dev-argocd-password
 
       - name: Initialize Terragrunt stack
