@@ -22,7 +22,9 @@ unit "iam_role_github_actions" {
     github_repo_name     = values.github_repo_name
     github_branch        = values.github_branch
     subject_claim_prefix = try(values.subject_claim_prefix, null)
-    inline_policies      = values.inline_policies
+    inline_policies      = try(values.inline_policies, [])
+    read_only            = try(values.read_only, false)
+    plan_secret_names    = try(values.plan_secret_names, [])
     max_session_duration = try(values.max_session_duration, 3600)
   }
 }
@@ -33,7 +35,8 @@ unit "iam_policies" {
 
   values = {
     version     = values.version
-    policy_arns = values.policy_arns
+    policy_arns = try(values.policy_arns, [])
+    read_only   = try(values.read_only, false)
   }
 }
 

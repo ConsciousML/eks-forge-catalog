@@ -7,10 +7,6 @@ locals {
 
   github_token = get_env("GITHUB_TOKEN")
 
-  aws_region = read_terragrunt_config(find_in_parent_folders("region.hcl")).locals.region
-  # Same alias as pipelines/root.hcl.
-  state_kms_key_alias = "alias/${read_terragrunt_config(find_in_parent_folders("bootstrap/environment.hcl")).locals.environment}-tofu-state"
-
   # GitHub's `sub` prefix for the repository. Holds owner and repo IDs with immutable subject claims.
   subject_claim_prefix = run_cmd("--terragrunt-quiet", "gh", "api", "repos/${local.github_owner_catalog}/${local.github_repo_name_catalog}/actions/oidc/customization/sub", "--jq", ".sub_claim_prefix // error(\"sub_claim_prefix missing from GitHub API response\")")
 }
@@ -27,40 +23,9 @@ stack "aws_gh_actions_auth" {
     subject_claim_prefix     = local.subject_claim_prefix
     github_token             = local.github_token
     iam_role_name            = "gh-terragrunt-role-catalog"
-    # Read-only, CI only plans.
-    policy_arns = [
-      "arn:aws:iam::aws:policy/ReadOnlyAccess",
-    ]
-    inline_policies = [
-      {
-        name = "TerragruntPlan"
-        policy = jsonencode({
-          Version = "2012-10-17"
-          Statement = [
-            {
-              Sid      = "StateLock"
-              Effect   = "Allow"
-              Action   = ["dynamodb:PutItem", "dynamodb:DeleteItem"]
-              Resource = "*"
-            },
-            {
-              # Catalog key only, so live state stays unreadable.
-              Sid       = "StateEncryption"
-              Effect    = "Allow"
-              Action    = ["kms:Decrypt", "kms:GenerateDataKey"]
-              Resource  = "*"
-              Condition = { "ForAnyValue:StringEquals" = { "kms:ResourceAliases" = local.state_kms_key_alias } }
-            },
-            {
-              Sid      = "ArgoCDRepositorySecret"
-              Effect   = "Allow"
-              Action   = "secretsmanager:GetSecretValue"
-              Resource = "arn:aws:secretsmanager:${local.aws_region}:${get_aws_account_id()}:secret:${local.github_locals.app_of_apps_deploy_key_secret_name}-*"
-            },
-          ]
-        })
-      }
-    ]
+    # CI only plans.
+    read_only               = true
+    plan_secret_names       = [local.github_locals.app_of_apps_deploy_key_secret_name]
     github_branch           = "*"
     oidc_url                = "https://token.actions.githubusercontent.com"
     oidc_client_id_list     = ["sts.amazonaws.com"]

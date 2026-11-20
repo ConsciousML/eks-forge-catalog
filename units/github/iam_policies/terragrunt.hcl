@@ -17,5 +17,5 @@ terraform {
 
 inputs = {
   role_name   = dependency.iam_role_github_actions.outputs.role_name
-  policy_arns = values.policy_arns
+  policy_arns = concat(try(values.policy_arns, []), try(values.read_only, false) ? ["arn:aws:iam::aws:policy/ReadOnlyAccess"] : [])
 }
