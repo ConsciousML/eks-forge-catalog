@@ -17,34 +17,24 @@ terraform {
   source = "git::git@github.com:${include.root.locals.github_owner_catalog}/${include.root.locals.github_repo_name_catalog}.git//modules/argocd_app_of_apps/?ref=${values.version}"
 }
 
-# The core argocd_app_of_apps dependency comes from stacks/example's autoinclude.
+# The core argocd_app_of_apps dependency comes from stacks/gpu's autoinclude.
 
 locals {
-  region_hcl = find_in_parent_folders("region.hcl")
-  region     = read_terragrunt_config(local.region_hcl).locals.region
-
   repo_url = include.root.locals.github_locals.app_of_apps_repo_url
 }
 
-dependency "s3" {
-  config_path = "../s3"
-  mock_outputs = {
-    s3_bucket_id = "mock-example"
-  }
-  mock_outputs_allowed_terraform_commands = ["init", "plan", "validate", "graph", "destroy"]
-}
-
-dependency "iam_role" {
-  config_path  = "../iam_role"
+# The DaemonSets only run on GPU nodes, so the NodePool must exist first.
+dependency "node_pool" {
+  config_path  = "../node_pool"
   skip_outputs = true
 }
 
 inputs = {
   # cluster_name comes from provider_k8s_base.hcl.
   repo_url              = local.repo_url
-  name                  = "example-apps"
+  name                  = "gpu-apps"
   namespace             = "argocd"
-  path                  = "apps/features/example"
+  path                  = "apps/features/gpu"
   target_revision       = values.target_revision
   project               = "default"
   destination_namespace = "argocd"
@@ -75,12 +65,6 @@ inputs = {
     }
     global = {
       environment = include.root.locals.environment_alias
-    }
-    appParams = {
-      "example-s3-lister" = {
-        bucket = dependency.s3.outputs.s3_bucket_id
-        region = local.region
-      }
     }
   }
 }

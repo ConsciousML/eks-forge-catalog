@@ -18,3 +18,7 @@ spec:
   kubelet:
     maxPods: {{ .Values.kubeletMaxPods }}
   {{- end }}
+  {{- with .Values.instanceStorePolicy }}
+  # Kubelet, containerd, and pod ephemeral storage on the instance's local NVMe.
+  instanceStorePolicy: {{ . | quote }}
+  {{- end }}

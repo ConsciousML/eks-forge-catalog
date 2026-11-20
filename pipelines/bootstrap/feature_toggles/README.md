@@ -7,14 +7,14 @@ In this guide, you'll make CI deploy the optional features you enabled. Your `.e
 Rerun this guide each time you enable or disable a feature, and once in each new catalog fork, since forks don't inherit GitHub Actions variables.
 :::
 
-First, set the toggle of each feature you want to `true` in your `.env` file, as described in the [`FEATURE_EXAMPLE_ENABLED`](/docs/reference/environment_variable/#feature_example_enabled) reference:
+First, set the toggle of each feature you want to `true` in your `.env` file, as described in the [`FEATURE_GPU_ENABLED`](/docs/reference/environment_variable/#feature_gpu_enabled) reference:
 ```bash
-export FEATURE_EXAMPLE_ENABLED=true
+export FEATURE_GPU_ENABLED=true
 ```
 
 To disable a feature, destroy it first, as described in its reference. Then remove its line from your `.env` file and unset it in your shell:
 ```bash
-unset FEATURE_EXAMPLE_ENABLED
+unset FEATURE_GPU_ENABLED
 ```
 
 You'll deploy one stack, [`feature_toggles`](../../../stacks/feature_toggles/), which adds a GitHub Actions variable for each `FEATURE_<NAME>_ENABLED` set to `true` in your shell, and removes the variable of each one that isn't.

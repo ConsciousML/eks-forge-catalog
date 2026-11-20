@@ -3,3 +3,4 @@ nodeRole: ""
 clusterName: ""
 amiAlias: ""
 kubeletMaxPods: 0
+instanceStorePolicy: ""

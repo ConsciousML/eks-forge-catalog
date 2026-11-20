@@ -1221,22 +1221,79 @@ unit "domain_name_hubble" {
 # disabled feature is no longer generated. Run `terragrunt stack clean` after changing one, since
 # `stack generate` keeps a feature's directory.
 
-stack "example" {
-  source  = "${get_repo_root()}/stacks/example"
-  path    = "example"
-  enabled = get_env("FEATURE_EXAMPLE_ENABLED", "false") == "true"
+stack "gpu" {
+  source  = "${get_repo_root()}/stacks/gpu"
+  path    = "gpu"
+  enabled = get_env("FEATURE_GPU_ENABLED", "false") == "true"
 
   values = {
     version                     = local.version
     github_owner_catalog        = local.github_owner_catalog
     github_repo_name_catalog    = local.github_repo_name_catalog
-    cluster_path                = unit.cluster.path
+    karpenter_iam_path          = unit.karpenter_iam.path
+    karpenter_helm_path         = unit.karpenter_helm.path
     app_of_apps_path            = unit.argocd_app_of_apps.path
     app_of_apps_target_revision = local.app_of_apps_target_revision
     helm_chart_version          = local.version_argocd_apps
-    version_s3                  = local.version_s3
-    # DEV: allows destroying the bucket without emptying it first, set to false for prod.
-    force_destroy = true
+
+    # EC2NodeClass and NodePool name. The gpu namespace DaemonSets select karpenter.sh/nodepool=gpu.
+    name = "gpu"
+    # Picks the NVIDIA AMI variant on GPU instances.
+    ami_alias        = "al2023@latest"
+    kubelet_max_pods = 110
+    # Every allowed family ships local NVMe. The root volume keeps the AMI's 20 GiB.
+    instance_store_policy = "RAID0"
+
+    requirements = [
+      {
+        key      = "karpenter.sh/capacity-type"
+        operator = "In"
+        # DEV: assess spot or on-demand for prod. GPU spot capacity is scarcer and interrupted more.
+        values = ["spot"]
+      },
+      {
+        key      = "kubernetes.io/arch"
+        operator = "In"
+        values   = ["amd64"]
+      },
+      {
+        key      = "kubernetes.io/os"
+        operator = "In"
+        values   = ["linux"]
+      },
+      # NVIDIA only, CUDA compute capability 7.5 or higher, whole GPUs, and local NVMe.
+      {
+        key      = "karpenter.k8s.aws/instance-family"
+        operator = "In"
+        values   = ["g4dn", "g5", "g6", "gr6", "g7", "g6e", "g7e"]
+      },
+      {
+        key      = "karpenter.k8s.aws/instance-gpu-count"
+        operator = "In"
+        values   = ["1"]
+      }
+    ]
+    taints = [
+      {
+        key    = "karpenter.sh/workload-class"
+        value  = "gpu"
+        effect = "NoSchedule"
+      }
+    ]
+    startup_taints = local.karpenter_node_pool_startup_taints
+    disruption = {
+      consolidationPolicy = "WhenEmptyOrUnderutilized"
+      consolidateAfter    = "5m"
+      budgets = [
+        {
+          nodes = "50%"
+        }
+      ]
+    }
+    # Matches gpu_spot_desired_value in pipelines/bootstrap/aws_service_quotas.
+    limits_cpu   = "16"
+    expire_after = "720h"
+
     node_selector = local.critical_node_selector
     tolerations   = local.critical_tolerations
   }

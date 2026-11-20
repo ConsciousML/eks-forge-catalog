@@ -47,10 +47,11 @@ inputs = {
   # the module's 300s default is too short under load, so we raise it here.
   timeout = try(values.timeout, 600)
   helm_values = {
-    name           = values.name
-    nodeRole       = dependency.karpenter_iam.outputs.node_iam_role_name
-    clusterName    = dependency.eks_cluster.outputs.cluster_name
-    amiAlias       = values.ami_alias
-    kubeletMaxPods = values.kubelet_max_pods
+    name                = values.name
+    nodeRole            = dependency.karpenter_iam.outputs.node_iam_role_name
+    clusterName         = dependency.eks_cluster.outputs.cluster_name
+    amiAlias            = values.ami_alias
+    kubeletMaxPods      = values.kubelet_max_pods
+    instanceStorePolicy = try(values.instance_store_policy, "")
   }
 }
