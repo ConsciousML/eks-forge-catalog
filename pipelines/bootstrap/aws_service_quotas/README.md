@@ -19,9 +19,10 @@ aws service-quotas get-service-quota --service-code ec2 --quota-code L-1216C47A 
 aws service-quotas get-service-quota --service-code ec2 --quota-code L-34B43A08 --query Quota.Value --output text # Spot Standard
 ```
 
-If you enable the [`gpu` feature](/docs/reference/environment_variable/#feature_gpu_enabled), also check its G and VT Spot quota, which is 0 on a new account:
+If you enable the [`gpu` feature](/docs/reference/environment_variable/#feature_gpu_enabled), also check its G and VT Spot and On-Demand quotas, which are 0 on a new account:
 ```bash
 aws service-quotas get-service-quota --service-code ec2 --quota-code L-3819A6DF --query Quota.Value --output text # G and VT Spot
+aws service-quotas get-service-quota --service-code ec2 --quota-code L-DB2E81BA --query Quota.Value --output text # G and VT On-Demand
 ```
 
 If each value is at least its `*_desired_value` in the [stack file](terragrunt.stack.hcl), skip the rest of this guide.

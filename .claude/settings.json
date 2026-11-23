@@ -85,7 +85,9 @@
 
       "Bash(source .env)",
 
-      "Edit(~/.claude/plans/**)"
+      "Edit(~/.claude/plans/**)",
+      "Bash(aws sts get-caller-identity)",
+      "Bash(aws eks update-kubeconfig --region us-east-1 --name dev-cluster)"
     ],
     "ask": [
       "Bash(rm -rf *)",

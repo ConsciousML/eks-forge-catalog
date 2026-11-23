@@ -27,17 +27,40 @@ unit "ec2_node_class" {
   }
 }
 
-unit "node_pool" {
+unit "node_pool_spot" {
   source = "git::git@github.com:${values.github_owner_catalog}/${values.github_repo_name_catalog}.git//units/features/gpu/node_pool?ref=${values.version}"
-  path   = "node_pool"
+  path   = "node_pool_spot"
 
   values = {
-    version                  = values.version
-    name                     = values.name
-    requirements             = values.node_pool_requirements
+    version = values.version
+    name    = "${values.name}-spot"
+    requirements = concat(
+      [{ key = "karpenter.sh/capacity-type", operator = "In", values = ["spot"] }],
+      values.node_pool_requirements,
+    )
     taints                   = values.node_pool_taints
     startup_taints           = values.node_pool_startup_taints
-    limits_cpu               = values.node_pool_limits_cpu
+    limits_cpu               = values.node_pool_spot_limits_cpu
+    termination_grace_period = values.node_pool_termination_grace_period
+    expire_after             = values.node_pool_expire_after
+    disruption               = values.node_pool_disruption
+  }
+}
+
+unit "node_pool_on_demand" {
+  source = "git::git@github.com:${values.github_owner_catalog}/${values.github_repo_name_catalog}.git//units/features/gpu/node_pool?ref=${values.version}"
+  path   = "node_pool_on_demand"
+
+  values = {
+    version = values.version
+    name    = "${values.name}-on-demand"
+    requirements = concat(
+      [{ key = "karpenter.sh/capacity-type", operator = "In", values = ["on-demand"] }],
+      values.node_pool_requirements,
+    )
+    taints                   = values.node_pool_taints
+    startup_taints           = values.node_pool_startup_taints
+    limits_cpu               = values.node_pool_on_demand_limits_cpu
     termination_grace_period = values.node_pool_termination_grace_period
     expire_after             = values.node_pool_expire_after
     disruption               = values.node_pool_disruption
