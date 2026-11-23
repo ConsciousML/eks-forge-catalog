@@ -37,7 +37,7 @@ The Job runs again only when the root Application's values change. A change made
 | <a name="input_finalizers"></a> [finalizers](#input\_finalizers) | List of finalizers applied to the Application resource | `list(string)` | <pre>[<br/>  "resources-finalizer.argocd.argoproj.io"<br/>]</pre> | no |
 | <a name="input_helm_chart_version"></a> [helm\_chart\_version](#input\_helm\_chart\_version) | Version of the argo-helm/argocd-apps chart to install | `string` | n/a | yes |
 | <a name="input_helm_values"></a> [helm\_values](#input\_helm\_values) | Helm values injected into spec.source.helm.values on the app-of-apps Application | `any` | `{}` | no |
-| <a name="input_name"></a> [name](#input\_name) | Name of the ArgoCD Application resource | `string` | `"app-of-apps"` | no |
+| <a name="input_name"></a> [name](#input\_name) | Name of the ArgoCD Application resource | `string` | `"app-of-apps-core"` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace where the ArgoCD Application resource is created | `string` | `"argocd"` | no |
 | <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | Node selector of the wait Job's pod | `map(string)` | `{}` | no |
 | <a name="input_path"></a> [path](#input\_path) | Path within the repository containing the application manifests | `string` | `"apps/core"` | no |
