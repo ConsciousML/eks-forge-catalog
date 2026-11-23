@@ -3,7 +3,7 @@
 
 The [`ec2_quotas` stack](../../stacks/ec2_quotas/), deployed by the [`aws_service_quotas` pipeline](../../pipelines/bootstrap/aws_service_quotas/), requests an increase for the account's EC2 `L-1216C47A` (Running On-Demand Standard instances) and `L-34B43A08` (All Standard Spot Instance Requests) [Service Quotas](https://docs.aws.amazon.com/eks/latest/best-practices/known_limits_and_service_quotas.html#_other_aws_service_quotas).
 
-With [`FEATURE_GPU_ENABLED`](../environment-variables.md#feature_gpu_enabled) set to `true`, it also requests `L-3819A6DF` (All G and VT Spot Instance Requests), which the [`gpu` feature](../../units/features/gpu/) launches its nodes under. Its AWS default is 0.
+With [`FEATURE_GPU_ENABLED`](../environment-variables.md#feature_gpu_enabled) set to `true`, it also requests `L-3819A6DF` (All G and VT Spot Instance Requests) and `L-DB2E81BA` (Running On-Demand G and VT instances). The [`gpu` feature](../../units/features/gpu/) launches its spot and on-demand nodes under them. Their AWS default is 0.
 
 All quotas are account-wide: they cover every on-demand or spot vCPU consumer across every [environment](/docs/iac/#environments) on the account, not just this stack.
 
@@ -16,6 +16,7 @@ For setup steps, read the [AWS Service Quotas Bootstrap](/docs/quickstart/bootst
 | `ec2_ondemand_quota` | [`units/service_quota`](../../units/service_quota/) | [`service_quota`](/docs/reference/terraform_modules/service_quota/) |
 | `ec2_spot_quota` | [`units/service_quota`](../../units/service_quota/) | [`service_quota`](/docs/reference/terraform_modules/service_quota/) |
 | `ec2_gpu_spot_quota` | [`units/service_quota`](../../units/service_quota/) | [`service_quota`](/docs/reference/terraform_modules/service_quota/) |
+| `ec2_gpu_ondemand_quota` | [`units/service_quota`](../../units/service_quota/) | [`service_quota`](/docs/reference/terraform_modules/service_quota/) |
 
 ## Inputs
 
@@ -24,6 +25,7 @@ For setup steps, read the [AWS Service Quotas Bootstrap](/docs/quickstart/bootst
 | `ondemand_desired_value` | Requested value for the `L-1216C47A` (On-Demand Standard) quota. | `number` | - | Yes |
 | `spot_desired_value` | Requested value for the `L-34B43A08` (Spot Standard) quota. | `number` | - | Yes |
 | `gpu_spot_desired_value` | Requested value for the `L-3819A6DF` (G and VT Spot) quota. `ec2_gpu_spot_quota` is generated only when it's above 0. | `number` | - | Yes |
+| `gpu_ondemand_desired_value` | Requested value for the `L-DB2E81BA` (G and VT On-Demand) quota. `ec2_gpu_ondemand_quota` is generated only when it's above 0. | `number` | - | Yes |
 
 The default values set in `terragrunt.stack.hcl` are a starting headroom above the AWS default, not a computed sum of any environment's vCPU usage.
 
@@ -36,13 +38,14 @@ Set the values in the `locals` block of the [pipeline stack file](../../pipeline
 locals {
   ondemand_desired_value = 32 # requested value for L-1216C47A
   spot_desired_value     = 32 # requested value for L-34B43A08
-  gpu_spot_desired_value = get_env("FEATURE_GPU_ENABLED", "false") == "true" ? 16 : 0 # requested value for L-3819A6DF
+  gpu_spot_desired_value     = get_env("FEATURE_GPU_ENABLED", "false") == "true" ? 8 : 0 # requested value for L-3819A6DF
+  gpu_ondemand_desired_value = get_env("FEATURE_GPU_ENABLED", "false") == "true" ? 8 : 0 # requested value for L-DB2E81BA
 }
 ```
 
 ## Outputs
 
-Per unit (`ec2_ondemand_quota`, `ec2_spot_quota`, and `ec2_gpu_spot_quota`):
+Per unit (`ec2_ondemand_quota`, `ec2_spot_quota`, `ec2_gpu_spot_quota`, and `ec2_gpu_ondemand_quota`):
 
 | Name | Description |
 |------|-------------|

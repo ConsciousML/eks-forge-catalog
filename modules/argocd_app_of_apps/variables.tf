@@ -7,7 +7,7 @@ variable "cluster_name" {
 variable "name" {
   description = "Name of the ArgoCD Application resource"
   type        = string
-  default     = "app-of-apps"
+  default     = "app-of-apps-core"
 }
 
 variable "namespace" {
@@ -81,7 +81,7 @@ variable "helm_chart_version" {
 }
 
 variable "retry" {
-  description = "Retry policy for the app-of-apps Application's sync operation. Defaults raised above ArgoCD's own defaults (limit 5, maxDuration 3m) so slow-starting sync waves (e.g. a component's first rollout) have enough runway to go Healthy before the sync gives up."
+  description = "Retry policy for the app-of-apps Application's sync operation. The default retries span longer than the default wait_timeout, so a slow-starting sync wave (e.g. a component's first rollout) goes Healthy before the sync gives up."
   type = object({
     limit = number
     backoff = object({
@@ -91,7 +91,7 @@ variable "retry" {
     })
   })
   default = {
-    limit = 7
+    limit = 20
     backoff = {
       duration     = "5s"
       factor       = 2

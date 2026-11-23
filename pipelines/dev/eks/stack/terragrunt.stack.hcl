@@ -689,7 +689,7 @@ unit "argocd_app_of_apps" {
 
   values = {
     version   = local.version
-    name      = "app-of-apps"
+    name      = "app-of-apps-core"
     namespace = "argocd"
     path      = "apps/core"
     # Fully qualified git ref: resolves directly instead of scanning all branches/tags.
@@ -705,8 +705,9 @@ unit "argocd_app_of_apps" {
     # and CI never page by default.
     pagerduty_enabled        = get_env("PAGERDUTY_ENABLED", "false") == "true"
     pagerduty_service_region = get_env("PAGERDUTY_SERVICE_REGION", "")
+    # Retries span longer than the wait Job's wait_timeout.
     retry = {
-      limit = 7
+      limit = 20
       backoff = {
         duration     = "5s"
         factor       = 2
@@ -1241,8 +1242,7 @@ stack "gpu" {
     app_of_apps_target_revision    = local.app_of_apps_target_revision
     app_of_apps_helm_chart_version = local.version_argocd_apps
 
-    # Prefix of the EC2NodeClass and NodePool names. The gpu namespace DaemonSets select
-    # karpenter.sh/nodepool=gpu-node-pool.
+    # Prefix of the EC2NodeClass and NodePool names.
     name = "gpu"
     # Picks the NVIDIA AMI variant on GPU instances.
     ec2_node_class_ami_alias        = "al2023@latest"
@@ -1251,13 +1251,8 @@ stack "gpu" {
     # volume keeps the AMI's 20 GiB for the OS.
     ec2_node_class_instance_store_policy = "RAID0"
 
+    # Shared by both NodePools. The stack adds each pool's karpenter.sh/capacity-type.
     node_pool_requirements = [
-      {
-        key      = "karpenter.sh/capacity-type"
-        operator = "In"
-        # DEV: assess spot or on-demand for prod. GPU spot capacity is scarcer and interrupted more.
-        values = ["spot"]
-      },
       {
         key      = "kubernetes.io/arch"
         operator = "In"
@@ -1280,6 +1275,7 @@ stack "gpu" {
         values   = ["1"]
       }
     ]
+    # Shared by both NodePools. Pods pick one with a karpenter.sh/capacity-type nodeSelector.
     node_pool_taints = [
       {
         key    = "karpenter.sh/workload-class"
@@ -1304,13 +1300,15 @@ stack "gpu" {
         }
       ]
     }
-    # Matches gpu_spot_desired_value in pipelines/bootstrap/aws_service_quotas.
-    node_pool_limits_cpu = "16"
+    # Match gpu_spot_desired_value and gpu_ondemand_desired_value in
+    # pipelines/bootstrap/aws_service_quotas.
+    node_pool_spot_limits_cpu      = "8"
+    node_pool_on_demand_limits_cpu = "8"
     # Bounds how long a karpenter.sh/do-not-disrupt pod blocks drift and expiry.
     node_pool_termination_grace_period = "1h"
     node_pool_expire_after             = "720h"
 
-    # Wait Job blocking until gpu-apps is Synced and Healthy.
+    # Wait Job blocking until app-of-apps-gpu is Synced and Healthy.
     app_of_apps_wait_job_node_selector = local.critical_node_selector
     app_of_apps_wait_job_tolerations   = local.critical_tolerations
   }

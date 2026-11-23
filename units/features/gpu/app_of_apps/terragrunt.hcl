@@ -23,16 +23,21 @@ locals {
   repo_url = include.root.locals.github_locals.app_of_apps_repo_url
 }
 
-# The DaemonSets only run on GPU nodes, so the NodePool must exist first.
-dependency "node_pool" {
-  config_path  = "../node_pool"
+# The DaemonSets only run on GPU nodes, so the NodePools must exist first.
+dependency "node_pool_spot" {
+  config_path  = "../node_pool_spot"
+  skip_outputs = true
+}
+
+dependency "node_pool_on_demand" {
+  config_path  = "../node_pool_on_demand"
   skip_outputs = true
 }
 
 inputs = {
   # cluster_name comes from provider_k8s_base.hcl.
   repo_url              = local.repo_url
-  name                  = "gpu-apps"
+  name                  = "app-of-apps-gpu"
   namespace             = "argocd"
   path                  = "apps/features/gpu"
   target_revision       = values.target_revision
@@ -44,8 +49,9 @@ inputs = {
   sync_options       = ["CreateNamespace=true"]
   prune              = true
   helm_chart_version = values.helm_chart_version
+  # Retries span longer than the wait Job's wait_timeout.
   retry = {
-    limit = 7
+    limit = 20
     backoff = {
       duration     = "5s"
       factor       = 2

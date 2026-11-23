@@ -5,9 +5,9 @@ The destroy fails on the `eks/addons/argocd/app_of_apps` unit with:
 ```text
 Error: Error uninstalling release
 
-Unable to uninstall Helm release app-of-apps: uninstallation completed with
+Unable to uninstall Helm release app-of-apps-core: uninstallation completed with
 2 error(s): Get
-"https://<cluster-endpoint>/apis/argoproj.io/v1alpha1/namespaces/argocd/applications/app-of-apps":
+"https://<cluster-endpoint>/apis/argoproj.io/v1alpha1/namespaces/argocd/applications/app-of-apps-core":
 read tcp <local-ip>:<port>-><vpc-ip>:443: read: operation timed out
 ```
 

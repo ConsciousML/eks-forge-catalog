@@ -132,7 +132,7 @@ Shared setup for units that talk to the Kubernetes API. Included by units that a
 | `cluster_exists` | Local | `true` if `aws eks describe-cluster` finds the cluster, `false` on `ResourceNotFoundException`. Fails on any other error. |
 | `cluster_name` | Input | `cluster_name_full`, passed to every unit that includes the file. |
 | `exclude` | Block | Excludes the unit from `init`, `validate`, `plan`, and `destroy` while the cluster doesn't exist. |
-| `generate "provider_k8s_base"` | Block | `aws_eks_cluster` and `aws_eks_cluster_auth` data sources named `this`. Generates `provider_k8s_base.tf`. |
+| `generate "provider_k8s_base"` | Block | `aws_eks_cluster` data source named `this`. Generates `provider_k8s_base.tf`. |
 
 ### `provider_helm.hcl`
 
@@ -140,7 +140,7 @@ The Helm provider for units that deploy Helm charts. Included alongside `provide
 
 | Name | Kind | Description |
 |------|------|-------------|
-| `generate "provider_helm"` | Block | Helm provider authenticated against the cluster from the `provider_k8s_base.hcl` data sources, with an `aws eks get-token` exec fallback. Logs into `oci://public.ecr.aws` with an ephemeral `aws_ecrpublic_authorization_token` (`us-east-1`), so chart pulls skip the anonymous rate limit. Generates `provider_helm.tf`. |
+| `generate "provider_helm"` | Block | Helm provider pointed at the cluster from the `provider_k8s_base.hcl` data source, authenticated by `aws eks get-token` through `exec`, which refreshes the token before it expires. Logs into `oci://public.ecr.aws` with an ephemeral `aws_ecrpublic_authorization_token` (`us-east-1`), so chart pulls skip the anonymous rate limit. Generates `provider_helm.tf`. |
 
 ## Per Environment
 
