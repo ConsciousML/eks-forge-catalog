@@ -705,8 +705,9 @@ unit "argocd_app_of_apps" {
     # and CI never page by default.
     pagerduty_enabled        = get_env("PAGERDUTY_ENABLED", "false") == "true"
     pagerduty_service_region = get_env("PAGERDUTY_SERVICE_REGION", "")
+    # Retries span longer than the wait Job's wait_timeout.
     retry = {
-      limit = 7
+      limit = 20
       backoff = {
         duration     = "5s"
         factor       = 2
