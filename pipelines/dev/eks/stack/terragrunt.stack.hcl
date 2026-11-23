@@ -689,7 +689,7 @@ unit "argocd_app_of_apps" {
 
   values = {
     version   = local.version
-    name      = "app-of-apps"
+    name      = "app-of-apps-core"
     namespace = "argocd"
     path      = "apps/core"
     # Fully qualified git ref: resolves directly instead of scanning all branches/tags.
@@ -1308,7 +1308,7 @@ stack "gpu" {
     node_pool_termination_grace_period = "1h"
     node_pool_expire_after             = "720h"
 
-    # Wait Job blocking until gpu-apps is Synced and Healthy.
+    # Wait Job blocking until app-of-apps-gpu is Synced and Healthy.
     app_of_apps_wait_job_node_selector = local.critical_node_selector
     app_of_apps_wait_job_tolerations   = local.critical_tolerations
   }

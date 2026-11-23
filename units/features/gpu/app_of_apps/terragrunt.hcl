@@ -37,7 +37,7 @@ dependency "node_pool_on_demand" {
 inputs = {
   # cluster_name comes from provider_k8s_base.hcl.
   repo_url              = local.repo_url
-  name                  = "gpu-apps"
+  name                  = "app-of-apps-gpu"
   namespace             = "argocd"
   path                  = "apps/features/gpu"
   target_revision       = values.target_revision

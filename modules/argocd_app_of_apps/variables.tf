@@ -7,7 +7,7 @@ variable "cluster_name" {
 variable "name" {
   description = "Name of the ArgoCD Application resource"
   type        = string
-  default     = "app-of-apps"
+  default     = "app-of-apps-core"
 }
 
 variable "namespace" {
