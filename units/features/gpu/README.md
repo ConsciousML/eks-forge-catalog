@@ -22,6 +22,7 @@ The [`gpu` stack](../../../stacks/gpu/) groups these units. An environment's sta
 - **[`gpu-namespaces`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/manifests/features/gpu/namespaces)** (app-of-apps): the `gpu` namespace. Not deployed by these units
 - **[`gpu-nvidia-device-plugin`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/charts/features/gpu/nvidia-device-plugin)** (app-of-apps): the DaemonSet advertising `nvidia.com/gpu` on GPU nodes. Not deployed by these units
 - **[`gpu-dcgm-exporter`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/charts/features/gpu/dcgm-exporter)** (app-of-apps): the DaemonSet exporting GPU metrics to Prometheus, and the **GPU** Grafana dashboard. Not deployed by these units
+- **[`gpu-smoke-test`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/manifests/features/gpu/smoke-test)** (app-of-apps): suspended `CronJob` running a CUDA sample on a GPU node, on demand. Not deployed by these units
 
 ## Scheduling a Pod on a GPU Node
 
@@ -62,6 +63,18 @@ GPU memory per family in the stack's allowlist, as Karpenter labels it:
 | `g7e` | RTX PRO 6000 | 98304 | 12.0 |
 
 `WhenEmptyOrUnderutilized` consolidation can replace a node running a GPU pod with a cheaper one. A pod annotated `karpenter.sh/do-not-disrupt: "true"` blocks it.
+
+## Running the GPU Smoke Test
+
+The [`gpu-smoke-test`](https://github.com/ConsciousML/eks-forge-app-of-apps/tree/main/manifests/features/gpu/smoke-test) `CronJob` runs one CUDA sample on a GPU node per trigger:
+
+```bash
+kubectl create job --from=cronjob/gpu-smoke-test <name> -n gpu
+kubectl wait --for=condition=complete job/<name> -n gpu --timeout=15m
+kubectl logs job/<name> -n gpu
+```
+
+A passing run logs `Test PASSED`.
 
 ## Upstream Dependencies
 
