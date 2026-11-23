@@ -23,9 +23,14 @@ locals {
   repo_url = include.root.locals.github_locals.app_of_apps_repo_url
 }
 
-# The DaemonSets only run on GPU nodes, so the NodePool must exist first.
-dependency "node_pool" {
-  config_path  = "../node_pool"
+# The DaemonSets only run on GPU nodes, so the NodePools must exist first.
+dependency "node_pool_spot" {
+  config_path  = "../node_pool_spot"
+  skip_outputs = true
+}
+
+dependency "node_pool_on_demand" {
+  config_path  = "../node_pool_on_demand"
   skip_outputs = true
 }
 
