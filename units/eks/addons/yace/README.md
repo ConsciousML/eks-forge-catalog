@@ -15,4 +15,4 @@ Provisions the AWS-side Pod Identity resources for [YACE](https://github.com/pro
 
 ## Upstream Dependencies
 
-- **[`units/vpc/endpoints`](../../../vpc/endpoints/)**: the `monitoring` and `tagging` interface endpoints, the exporter's only egress. Their pinned IPs reach the chart through `app_of_apps`
+- **[`units/vpc/endpoints`](../../../vpc/endpoints/)**: the `monitoring` and `tagging` interface endpoints. Their pinned IPs reach the chart through `app_of_apps`. STS has no endpoint. The chart reaches it through `world` egress
