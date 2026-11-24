@@ -19,6 +19,7 @@ locals {
     iam                  = 18
     tagging              = 19
     acm                  = 21
+    monitoring           = 22
   }
 
   # Consumer-side keys matching the vpcEndpointCidrs shape each CiliumNetworkPolicy
@@ -32,5 +33,6 @@ locals {
     iam                  = "iam"
     tagging              = "tagging"
     acm                  = "acm"
+    monitoring           = "monitoring"
   }
 }
