@@ -128,6 +128,11 @@ dependency "iam_role_loki" {
   skip_outputs = true
 }
 
+dependency "iam_role_yace" {
+  config_path  = "../../yace/iam_role"
+  skip_outputs = true
+}
+
 dependency "argocd_password" {
   config_path = "../aws_secret_password"
   mock_outputs = {
@@ -197,6 +202,7 @@ dependency "vpc_endpoint_cidrs" {
       iam                  = ["10.2.0.18", "10.2.32.18", "10.2.64.18"]
       tagging              = ["10.2.0.19", "10.2.32.19", "10.2.64.19"]
       acm                  = ["10.2.0.21", "10.2.32.21", "10.2.64.21"]
+      monitoring           = ["10.2.0.22", "10.2.32.22", "10.2.64.22"]
     }
   }
   mock_outputs_allowed_terraform_commands = ["init", "plan", "validate", "graph", "destroy"]
@@ -391,6 +397,16 @@ inputs = {
       }
       "hubble-ui-httproute" = {
         host = local.domain_private_hubble
+      }
+      "yace" = {
+        vpcEndpointCidrs = {
+          monitoring = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.monitoring
+          tagging    = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.tagging
+        }
+        "yet-another-cloudwatch-exporter" = {
+          region      = local.region
+          clusterName = local.cluster_name_full
+        }
       }
       "blackbox-exporter" = {
         "prometheus-blackbox-exporter" = {

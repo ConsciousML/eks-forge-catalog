@@ -41,6 +41,7 @@ This stack is instantiated in:
 - **[addons/external_dns](addons/external_dns/README.md)**: syncs DNS records for cluster services to the private and public hosted zones
 - **[addons/external_secrets_operator](addons/external_secrets_operator/README.md)**: syncs secrets from AWS Secrets Manager into Kubernetes `Secret` objects
 - **[addons/loki](addons/loki/README.md)**: cluster-wide log aggregation backed by S3
+- **[addons/yace](addons/yace/README.md)**: CloudWatch metrics of the ALBs carrying an SLO, exported to Prometheus
 - **[addons/argocd](addons/argocd/README.md)**: GitOps controller for declarative application delivery
 - **[addons/argocd/app_of_apps](addons/argocd/app_of_apps/)**: deploys the root ArgoCD `Application` that bootstraps all child apps from the [App of Apps repository](https://github.com/ConsciousML/eks-forge-app-of-apps)
 - **[addons/tailscale](addons/tailscale/README.md)**: VPN access to internal cluster services via subnet routing and split DNS

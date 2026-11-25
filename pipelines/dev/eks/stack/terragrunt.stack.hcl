@@ -499,6 +499,16 @@ unit "iam_role_loki" {
   }
 }
 
+unit "iam_role_yace" {
+  source = "${get_repo_root()}/units/eks/addons/yace/iam_role"
+  path   = "eks/addons/yace/iam_role"
+
+  values = {
+    version = local.version
+    tags    = {}
+  }
+}
+
 # --- Prometheus Operator CRDs ---
 # Installed ahead of ArgoCD so the ServiceMonitor CRD already exists by the time anything
 # renders one.
