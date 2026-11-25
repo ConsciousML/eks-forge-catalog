@@ -8,6 +8,6 @@ The following inputs are required by EKS and must not be removed:
 
 - `enable_dns_hostnames` and `enable_dns_support` must be `true`. EKS node registration fails without them
 - Public subnets must carry `kubernetes.io/role/elb = 1` and private subnets `kubernetes.io/role/internal-elb = 1`. The AWS Load Balancer Controller uses these tags to discover subnets. Missing tags cause load balancer provisioning to fail silently
-- A NAT gateway on private subnets is required for traffic with no VPC endpoint (e.g. Tailscale, or AWS APIs no network policy reaches, like ECR and STS). The AWS APIs a network policy allows (EC2, Route 53, Secrets Manager, ...) instead route through [`../endpoints`](../endpoints/) and stay off the NAT gateway
+- A NAT gateway on private subnets is required for traffic with no VPC endpoint (e.g. Tailscale, or AWS APIs only non-critical pods call, like CloudWatch and STS). The AWS APIs critical pods call (EC2, Route 53, Secrets Manager, ...) instead route through [`../endpoints`](../endpoints/) and stay off the NAT gateway
 - Subnets must span at least two Availability Zones and each have at least 16 available IP addresses
 - The VPC CIDR must not overlap with other VPCs connected via Transit Gateway or VPC peering. CIDR conflicts cause unpredictable routing failures

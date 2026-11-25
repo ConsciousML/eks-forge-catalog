@@ -61,6 +61,11 @@ inputs = {
     {
       name  = "settings.interruptionQueue"
       value = dependency.karpenter_iam.outputs.queue_name
+    },
+    # Skips Pricing API lookups, which have no VPC endpoint. On-demand prices come from Karpenter's bundled list.
+    {
+      name  = "settings.isolatedVPC"
+      value = "true"
     }
   ]
 }

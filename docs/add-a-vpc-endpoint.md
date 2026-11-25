@@ -2,7 +2,7 @@
 
 This guide shows you how to create an [interface VPC endpoint](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-interface.html) for an AWS service from your [forked catalog](/docs/quickstart/installation/#fork-the-eks-forge-catalog), validate it in [`dev`](/docs/iac/#dev), and merge it.
 
-You need it when an app calls an AWS API that has no endpoint yet. Without one, the app's network policy has to allow egress to `world` on port 443, which opens the whole internet. The endpoint gets a fixed IP in each subnet it uses, so the policy can allow only those IPs instead (see [Reaching AWS APIs](/docs/security/how-network-policies-work/#reaching-aws-apis)).
+You need it when a critical app calls an AWS API that has no endpoint yet. An app is critical if its IAM role can read secrets, change DNS, launch compute, pass IAM roles, or change network exposure (load balancers, security groups). Without an endpoint, the app's network policy has to allow egress to every public IP on port 443. A non-critical app does that by design and needs no endpoint. The endpoint gets a fixed IP in each subnet it uses, so the policy can allow only those IPs instead (see [Reaching AWS APIs](/docs/security/how-network-policies-work/#reaching-aws-apis)).
 
 To write that rule once the endpoint exists, see [Allow an AWS API](/docs/security/write-network-policies/#allow-an-aws-api).
 
@@ -38,7 +38,7 @@ Your service's key is the end of the name you need, after the region:
 
 Some names have no region, like Route 53's. Note it for the next section.
 
-S3 and DynamoDB use a [gateway endpoint](https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html) instead, which has no IP to fix. The catalog already creates the S3 one, and a policy reaching either still allows `world` (see [Reaching AWS APIs](/docs/security/how-network-policies-work/#reaching-aws-apis)).
+S3 and DynamoDB use a [gateway endpoint](https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html) instead, which has no IP to fix. The catalog already creates the S3 one, and a policy reaching either still allows every public IP (see [Reaching AWS APIs](/docs/security/how-network-policies-work/#reaching-aws-apis)).
 
 :::warning
 Don't add `s3` in the next section. The unit keeps its gateway endpoint and ignores the entry.
