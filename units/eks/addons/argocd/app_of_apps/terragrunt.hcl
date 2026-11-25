@@ -203,6 +203,7 @@ dependency "vpc_endpoint_cidrs" {
       tagging              = ["10.2.0.19", "10.2.32.19", "10.2.64.19"]
       acm                  = ["10.2.0.21", "10.2.32.21", "10.2.64.21"]
       ssm                  = ["10.2.0.22", "10.2.32.22", "10.2.64.22"]
+      eks                  = ["10.2.0.23", "10.2.32.23", "10.2.64.23"]
     }
   }
   mock_outputs_allowed_terraform_commands = ["init", "plan", "validate", "graph", "destroy"]
@@ -298,6 +299,7 @@ inputs = {
           sqs = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.sqs
           iam = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.iam
           ssm = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.ssm
+          eks = dependency.vpc_endpoint_cidrs.outputs.vpc_endpoint_cidrs.eks
         }
       }
       "loki" = {

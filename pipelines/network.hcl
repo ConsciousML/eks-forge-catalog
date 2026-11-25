@@ -21,6 +21,7 @@ locals {
     tagging              = 19
     acm                  = 21
     ssm                  = 22
+    eks                  = 23
   }
 
   # Consumer-side keys matching the vpcEndpointCidrs shape each CiliumNetworkPolicy
@@ -35,5 +36,6 @@ locals {
     tagging              = "tagging"
     acm                  = "acm"
     ssm                  = "ssm"
+    eks                  = "eks"
   }
 }

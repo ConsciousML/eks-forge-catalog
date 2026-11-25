@@ -18,8 +18,7 @@ terraform {
 dependency "eks_cluster" {
   config_path = "../../../cluster"
   mock_outputs = {
-    cluster_name     = "mock-cluster"
-    cluster_endpoint = "https://mock.eks.amazonaws.com"
+    cluster_name = "mock-cluster"
   }
   mock_outputs_allowed_terraform_commands = ["init", "plan", "validate", "graph", "destroy"]
 }
@@ -62,11 +61,6 @@ inputs = {
     {
       name  = "settings.interruptionQueue"
       value = dependency.karpenter_iam.outputs.queue_name
-    },
-    # Skips the startup DescribeCluster call. The EKS API has no VPC endpoint.
-    {
-      name  = "settings.clusterEndpoint"
-      value = dependency.eks_cluster.outputs.cluster_endpoint
     },
     # Skips Pricing API lookups, which have no VPC endpoint. On-demand prices come from Karpenter's bundled list.
     {
