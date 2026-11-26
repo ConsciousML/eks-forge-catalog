@@ -73,6 +73,7 @@ GitHub owners and repository names used in module sources and GitHub resources.
 | `app_of_apps_repo_url` | URL ArgoCD reads the app-of-apps from, used as the `Application` `repoURL` and the repository `Secret` `url`. `ssh://git@ssh.github.com:443/<owner>/<repo>.git` when `app_of_apps_private` is `true`, `https://github.com/<owner>/<repo>` otherwise. |
 | `github_owner_live` | Live only. User or organization owning the live repository. |
 | `github_repo_name_live` | Live only. Live repository name. |
+| `plan_role_name` | Live only. Name of the read-only CI plan role, granted EKS view access in the `staging` and `prod` stacks. |
 
 ### `dns.hcl`
 

@@ -7,7 +7,7 @@ In this guide, you'll authenticate GitHub Actions with AWS, so the [CI/CD](/docs
 This guide needs to be performed only once per catalog fork before running the [deployment](/docs/quickstart/deployment/).
 :::
 
-This [bootstrap pipeline](/docs/quickstart/bootstrap) creates an IAM [OIDC identity provider and role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html) that GitHub Actions assumes at runtime, so workflows authenticate with a short-lived GitHub token instead of stored AWS keys. It also stores the role ARN and the deploy keys Terragrunt needs to pull your catalog as GitHub Actions secrets.
+This [bootstrap pipeline](/docs/quickstart/bootstrap) creates an IAM [OIDC identity provider and role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html) that GitHub Actions assumes at runtime, so workflows authenticate with a short-lived GitHub token instead of stored AWS keys. The role is read-only, since CI only plans (see [Read-Only Plan Role](/docs/reference/bootstrap/aws_gh_actions_auth/#read-only-plan-role)). It also stores the role ARN and the deploy keys Terragrunt needs to pull your catalog as GitHub Actions secrets.
 
 First, fill in `GITHUB_TOKEN` in the `.env` file you created in [Create the `.env` File](/docs/quickstart/configuration/#create-the-env-file), by following the [`GITHUB_TOKEN`](/docs/reference/environment_variable/#github_token) section of the environment variables reference.
 
