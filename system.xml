@@ -41,6 +41,9 @@
     </commits>
 
     <restrictions>
+        - Never plan or make changes in `eks-forge-live`, it's out of scope. Only read it and run
+          its tests (see the `terratest-dev-catalog` skill). Releasing to `staging` and `prod` is
+          the maintainer's job
         - Never use `/` in branch names, it breaks Terragrunt (use `-` instead)
         - Skip `.terraform*` and `.terragrunt*` dirs when searching or reading, generated caches
         - In `modules/`, write docs only in `header.md` and `footer.md`. CI generates `README.md`
