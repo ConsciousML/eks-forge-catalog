@@ -15,4 +15,4 @@ Provisions the AWS-side Pod Identity resources for [YACE](https://github.com/pro
 
 ## Upstream Dependencies
 
-- **[`units/vpc/endpoints`](../../../vpc/endpoints/)**: the `monitoring` and `tagging` interface endpoints. Their pinned IPs reach the chart through `app_of_apps`. STS has no endpoint. The chart reaches it through `world` egress
+- **[`units/vpc/endpoints`](../../../vpc/endpoints/)**: the `tagging` interface endpoint, created for `aws-lbc`. Private DNS resolves the Resource Groups Tagging API to it, so its pinned IPs reach the chart through `app_of_apps`. CloudWatch and STS have no endpoint, since YACE isn't critical. The chart reaches them through its public egress rule
