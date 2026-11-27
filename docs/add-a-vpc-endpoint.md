@@ -50,8 +50,8 @@ Add your key to `endpoint_host_offsets` in [`pipelines/network.hcl`](https://git
 ```hcl
 endpoint_host_offsets = {
   ...
-  acm = 21
-  kms = 22
+  eks = 23
+  kms = 24
 }
 ```
 
