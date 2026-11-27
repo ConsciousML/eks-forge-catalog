@@ -53,7 +53,7 @@ eks-pod-identity-agent-9pq6k   1/1     Running   0          41m
 
 ## Deploy Applications with ArgoCD
 
-This stack spins up [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) to deploy [Kubernetes](https://kubernetes.io/) resources with [GitOps](https://about.gitlab.com/topics/gitops/). Once you've run the Terragrunt stack, ArgoCD will take some time deploying these resources. You can monitor the progress by running:
+This stack spins up [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) to deploy [Kubernetes](https://kubernetes.io/) resources with [GitOps](https://about.gitlab.com/topics/gitops/). The Terragrunt stack returns only once ArgoCD has deployed these resources. You can check them by running:
 ```bash
 kubectl get app -n argocd
 ```
